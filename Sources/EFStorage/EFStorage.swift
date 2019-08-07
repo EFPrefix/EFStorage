@@ -2,9 +2,9 @@
 public protocol EFStorage {
     associatedtype Content
     
-    var wrappedValue: Content { get set }
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { get }
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { get set }
+    var wrappedValue: Content { mutating get set }
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { mutating get }
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { mutating get set }
 }
 
 extension UserDefaults {
@@ -53,25 +53,36 @@ public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
     private let ref: EFStorageUserDefaultsRef<T>
     public var key: String { return ref.key }
     public var wrappedValue: T {
-        get { return ref.value! }
+        mutating get {
+            if let value = ref.value { return value }
+            let value = defaultValue
+            if storeDefaultValueToStorage { ref.value = value }
+            return defaultValue
+        }
         set { ref.value = newValue }
     }
     public func remove() {
         ref.value = nil
     }
+    private let makeDefaultValue: () -> T
+    private lazy var defaultValue: T = makeDefaultValue()
+    private let storeDefaultValueToStorage: Bool
     
-    public init(forKey key: String, defaultsTo defaultValue: @autoclosure () -> T,
-                in userDefaults: UserDefaults = .standard) {
+    public init(forKey key: String, in userDefaults: UserDefaults = .standard,
+                defaultsTo defaultValue: @escaping @autoclosure () -> T,
+                storeDefaultValueToStorage: Bool = false) {
         self.ref = EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults)
-        self.wrappedValue = T.fromUserDefaults(userDefaults, forKey: key) ?? defaultValue()
+        self.makeDefaultValue = defaultValue
+        self.ref.value = T.fromUserDefaults(userDefaults, forKey: key)
+        self.storeDefaultValueToStorage = storeDefaultValueToStorage
     }
     
     public subscript<Value>(dynamicMember keyPath: KeyPath<T, Value>) -> Value {
-        get { return wrappedValue[keyPath: keyPath] }
+        mutating get { return wrappedValue[keyPath: keyPath] }
     }
     
     public subscript<Value>(dynamicMember keyPath: WritableKeyPath<T, Value>) -> Value {
-        get { return wrappedValue[keyPath: keyPath] }
+        mutating get { return wrappedValue[keyPath: keyPath] }
         set { wrappedValue[keyPath: keyPath] = newValue }
     }
 }
@@ -138,7 +149,7 @@ extension NSString: UserDefaultsStorable { }
 
 public extension EFStorageUserDefaults where T: NSString {
     var string: String {
-        get {
+        mutating get {
             return wrappedValue as String
         }
         set {
@@ -147,11 +158,11 @@ public extension EFStorageUserDefaults where T: NSString {
     }
     
     subscript<Value>(dynamicMember keyPath: KeyPath<String, Value>) -> Value {
-        get { return string[keyPath: keyPath] }
+        mutating get { return string[keyPath: keyPath] }
     }
     
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<String, Value>) -> Value {
-        get { return string[keyPath: keyPath] }
+        mutating get { return string[keyPath: keyPath] }
         set { string[keyPath: keyPath] = newValue }
     }
 }
