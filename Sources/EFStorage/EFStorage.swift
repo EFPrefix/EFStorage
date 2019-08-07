@@ -13,7 +13,8 @@ extension UserDefaults {
 
 /// This class should not be copied nor should it be initialized directly;
 /// use `EFStorageUserDefaultsRef.forKey<T: UserDefaultsStorable>` instead.
-private class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
+@dynamicMemberLookup
+public class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
     fileprivate let key: String
     private let userDefaults: UserDefaults
     private init(forKey key: String, in userDefaults: UserDefaults) {
@@ -45,6 +46,10 @@ private class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
         let newStorage = EFStorageUserDefaultsRef<T>(forKey: key, in: userDefaults)
         UserDefaults.efStorages.setObject(newStorage, forKey: key as NSString)
         return newStorage
+    }
+    
+    public static subscript(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> {
+        return forKey(key, in: .standard)
     }
 }
 
@@ -188,13 +193,20 @@ public extension UserDefaultsStorable where Self: Codable {
 }
 
 @dynamicMemberLookup
-public class EFUnsafeUserDefaults {
+public class EFSafeUserDefaults {
     public static let standard = EFUnsafeUserDefaults()
     public init(_ userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
-    private let userDefaults: UserDefaults
+    fileprivate let userDefaults: UserDefaults
     
+    public subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> {
+        return EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults)
+    }
+}
+
+@dynamicMemberLookup
+public class EFUnsafeUserDefaults: EFSafeUserDefaults {
     public subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? {
         get {
             return EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults).value
