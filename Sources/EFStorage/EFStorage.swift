@@ -92,6 +92,8 @@ public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
     }
 }
 
+// MARK: - Value Protocol
+
 import Foundation
 
 /// NSData, NSString, NSNumber, NSDate, NSArray, or NSDictionary
@@ -99,6 +101,8 @@ public protocol UserDefaultsStorable {
     func asUserDefaultsStorable() -> UserDefaultsStorable
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self?
 }
+
+// MARK: - Natives
 
 protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
 
@@ -117,11 +121,6 @@ extension String: AsIsUserDefaultsStorable {
         return userDefaults.string(forKey: key)
     }
 }
-extension URL: AsIsUserDefaultsStorable {
-    public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> URL? {
-        return userDefaults.url(forKey: key)
-    }
-}
 extension Bool: AsIsUserDefaultsStorable { }
 extension Int: AsIsUserDefaultsStorable { }
 extension Float: AsIsUserDefaultsStorable { }
@@ -137,6 +136,17 @@ extension Array: AsIsUserDefaultsStorable
 where Element: AsIsUserDefaultsStorable { }
 extension Array: UserDefaultsStorable
 where Element: AsIsUserDefaultsStorable { }
+
+extension URL: UserDefaultsStorable {
+    public func asUserDefaultsStorable() -> UserDefaultsStorable {
+        return absoluteString
+    }
+    public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> URL? {
+        return userDefaults.url(forKey: key)
+    }
+}
+
+// MARK: - NSCoding
 
 extension UserDefaultsStorable where Self: NSCoding {
     public func asUserDefaultsStorable() -> UserDefaultsStorable {
@@ -172,12 +182,15 @@ public extension EFStorageUserDefaults where T: NSString {
     }
 }
 
+// MARK: - RawRepresentable
+
 public extension UserDefaultsStorable where Self: RawRepresentable, Self.RawValue: UserDefaultsStorable {
     func asUserDefaultsStorable() -> UserDefaultsStorable {
         return rawValue.asUserDefaultsStorable()
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
-        return RawValue.fromUserDefaults(userDefaults, forKey: key).flatMap(Self.init(rawValue:))
+        return RawValue.fromUserDefaults(userDefaults, forKey: key)
+            .flatMap(Self.init(rawValue:))
     }
 }
 
@@ -192,36 +205,76 @@ public extension UserDefaultsStorable where Self: Codable {
     }
 }
 
+// MARK: - Direct Lookup
+
 @dynamicMemberLookup
-public class EFSafeUserDefaults {
-    public static let standard = EFUnsafeUserDefaults()
-    public init(_ userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-    }
-    fileprivate let userDefaults: UserDefaults
-    
-    public subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> {
-        return EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults)
+public struct EFStorageWrapper<Base> {
+    fileprivate let base: Base
+    fileprivate init(_ base: Base) {
+        self.base = base
     }
 }
 
+public protocol EFStorageWrapperBase { }
+
+public extension EFStorageWrapperBase {
+    var efStorage: EFStorageWrapper<Self> {
+        return EFStorageWrapper(self)
+    }
+    
+    static var efStorage: EFStorageWrapper<Self.Type> {
+        return EFStorageWrapper(Self.self)
+    }
+}
+
+extension UserDefaults: EFStorageWrapperBase { }
+
+public extension EFStorageWrapper {
+    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> where Base == UserDefaults {
+        return EFStorageUserDefaultsRef<T>.forKey(key, in: base)
+    }
+    
+    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> where Base == UserDefaults.Type {
+        return EFStorageUserDefaultsRef<T>.forKey(key, in: UserDefaults.standard)
+    }
+}
+
+// MARK: - Direct Value Lookup
+
 @dynamicMemberLookup
-public class EFUnsafeUserDefaults: EFSafeUserDefaults {
-    public subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? {
+public struct EFStorageContentWrapper<Base> {
+    private let baseWrapper: EFStorageWrapper<Base>
+    fileprivate init(_ baseWrapper: EFStorageWrapper<Base>) {
+        self.baseWrapper = baseWrapper
+    }
+}
+
+public extension EFStorageWrapperBase {
+    var efStorageContents: EFStorageContentWrapper<Self> {
+        return EFStorageContentWrapper(efStorage)
+    }
+    
+    static var efStorageContents: EFStorageContentWrapper<Self.Type> {
+        return EFStorageContentWrapper(efStorage)
+    }
+}
+
+public extension EFStorageContentWrapper {
+    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == UserDefaults {
         get {
-            return EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults).value
+            return baseWrapper.base.efStorage[dynamicMember: key].value
         }
         set {
-            EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults).value = newValue
+            baseWrapper.base.efStorage[dynamicMember: key].value = newValue
         }
     }
     
-    public static subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? {
+    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == UserDefaults.Type {
         get {
-            return EFUnsafeUserDefaults.standard[dynamicMember: key]
+            return baseWrapper.base.efStorage[dynamicMember: key].value
         }
         set {
-            EFUnsafeUserDefaults.standard[dynamicMember: key] = newValue
+            baseWrapper.base.efStorage[dynamicMember: key].value = newValue
         }
     }
 }

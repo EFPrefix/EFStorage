@@ -7,7 +7,7 @@ final class EFStorageTests: XCTestCase {
     @EFStorageUserDefaults(forKey: "text", defaultsTo: EFStorageTests.defaultText, storeDefaultValueToStorage: true)
     var text: String
     
-    var storage: EFStorageUserDefaultsRef<String> = EFSafeUserDefaults.standard.text
+    var storage: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {
         // This is an example of a functional test case.
@@ -18,7 +18,7 @@ final class EFStorageTests: XCTestCase {
         XCTAssertEqual(_text.wrappedValue, "meow")
         _text.remove()
         XCTAssertEqual(text, EFStorageTests.defaultText)
-        XCTAssertEqual(text, EFUnsafeUserDefaults.text)
+        XCTAssertEqual(text, UserDefaults.efStorageContents.text)
         XCTAssertEqual(storage.value, text)
     }
 
