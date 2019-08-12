@@ -2,9 +2,64 @@
 public protocol EFStorage {
     associatedtype Content
     
-    var wrappedValue: Content { mutating get set }
+    /// Actual content stored in storage
+    var content: Content? { get set }
+    /// Non-optional value for property wrappers and dynamic member lookup based on `content`.
+    var wrappedValue: Content { get set }
     subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { mutating get }
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { mutating get set }
+}
+
+public extension EFStorage {
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value {
+        return wrappedValue[keyPath: keyPath]
+    }
+
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value {
+        get {
+            return wrappedValue[keyPath: keyPath]
+        }
+        set {
+            wrappedValue[keyPath: keyPath] = newValue
+        }
+    }
+}
+
+public extension EFStorage {
+    static func +<AnotherStorage: EFStorage>(lhs: Self, rhs: AnotherStorage)
+        -> EFStorageComposition<Self, AnotherStorage, Content> {
+        return EFStorageComposition(lhs, rhs)
+    }
+}
+
+public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
+: EFStorage where Content == A.Content, Content == B.Content {
+    public var wrappedValue: Content {
+        get {
+            return content ?? a.wrappedValue
+        }
+        set {
+            a.wrappedValue = newValue
+            b.wrappedValue = newValue
+        }
+    }
+    
+    public var content: Content? {
+        get {
+            return a.content ?? b.content
+        }
+        set {
+            a.content = newValue
+            b.content = newValue
+        }
+    }
+    
+    private var a: A
+    private var b: B
+    fileprivate init(_ a: A, _ b: B) {
+        self.a = a
+        self.b = b
+    }
 }
 
 // MARK: - Direct Lookup

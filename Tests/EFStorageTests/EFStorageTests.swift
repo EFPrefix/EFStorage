@@ -7,6 +7,9 @@ final class EFStorageTests: XCTestCase {
     @EFStorageUserDefaults(forKey: "text", defaultsTo: EFStorageTests.defaultText, storeDefaultValueToStorage: true)
     var text: String
     
+    @EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
+    var nsString: NSString
+    
     var storage: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {

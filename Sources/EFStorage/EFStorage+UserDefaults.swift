@@ -43,7 +43,6 @@ public extension EFStorageContentWrapper {
 
 // MARK: - Implementation
 
-
 extension UserDefaults {
     fileprivate static var efStorages = NSMapTable<NSString, AnyObject>.weakToWeakObjects()
 }
@@ -98,13 +97,18 @@ public class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
 @propertyWrapper
 @dynamicMemberLookup
 public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
-    private let ref: EFStorageUserDefaultsRef<T>
-    public var key: String { return ref.key }
+    private let storeDefaultValueToStorage: Bool
+    public let makeDefaultContent: () -> T
+    
+    public var content: T? {
+        get { return ref.value }
+        set { ref.value = newValue }
+    }
     public var wrappedValue: T {
-        mutating get {
+        get {
             if let value = ref.value { return value }
-            let value = defaultValue
-            if storeDefaultValueToStorage { ref.value = value }
+            let defaultValue = makeDefaultContent()
+            if storeDefaultValueToStorage { ref.value = defaultValue }
             return defaultValue
         }
         set { ref.value = newValue }
@@ -112,26 +116,16 @@ public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
     public func remove() {
         ref.value = nil
     }
-    private let makeDefaultValue: () -> T
-    private lazy var defaultValue: T = makeDefaultValue()
-    private let storeDefaultValueToStorage: Bool
     
+    private let ref: EFStorageUserDefaultsRef<T>
+    public var key: String { return ref.key }
     public init(forKey key: String, in userDefaults: UserDefaults = .standard,
-                defaultsTo defaultValue: @escaping @autoclosure () -> T,
+                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> T,
                 storeDefaultValueToStorage: Bool = false) {
         self.ref = EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults)
-        self.makeDefaultValue = defaultValue
-        self.ref.value = T.fromUserDefaults(userDefaults, forKey: key)
+        self.makeDefaultContent = makeDefaultValue
+        self.ref.value = T.fromUserDefaults(userDefaults, forKey: key) ?? makeDefaultValue()
         self.storeDefaultValueToStorage = storeDefaultValueToStorage
-    }
-    
-    public subscript<Value>(dynamicMember keyPath: KeyPath<T, Value>) -> Value {
-        mutating get { return wrappedValue[keyPath: keyPath] }
-    }
-    
-    public subscript<Value>(dynamicMember keyPath: WritableKeyPath<T, Value>) -> Value {
-        mutating get { return wrappedValue[keyPath: keyPath] }
-        set { wrappedValue[keyPath: keyPath] = newValue }
     }
 }
 
@@ -139,7 +133,7 @@ public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
 
 /// NSData, NSString, NSNumber, NSDate, NSArray, or NSDictionary
 public protocol UserDefaultsStorable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable
+    func asUserDefaultsStorable() -> UserDefaultsStorable!
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self?
 }
 
@@ -148,7 +142,7 @@ public protocol UserDefaultsStorable {
 protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
 
 extension AsIsUserDefaultsStorable {
-    public func asUserDefaultsStorable() -> UserDefaultsStorable {
+    public func asUserDefaultsStorable() -> UserDefaultsStorable! {
         return self
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
@@ -179,7 +173,7 @@ extension Array: UserDefaultsStorable
 where Element: AsIsUserDefaultsStorable { }
 
 extension URL: UserDefaultsStorable {
-    public func asUserDefaultsStorable() -> UserDefaultsStorable {
+    public func asUserDefaultsStorable() -> UserDefaultsStorable! {
         return absoluteString
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> URL? {
@@ -189,11 +183,11 @@ extension URL: UserDefaultsStorable {
 
 // MARK: - NSCoding
 
-extension UserDefaultsStorable where Self: NSCoding {
-    public func asUserDefaultsStorable() -> UserDefaultsStorable {
+public extension UserDefaultsStorable where Self: NSCoding {
+    func asUserDefaultsStorable() -> UserDefaultsStorable! {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
-    public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
+    static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
         guard let data = userDefaults.data(forKey: key) else { return nil }
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? Self
     }
@@ -226,7 +220,7 @@ public extension EFStorageUserDefaults where T: NSString {
 // MARK: - RawRepresentable
 
 public extension UserDefaultsStorable where Self: RawRepresentable, Self.RawValue: UserDefaultsStorable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable {
+    func asUserDefaultsStorable() -> UserDefaultsStorable! {
         return rawValue.asUserDefaultsStorable()
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
@@ -236,7 +230,7 @@ public extension UserDefaultsStorable where Self: RawRepresentable, Self.RawValu
 }
 
 public extension UserDefaultsStorable where Self: Codable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable {
+    func asUserDefaultsStorable() -> UserDefaultsStorable! {
         return try! JSONEncoder().encode(self).asUserDefaultsStorable()
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
