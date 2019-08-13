@@ -43,22 +43,21 @@ public extension EFStorageContentWrapper {
 
 // MARK: - Implementation
 
-extension UserDefaults {
-    fileprivate static var efStorages = NSMapTable<NSString, AnyObject>.weakToWeakObjects()
-}
-
 /// This class should not be copied nor should it be initialized directly;
-/// use `EFStorageUserDefaultsRef.forKey<T: UserDefaultsStorable>` instead.
-@dynamicMemberLookup
-public class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
+/// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
+public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleInstanceStorageReference {
     fileprivate let key: String
     private let userDefaults: UserDefaults
-    private init(forKey key: String, in userDefaults: UserDefaults) {
+    public required init(
+        forKeyToBeHeldStrongly key: String, in storage: UserDefaults,
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
+    ) {
         self.key = key
-        self.userDefaults = userDefaults
+        self.userDefaults = storage
+        self.value = Content.fromUserDefaults(userDefaults, forKey: key)
     }
     
-    public var value: T? {
+    public var value: Content? {
         didSet {
             if let newValue = value {
                 userDefaults.set(newValue.asUserDefaultsStorable(), forKey: key)
@@ -67,44 +66,18 @@ public class EFStorageUserDefaultsRef<T: UserDefaultsStorable> {
             }
         }
     }
-    
-    /// Returns the unique instance for key in the specified `userDefaults`.
-    /// - Parameter key: user defaults key.
-    /// - Parameter userDefaults: `UserDefaults` instance where key is to be stored.
-    ///
-    /// - Important: does not support using the same key across different user defaults.
-    public static func forKey(_ key: String, in userDefaults: UserDefaults) -> EFStorageUserDefaultsRef<T> {
-        if let object = UserDefaults.efStorages.object(forKey: key as NSString),
-            let storage = object as? EFStorageUserDefaultsRef<T> {
-            assert(storage.userDefaults == userDefaults, "Identical Key In Different User Defaults")
-            return storage
-        }
-        let newStorage = EFStorageUserDefaultsRef<T>(forKey: key, in: userDefaults)
-        UserDefaults.efStorages.setObject(newStorage, forKey: key as NSString)
-        return newStorage
-    }
-    
-    public subscript<Value>(dynamicMember keyPath: KeyPath<T, Value>) -> Value? {
-        get { return value?[keyPath: keyPath] }
-    }
-    
-    public subscript<Value>(dynamicMember keyPath: WritableKeyPath<T, Value>) -> Value? {
-        get { return value?[keyPath: keyPath] }
-        set { newValue.map { value?[keyPath: keyPath] = $0 } }
-    }
 }
 
 @propertyWrapper
-@dynamicMemberLookup
-public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
+public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFStorage {
     private let storeDefaultValueToStorage: Bool
-    public let makeDefaultContent: () -> T
+    public let makeDefaultContent: () -> Content
     
-    public var content: T? {
+    public var content: Content? {
         get { return ref.value }
         set { ref.value = newValue }
     }
-    public var wrappedValue: T {
+    public var wrappedValue: Content {
         get {
             if let value = ref.value { return value }
             let defaultValue = makeDefaultContent()
@@ -117,14 +90,16 @@ public struct EFStorageUserDefaults<T: UserDefaultsStorable>: EFStorage {
         ref.value = nil
     }
     
-    private let ref: EFStorageUserDefaultsRef<T>
+    private let ref: EFStorageUserDefaultsRef<Content>
     public var key: String { return ref.key }
     public init(forKey key: String, in userDefaults: UserDefaults = .standard,
-                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> T,
+                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> Content,
                 storeDefaultValueToStorage: Bool = false) {
-        self.ref = EFStorageUserDefaultsRef<T>.forKey(key, in: userDefaults)
+        self.ref = EFStorageUserDefaultsRef<Content>.forKey(key, in: userDefaults)
         self.makeDefaultContent = makeDefaultValue
-        self.ref.value = T.fromUserDefaults(userDefaults, forKey: key) ?? makeDefaultValue()
+        if self.ref.value == nil, storeDefaultValueToStorage {
+            self.ref.value = makeDefaultValue()
+        }
         self.storeDefaultValueToStorage = storeDefaultValueToStorage
     }
 }
@@ -197,13 +172,13 @@ extension NSArray: UserDefaultsStorable { }
 extension NSNumber: UserDefaultsStorable { }
 extension NSString: UserDefaultsStorable { }
 
-public extension EFStorageUserDefaults where T: NSString {
+public extension EFStorageUserDefaults where Content: NSString {
     var string: String {
         mutating get {
             return wrappedValue as String
         }
         set {
-            wrappedValue = newValue as NSString as! T
+            wrappedValue = newValue as NSString as! Content
         }
     }
     

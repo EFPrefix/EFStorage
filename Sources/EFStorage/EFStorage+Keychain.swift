@@ -76,10 +76,21 @@ public extension KeychainStorable where Self: Codable {
 
 // MARK: - Implementation
 
-class StorageKeychain<T: KeychainStorable> {
-    public let key: String
+/// This class should not be copied nor should it be initialized directly;
+/// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
+public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceStorageReference {
+    fileprivate let key: String
     private let keychain: Keychain
-    public var value: T? {
+    public required init(
+        forKeyToBeHeldStrongly key: String, in storage: Keychain,
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
+    ) {
+        self.key = key
+        self.keychain = storage
+        self.value = Content.fromKeychain(keychain, forKey: key)
+    }
+    
+    public var value: Content? {
         didSet {
             guard let newValue = value else {
                 try? keychain.remove(key)
@@ -95,11 +106,51 @@ class StorageKeychain<T: KeychainStorable> {
             }
         }
     }
+}
 
-    init(key: String, in keychain: Keychain) {
-        self.key = key
-        self.keychain = keychain
-        self.value = T.fromKeychain(keychain, forKey: key)
+@propertyWrapper
+public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage {
+    public let makeDefaultContent: () -> Content
+    
+    public var content: Content? {
+        get { return ref.value }
+        set { ref.value = newValue }
+    }
+    public var wrappedValue: Content {
+        get {
+            if let value = ref.value { return value }
+            let defaultValue = makeDefaultContent()
+            ref.value = defaultValue
+            return defaultValue
+        }
+        set { ref.value = newValue }
+    }
+    public func remove() {
+        ref.value = nil
+    }
+    
+    private let ref: EFStorageKeychainRef<Content>
+    public var key: String { return ref.key }
+    public init(forKey key: String, in keychain: Keychain = Keychain(),
+                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> Content,
+                storeDefaultValueToStorage: Bool = false) {
+        self.ref = EFStorageKeychainRef<Content>.forKey(key, in: keychain)
+        self.makeDefaultContent = makeDefaultValue
+        if self.ref.value == nil {
+            self.ref.value = Content.fromKeychain(keychain, forKey: key) ?? makeDefaultValue()
+        }
     }
 }
 
+extension Keychain: Equatable {
+    public static func == (lhs: Keychain, rhs: Keychain) -> Bool {
+        guard lhs.itemClass == rhs.itemClass else { return false }
+        switch lhs.itemClass {
+        case .genericPassword:
+            return lhs.service == rhs.service && lhs.accessGroup == rhs.accessGroup
+        case .internetPassword:
+            return lhs.server == rhs.server && lhs.protocolType == rhs.protocolType
+                && lhs.authenticationType == rhs.authenticationType
+        }
+    }
+}

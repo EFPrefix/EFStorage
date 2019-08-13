@@ -1,13 +1,17 @@
 @dynamicMemberLookup
-public protocol EFStorage {
+public protocol EFContentWrapper {
     associatedtype Content
     
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { mutating get }
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { mutating get set }
+}
+
+@dynamicMemberLookup
+public protocol EFStorage: EFContentWrapper {
     /// Actual content stored in storage
     var content: Content? { get set }
     /// Non-optional value for property wrappers and dynamic member lookup based on `content`.
     var wrappedValue: Content { get set }
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { mutating get }
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { mutating get set }
 }
 
 public extension EFStorage {
@@ -32,6 +36,7 @@ public extension EFStorage {
     }
 }
 
+@propertyWrapper
 public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
 : EFStorage where Content == A.Content, Content == B.Content {
     public var wrappedValue: Content {
@@ -56,7 +61,7 @@ public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
     
     private var a: A
     private var b: B
-    fileprivate init(_ a: A, _ b: B) {
+    public init(_ a: A, _ b: B) {
         self.a = a
         self.b = b
     }
@@ -101,5 +106,61 @@ public extension EFStorageWrapperBase {
     
     static var efStorageContents: EFStorageContentWrapper<Self.Type> {
         return EFStorageContentWrapper(efStorage)
+    }
+}
+
+// MARK: - Single Instance Container
+
+@dynamicMemberLookup
+public protocol EFOptionalContentWrapper {
+    associatedtype Content
+    
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? { get }
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? { get set }
+}
+
+@dynamicMemberLookup
+public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWrapper {
+    associatedtype Storage: Equatable
+    associatedtype Content
+    
+    var value: Content? { get set }
+    
+    /// A method that should only be invoked by the static constructor `forKey(_:in:)`.
+    init(forKeyToBeHeldStrongly key: String, in storage: Storage,
+         iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool)
+}
+
+public extension EFSingleInstanceStorageReference {
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? {
+        get { return value?[keyPath: keyPath] }
+    }
+    
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? {
+        get { return value?[keyPath: keyPath] }
+        set { newValue.map { value?[keyPath: keyPath] = $0 } }
+    }
+}
+
+import Foundation
+
+private var efStorages = [AnyHashable: NSMapTable<NSString, AnyObject>]()
+
+extension EFSingleInstanceStorageReference {
+    public static func forKey(_ key: String, in storage: Storage) -> Self {
+        let typeIdentifier = String(describing: self)
+        if efStorages[typeIdentifier] == nil {
+            efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.weakToWeakObjects()
+        }
+        if let object = efStorages[typeIdentifier]?.object(forKey: key as NSString),
+            let instanceOfSelfType = object as? Self, storage == storage {
+            return instanceOfSelfType
+        }
+        let newInstance = Self(
+            forKeyToBeHeldStrongly: key, in: storage,
+            iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: true
+        )
+        efStorages[typeIdentifier]?.setObject(newInstance, forKey: key as NSString)
+        return newInstance
     }
 }
