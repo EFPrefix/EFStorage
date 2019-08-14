@@ -45,11 +45,11 @@ public extension EFStorageContentWrapper {
 
 /// This class should not be copied nor should it be initialized directly;
 /// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
-public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleInstanceStorageReference {
+public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleInstanceStorageReference, CustomDebugStringConvertible {
     fileprivate let key: String
     private let userDefaults: UserDefaults
     public required init(
-        forKeyToBeHeldStrongly key: String, in storage: UserDefaults,
+        forKey key: String, in storage: UserDefaults,
         iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
     ) {
         self.key = key
@@ -66,10 +66,18 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
             }
         }
     }
+    
+    public var debugDescription: String {
+        return "UD[\(key)] = \((value ?? "nil") as Any)"
+    }
+    
+    deinit {
+        debugPrint("CLEAR \(String(describing: self)) \(key)")
+    }
 }
 
 @propertyWrapper
-public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFStorage {
+public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFStorage, CustomDebugStringConvertible {
     private let storeDefaultValueToStorage: Bool
     public let makeDefaultContent: () -> Content
     
@@ -101,6 +109,10 @@ public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFStorage {
             self.ref.value = makeDefaultValue()
         }
         self.storeDefaultValueToStorage = storeDefaultValueToStorage
+    }
+    
+    public var debugDescription: String {
+        return "UD[\(key)] = \((ref.value ?? "nil") as Any) ?? \(makeDefaultContent())"
     }
 }
 

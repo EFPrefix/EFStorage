@@ -78,11 +78,11 @@ public extension KeychainStorable where Self: Codable {
 
 /// This class should not be copied nor should it be initialized directly;
 /// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
-public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceStorageReference {
+public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceStorageReference, CustomDebugStringConvertible {
     fileprivate let key: String
     private let keychain: Keychain
     public required init(
-        forKeyToBeHeldStrongly key: String, in storage: Keychain,
+        forKey key: String, in storage: Keychain,
         iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
     ) {
         self.key = key
@@ -106,10 +106,19 @@ public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceSt
             }
         }
     }
+    
+    public var debugDescription: String {
+        return "KY[\(key)] = \((value ?? "nil") as Any)"
+    }
+    
+    deinit {
+        debugPrint("CLEAR \(String(describing: self)) \(key)")
+    }
 }
 
 @propertyWrapper
-public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage {
+public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage, CustomDebugStringConvertible {
+    private let storeDefaultValueToStorage: Bool
     public let makeDefaultContent: () -> Content
     
     public var content: Content? {
@@ -120,7 +129,7 @@ public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage {
         get {
             if let value = ref.value { return value }
             let defaultValue = makeDefaultContent()
-            ref.value = defaultValue
+            if storeDefaultValueToStorage { ref.value = defaultValue }
             return defaultValue
         }
         set { ref.value = newValue }
@@ -136,9 +145,14 @@ public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage {
                 storeDefaultValueToStorage: Bool = false) {
         self.ref = EFStorageKeychainRef<Content>.forKey(key, in: keychain)
         self.makeDefaultContent = makeDefaultValue
-        if self.ref.value == nil {
-            self.ref.value = Content.fromKeychain(keychain, forKey: key) ?? makeDefaultValue()
+        if self.ref.value == nil, storeDefaultValueToStorage {
+            self.ref.value = makeDefaultValue()
         }
+        self.storeDefaultValueToStorage = storeDefaultValueToStorage
+    }
+    
+    public var debugDescription: String {
+        return "KY[\(key)] = \((ref.value ?? "nil") as Any) ?? \(makeDefaultContent())"
     }
 }
 

@@ -7,7 +7,8 @@ extension Bool: KeychainStorable {
         return "\(self)"
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Bool? {
-        return try? keychain.getString(key) == "true"
+        guard let string = try? keychain.getString(key) else { return nil }
+        return string == "true"
     }
 }
 
@@ -29,7 +30,12 @@ final class EFStorageTests: XCTestCase {
                           EFStorageKeychain(forKey: "isNewUser", valueIfNotPresent: false))
     var isNewUser: Bool
     
-    var storage: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
+    @AnyEFStorage(EFStorageKeychain(forKey: "paidBefore", valueIfNotPresent: false, storeDefaultValueToStorage: false)
+        + EFStorageUserDefaults(forKey: "paidBefore", valueIfNotPresent: false, storeDefaultValueToStorage: false)
+        + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", valueIfNotPresent: true))
+    var hasPaidBefore: Bool
+    
+    var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {
         // This is an example of a functional test case.
@@ -41,7 +47,12 @@ final class EFStorageTests: XCTestCase {
         _text.remove()
         XCTAssertEqual(text, EFStorageTests.defaultText)
         XCTAssertEqual(text, UserDefaults.efStorageContents.text)
-        XCTAssertEqual(storage.value, text)
+        XCTAssertEqual(storageText.value, text)
+        let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
+        hasPaidBeforeRef.value = true
+        XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
+        debugPrint(efStorages)
+        XCTAssertEqual(hasPaidBefore, true)
     }
 
     static var allTests = [

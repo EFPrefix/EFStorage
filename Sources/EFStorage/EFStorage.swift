@@ -2,8 +2,8 @@
 public protocol EFContentWrapper {
     associatedtype Content
     
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { mutating get }
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { mutating get set }
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { get }
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { get set }
 }
 
 @dynamicMemberLookup
@@ -26,6 +26,25 @@ public extension EFStorage {
         set {
             wrappedValue[keyPath: keyPath] = newValue
         }
+    }
+}
+
+@propertyWrapper
+public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
+    public var content: Content? {
+        get { return storage.content }
+        set { storage.content = newValue }
+    }
+    
+    public var wrappedValue: Content {
+        get { return storage.wrappedValue }
+        set { storage.wrappedValue = newValue }
+    }
+    
+    private var storage: Storage
+    
+    public init(_ storage: Storage)  {
+        self.storage = storage
     }
 }
 
@@ -127,7 +146,7 @@ public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWr
     var value: Content? { get set }
     
     /// A method that should only be invoked by the static constructor `forKey(_:in:)`.
-    init(forKeyToBeHeldStrongly key: String, in storage: Storage,
+    init(forKey key: String, in storage: Storage,
          iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool)
 }
 
@@ -144,23 +163,26 @@ public extension EFSingleInstanceStorageReference {
 
 import Foundation
 
-private var efStorages = [AnyHashable: NSMapTable<NSString, AnyObject>]()
+var efStorages = [String: NSMapTable<NSString, AnyObject>]()
 
 extension EFSingleInstanceStorageReference {
     public static func forKey(_ key: String, in storage: Storage) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
-            efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.weakToWeakObjects()
+            debugPrint("ALLOC \(typeIdentifier)")
+            efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.strongToWeakObjects()
         }
         if let object = efStorages[typeIdentifier]?.object(forKey: key as NSString),
             let instanceOfSelfType = object as? Self, storage == storage {
+            debugPrint("FETCH \(typeIdentifier) \(key)")
             return instanceOfSelfType
         }
         let newInstance = Self(
-            forKeyToBeHeldStrongly: key, in: storage,
+            forKey: key, in: storage,
             iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: true
         )
         efStorages[typeIdentifier]?.setObject(newInstance, forKey: key as NSString)
+        debugPrint("CREAT \(typeIdentifier) \(key)")
         return newInstance
     }
 }
