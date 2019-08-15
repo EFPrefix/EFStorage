@@ -13,11 +13,16 @@ extension Bool: KeychainStorable {
 }
 
 final class EFStorageTests: XCTestCase {
+    func testReset() {
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        try! Keychain().removeAll()
+    }
+    
     static let defaultText = "Hello, World!"
     
     @EFStorageUserDefaults(forKey: "text",
                            valueIfNotPresent: EFStorageTests.defaultText,
-                           storeDefaultValueToStorage: true)
+                           persistDefaultContent: true)
     var text: String
     
     @EFStorageUserDefaults(forKey: "wow", valueIfNotPresent: "nah")
@@ -30,26 +35,23 @@ final class EFStorageTests: XCTestCase {
                           EFStorageKeychain(forKey: "isNewUser", valueIfNotPresent: false))
     var isNewUser: Bool
     
-    @AnyEFStorage(EFStorageKeychain(forKey: "paidBefore", valueIfNotPresent: false, storeDefaultValueToStorage: false)
-        + EFStorageUserDefaults(forKey: "paidBefore", valueIfNotPresent: false, storeDefaultValueToStorage: false)
+    @AnyEFStorage(EFStorageKeychain(forKey: "paidBefore", valueIfNotPresent: false)
+        + EFStorageUserDefaults(forKey: "paidBefore", valueIfNotPresent: false)
         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", valueIfNotPresent: true))
     var hasPaidBefore: Bool
     
     var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
         XCTAssertEqual(text, EFStorageTests.defaultText)
         text = "meow"
         XCTAssertEqual(_text.wrappedValue, "meow")
-        _text.remove()
+        _text.removeContentFromUnderlyingStorage()
         XCTAssertEqual(text, EFStorageTests.defaultText)
         XCTAssertEqual(text, UserDefaults.efStorageContents.text)
-        XCTAssertEqual(storageText.value, text)
+        XCTAssertEqual(storageText.content, text)
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
-        hasPaidBeforeRef.value = true
+        hasPaidBeforeRef.content = true
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
         debugPrint(efStorages)
         XCTAssertEqual(hasPaidBefore, true)

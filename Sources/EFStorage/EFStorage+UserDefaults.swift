@@ -9,7 +9,15 @@ import Foundation
 
 // MARK: - Conformance
 
-extension UserDefaults: EFStorageWrapperBase { }
+extension UserDefaults: EFStorageWrapperBase, EFUnderlyingStorage {
+    public class func makeDefault() -> Self {
+        if let this = UserDefaults.standard as? Self {
+            return this
+        } else {
+            return Self()
+        }
+    }
+}
 
 public extension EFStorageWrapper {
     subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> where Base == UserDefaults {
@@ -24,19 +32,19 @@ public extension EFStorageWrapper {
 public extension EFStorageContentWrapper {
     subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == UserDefaults {
         get {
-            return baseWrapper.base.efStorage[dynamicMember: key].value
+            return baseWrapper.base.efStorage[dynamicMember: key].content
         }
         set {
-            baseWrapper.base.efStorage[dynamicMember: key].value = newValue
+            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
         }
     }
     
     subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == UserDefaults.Type {
         get {
-            return baseWrapper.base.efStorage[dynamicMember: key].value
+            return baseWrapper.base.efStorage[dynamicMember: key].content
         }
         set {
-            baseWrapper.base.efStorage[dynamicMember: key].value = newValue
+            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
         }
     }
 }
@@ -45,30 +53,26 @@ public extension EFStorageContentWrapper {
 
 /// This class should not be copied nor should it be initialized directly;
 /// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
-public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleInstanceStorageReference, CustomDebugStringConvertible {
-    fileprivate let key: String
-    private let userDefaults: UserDefaults
+public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleInstanceStorageReference {
     public required init(
-        forKey key: String, in storage: UserDefaults,
-        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool,
+        forKey key: String, in storage: UserDefaults
     ) {
         self.key = key
-        self.userDefaults = storage
-        self.value = Content.fromUserDefaults(userDefaults, forKey: key)
+        self.storage = storage
+        self.content = Content.fromUserDefaults(storage, forKey: key)
     }
     
-    public var value: Content? {
+    public let key: String
+    public let storage: UserDefaults
+    public var content: Content? {
         didSet {
-            if let newValue = value {
-                userDefaults.set(newValue.asUserDefaultsStorable(), forKey: key)
+            if let newValue = content {
+                storage.set(newValue.asUserDefaultsStorable(), forKey: key)
             } else {
-                userDefaults.removeObject(forKey: key)
+                storage.removeObject(forKey: key)
             }
         }
-    }
-    
-    public var debugDescription: String {
-        return "UD[\(key)] = \((value ?? "nil") as Any)"
     }
     
     deinit {
@@ -77,42 +81,33 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
 }
 
 @propertyWrapper
-public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFStorage, CustomDebugStringConvertible {
-    private let storeDefaultValueToStorage: Bool
-    public let makeDefaultContent: () -> Content
-    
-    public var content: Content? {
-        get { return ref.value }
-        set { ref.value = newValue }
-    }
+public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFSingleInstanceStorageReferenceWrapper {
+    public var _ref: EFStorageUserDefaultsRef<Content>
     public var wrappedValue: Content {
         get {
-            if let value = ref.value { return value }
-            let defaultValue = makeDefaultContent()
-            if storeDefaultValueToStorage { ref.value = defaultValue }
-            return defaultValue
+            if let content = _ref.content { return content }
+            let defaultContent = makeDefaultContent()
+            if persistDefaultContent { _ref.content = defaultContent }
+            return defaultContent
         }
-        set { ref.value = newValue }
-    }
-    public func remove() {
-        ref.value = nil
+        set { _ref.content = newValue }
     }
     
-    private let ref: EFStorageUserDefaultsRef<Content>
-    public var key: String { return ref.key }
-    public init(forKey key: String, in userDefaults: UserDefaults = .standard,
-                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> Content,
-                storeDefaultValueToStorage: Bool = false) {
-        self.ref = EFStorageUserDefaultsRef<Content>.forKey(key, in: userDefaults)
-        self.makeDefaultContent = makeDefaultValue
-        if self.ref.value == nil, storeDefaultValueToStorage {
-            self.ref.value = makeDefaultValue()
-        }
-        self.storeDefaultValueToStorage = storeDefaultValueToStorage
+    public let persistDefaultContent: Bool
+    public let makeDefaultContent: () -> Content
+    public func removeContentFromUnderlyingStorage() {
+        _ref.content = nil
     }
     
-    public var debugDescription: String {
-        return "UD[\(key)] = \((ref.value ?? "nil") as Any) ?? \(makeDefaultContent())"
+    public init(
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
+        ref: EFStorageUserDefaultsRef<Content>,
+        makeDefaultContent: @escaping () -> Content,
+        persistDefaultContent: Bool
+    ) {
+        self._ref = ref
+        self.makeDefaultContent = makeDefaultContent
+        self.persistDefaultContent = persistDefaultContent
     }
 }
 

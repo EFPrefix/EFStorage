@@ -77,38 +77,34 @@ public extension KeychainStorable where Self: Codable {
 // MARK: - Implementation
 
 /// This class should not be copied nor should it be initialized directly;
-/// use `EFStorageUserDefaultsRef.forKey<Content: UserDefaultsStorable>` instead.
-public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceStorageReference, CustomDebugStringConvertible {
-    fileprivate let key: String
-    private let keychain: Keychain
+/// use `EFStorageKeychainRef.forKey<Content: KeychainStorable>` instead.
+public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceStorageReference {
     public required init(
-        forKey key: String, in storage: Keychain,
-        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
+        forKey key: String, in storage: Keychain
     ) {
         self.key = key
-        self.keychain = storage
-        self.value = Content.fromKeychain(keychain, forKey: key)
+        self.storage = storage
+        self.content = Content.fromKeychain(storage, forKey: key)
     }
     
-    public var value: Content? {
+    public let key: String
+    public let storage: Keychain
+    public var content: Content? {
         didSet {
-            guard let newValue = value else {
-                try? keychain.remove(key)
+            guard let newValue = content else {
+                try? storage.remove(key)
                 return
             }
             switch newValue.asKeychainStorable() {
             case let string as String:
-                try? keychain.set(string, key: key)
+                try? storage.set(string, key: key)
             case let data as Data:
-                try? keychain.set(data, key: key)
+                try? storage.set(data, key: key)
             default:
                 fatalError("\(newValue) of type \(type(of: newValue)) is not storable in keychain")
             }
         }
-    }
-    
-    public var debugDescription: String {
-        return "KY[\(key)] = \((value ?? "nil") as Any)"
     }
     
     deinit {
@@ -117,46 +113,41 @@ public class EFStorageKeychainRef<Content: KeychainStorable>: EFSingleInstanceSt
 }
 
 @propertyWrapper
-public struct EFStorageKeychain<Content: KeychainStorable>: EFStorage, CustomDebugStringConvertible {
-    private let storeDefaultValueToStorage: Bool
-    public let makeDefaultContent: () -> Content
-    
-    public var content: Content? {
-        get { return ref.value }
-        set { ref.value = newValue }
-    }
+public struct EFStorageKeychain<Content: KeychainStorable>: EFSingleInstanceStorageReferenceWrapper {
+    public var _ref: EFStorageKeychainRef<Content>
     public var wrappedValue: Content {
         get {
-            if let value = ref.value { return value }
-            let defaultValue = makeDefaultContent()
-            if storeDefaultValueToStorage { ref.value = defaultValue }
-            return defaultValue
+            if let content = _ref.content { return content }
+            let defaultContent = makeDefaultContent()
+            if persistDefaultContent { _ref.content = defaultContent }
+            return defaultContent
         }
-        set { ref.value = newValue }
-    }
-    public func remove() {
-        ref.value = nil
+        set { _ref.content = newValue }
     }
     
-    private let ref: EFStorageKeychainRef<Content>
-    public var key: String { return ref.key }
-    public init(forKey key: String, in keychain: Keychain = Keychain(),
-                valueIfNotPresent makeDefaultValue: @escaping @autoclosure () -> Content,
-                storeDefaultValueToStorage: Bool = false) {
-        self.ref = EFStorageKeychainRef<Content>.forKey(key, in: keychain)
-        self.makeDefaultContent = makeDefaultValue
-        if self.ref.value == nil, storeDefaultValueToStorage {
-            self.ref.value = makeDefaultValue()
-        }
-        self.storeDefaultValueToStorage = storeDefaultValueToStorage
+    public let persistDefaultContent: Bool
+    public let makeDefaultContent: () -> Content
+    public func removeContentFromUnderlyingStorage() {
+        _ref.content = nil
     }
     
-    public var debugDescription: String {
-        return "KY[\(key)] = \((ref.value ?? "nil") as Any) ?? \(makeDefaultContent())"
+    public init(
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
+        ref: EFStorageKeychainRef<Content>,
+        makeDefaultContent: @escaping () -> Content,
+        persistDefaultContent: Bool
+    ) {
+        self._ref = ref
+        self.makeDefaultContent = makeDefaultContent
+        self.persistDefaultContent = persistDefaultContent
     }
 }
 
-extension Keychain: Equatable {
+extension Keychain: EFUnderlyingStorage {
+    public class func makeDefault() -> Self {
+        return Self()
+    }
+    
     public static func == (lhs: Keychain, rhs: Keychain) -> Bool {
         guard lhs.itemClass == rhs.itemClass else { return false }
         switch lhs.itemClass {

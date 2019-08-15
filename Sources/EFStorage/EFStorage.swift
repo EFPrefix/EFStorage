@@ -2,23 +2,18 @@
 public protocol EFContentWrapper {
     associatedtype Content
     
+    /// Non-optional value for property wrappers and dynamic member lookup based on `content`.
+    var wrappedValue: Content { get set }
+    
     subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { get }
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { get set }
 }
 
-@dynamicMemberLookup
-public protocol EFStorage: EFContentWrapper {
-    /// Actual content stored in storage
-    var content: Content? { get set }
-    /// Non-optional value for property wrappers and dynamic member lookup based on `content`.
-    var wrappedValue: Content { get set }
-}
-
-public extension EFStorage {
+public extension EFContentWrapper {
     subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value {
         return wrappedValue[keyPath: keyPath]
     }
-
+    
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value {
         get {
             return wrappedValue[keyPath: keyPath]
@@ -28,6 +23,31 @@ public extension EFStorage {
         }
     }
 }
+
+@dynamicMemberLookup
+public protocol EFOptionalContentWrapper {
+    associatedtype Content
+    
+    /// Actual content stored in storage
+    var content: Content? { get set }
+    
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? { get }
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? { get set }
+}
+
+public extension EFOptionalContentWrapper {
+    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? {
+        get { return content?[keyPath: keyPath] }
+    }
+    
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? {
+        get { return content?[keyPath: keyPath] }
+        set { newValue.map { content?[keyPath: keyPath] = $0 } }
+    }
+}
+
+@dynamicMemberLookup
+public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 
 @propertyWrapper
 public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
@@ -51,7 +71,7 @@ public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.
 public extension EFStorage {
     static func +<AnotherStorage: EFStorage>(lhs: Self, rhs: AnotherStorage)
         -> EFStorageComposition<Self, AnotherStorage, Content> {
-        return EFStorageComposition(lhs, rhs)
+            return EFStorageComposition(lhs, rhs)
     }
 }
 
@@ -130,35 +150,69 @@ public extension EFStorageWrapperBase {
 
 // MARK: - Single Instance Container
 
-@dynamicMemberLookup
-public protocol EFOptionalContentWrapper {
-    associatedtype Content
+public protocol EFSingleInstanceStorageReferenceWrapper: EFStorage, CustomDebugStringConvertible {
+    associatedtype Ref: EFSingleInstanceStorageReference where Content == Ref.Content
+    var key: String { get }
+    var _ref: Ref { get set }
     
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? { get }
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? { get set }
+    var persistDefaultContent: Bool { get }
+    var makeDefaultContent: () -> Content { get }
+    func removeContentFromUnderlyingStorage()
+    
+    init(
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
+        ref: Ref, makeDefaultContent: @escaping () -> Content, persistDefaultContent: Bool
+    )
+}
+
+public extension EFSingleInstanceStorageReferenceWrapper {
+    var key: String {
+        return _ref.key
+    }
+    
+    var content: Content? {
+        get { return _ref.content }
+        set { _ref.content = newValue }
+    }
+    
+    var debugDescription: String {
+        let storageName = String(describing: Ref.Storage.self)
+        return "\(storageName)[\(key)] : \(content ?? makeDefaultContent())"
+    }
+    
+    init(
+        forKey key: String, in storage: Ref.Storage = Ref.Storage.makeDefault(),
+        valueIfNotPresent makeDefaultContent: @escaping @autoclosure () -> Content,
+        persistDefaultContent: Bool = false
+    ) {
+        self.init(
+            iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: true,
+            ref: Ref.forKey(key, in: storage),
+            makeDefaultContent: makeDefaultContent,
+            persistDefaultContent: persistDefaultContent
+        )
+        if _ref.content == nil, persistDefaultContent {
+            _ref.content = makeDefaultContent()
+        }
+    }
+}
+
+public protocol EFUnderlyingStorage: Equatable {
+    static func makeDefault() -> Self
 }
 
 @dynamicMemberLookup
-public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWrapper {
-    associatedtype Storage: Equatable
-    associatedtype Content
+public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWrapper, CustomDebugStringConvertible {
+    associatedtype Storage: EFUnderlyingStorage
     
-    var value: Content? { get set }
+    var key: String { get }
+    var storage: Storage { get }
     
     /// A method that should only be invoked by the static constructor `forKey(_:in:)`.
-    init(forKey key: String, in storage: Storage,
-         iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool)
-}
-
-public extension EFSingleInstanceStorageReference {
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value? {
-        get { return value?[keyPath: keyPath] }
-    }
-    
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? {
-        get { return value?[keyPath: keyPath] }
-        set { newValue.map { value?[keyPath: keyPath] = $0 } }
-    }
+    init(
+        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
+        forKey key: String, in storage: Storage
+    )
 }
 
 import Foundation
@@ -166,6 +220,11 @@ import Foundation
 var efStorages = [String: NSMapTable<NSString, AnyObject>]()
 
 extension EFSingleInstanceStorageReference {
+    public var debugDescription: String {
+        let storageName = String(describing: Storage.self)
+        return "\(storageName)[\(key)] : \(content.debugDescription)"
+    }
+    
     public static func forKey(_ key: String, in storage: Storage) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
@@ -178,8 +237,8 @@ extension EFSingleInstanceStorageReference {
             return instanceOfSelfType
         }
         let newInstance = Self(
-            forKey: key, in: storage,
-            iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: true
+            iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: true,
+            forKey: key, in: storage
         )
         efStorages[typeIdentifier]?.setObject(newInstance, forKey: key as NSString)
         debugPrint("CREAT \(typeIdentifier) \(key)")
