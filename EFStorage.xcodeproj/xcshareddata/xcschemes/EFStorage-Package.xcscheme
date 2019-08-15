@@ -14,9 +14,37 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFStorage::EFStorage"
-               BuildableName = "EFStorage.framework"
-               BlueprintName = "EFStorage"
+               BlueprintIdentifier = "EFStorage::EFStorageKeychain"
+               BuildableName = "EFStorageKeychain.framework"
+               BlueprintName = "EFStorageKeychain"
+               ReferencedContainer = "container:EFStorage.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EFStorage::EFStorageUserDefaults"
+               BuildableName = "EFStorageUserDefaults.framework"
+               BlueprintName = "EFStorageUserDefaults"
+               ReferencedContainer = "container:EFStorage.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EFStorage::EFStorageCore"
+               BuildableName = "EFStorageCore.framework"
+               BlueprintName = "EFStorageCore"
                ReferencedContainer = "container:EFStorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

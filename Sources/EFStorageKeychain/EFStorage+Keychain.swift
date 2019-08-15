@@ -7,6 +7,7 @@
 
 import KeychainAccess
 import Foundation
+import EFStorageCore
 
 // MARK: - Value Protocol
 

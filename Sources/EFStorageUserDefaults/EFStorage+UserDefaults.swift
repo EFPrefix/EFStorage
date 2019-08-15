@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import EFStorageCore
 
 // MARK: - Conformance
 
@@ -19,6 +20,7 @@ extension UserDefaults: EFStorageWrapperBase, EFUnderlyingStorage {
     }
 }
 
+/*
 public extension EFStorageWrapper {
     subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> EFStorageUserDefaultsRef<T> where Base == UserDefaults {
         return EFStorageUserDefaultsRef<T>.forKey(key, in: base)
@@ -48,6 +50,7 @@ public extension EFStorageContentWrapper {
         }
     }
 }
+*/
 
 // MARK: - Implementation
 

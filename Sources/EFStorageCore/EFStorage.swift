@@ -108,7 +108,6 @@ public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
 
 // MARK: - Direct Lookup
 
-@dynamicMemberLookup
 public struct EFStorageWrapper<Base> {
     public let base: Base
     fileprivate init(_ base: Base) {
@@ -130,7 +129,6 @@ public extension EFStorageWrapperBase {
 
 // MARK: - Direct Value Lookup
 
-@dynamicMemberLookup
 public struct EFStorageContentWrapper<Base> {
     public let baseWrapper: EFStorageWrapper<Base>
     fileprivate init(_ baseWrapper: EFStorageWrapper<Base>) {
@@ -182,7 +180,7 @@ public extension EFSingleInstanceStorageReferenceWrapper {
     
     init(
         forKey key: String, in storage: Ref.Storage = Ref.Storage.makeDefault(),
-        valueIfNotPresent makeDefaultContent: @escaping @autoclosure () -> Content,
+        defaultsTo makeDefaultContent: @escaping @autoclosure () -> Content,
         persistDefaultContent: Bool = false
     ) {
         self.init(
