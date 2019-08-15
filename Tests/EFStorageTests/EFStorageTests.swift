@@ -1,5 +1,7 @@
 import XCTest
-@testable import EFStorage
+@testable import EFStorageCore
+@testable import EFStorageKeychain
+@testable import EFStorageUserDefaults
 import KeychainAccess
 
 extension Bool: KeychainStorable {
@@ -41,7 +43,7 @@ final class EFStorageTests: XCTestCase {
                                 persistDefaultContent: true))
     var hasPaidBefore: Bool
     
-    var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
+//    var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {
         XCTAssertEqual(text, EFStorageTests.defaultText)
@@ -50,7 +52,7 @@ final class EFStorageTests: XCTestCase {
         _text.removeContentFromUnderlyingStorage()
         XCTAssertEqual(text, EFStorageTests.defaultText)
 //        XCTAssertEqual(text, UserDefaults.efStorageContents.text)
-        XCTAssertEqual(storageText.content, text)
+//        XCTAssertEqual(storageText.content, text)
 //        let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
 //        hasPaidBeforeRef.content = true
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
