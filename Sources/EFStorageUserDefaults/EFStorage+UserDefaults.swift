@@ -84,3 +84,29 @@ public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFSingleInst
         self.persistDefaultContent = persistDefaultContent
     }
 }
+
+// MARK: - Dynamic Member Lookup
+
+public extension EFUnderlyingStorageWrapper {
+    subscript<T: UserDefaultsStorable>(
+        dynamicMember key: String
+    ) -> T? where Base == UserDefaults {
+        get {
+            return EFStorageUserDefaultsRef.forKey(key, in: base).content
+        }
+        set {
+            EFStorageUserDefaultsRef.forKey(key, in: base).content = newValue
+        }
+    }
+    
+    subscript<T: UserDefaultsStorable>(
+        dynamicMember key: String
+    ) -> T? where Base == UserDefaults.Type {
+        get {
+            return EFStorageUserDefaultsRef.forKey(key, in: UserDefaults.makeDefault()).content
+        }
+        set {
+            EFStorageUserDefaultsRef.forKey(key, in: UserDefaults.makeDefault()).content = newValue
+        }
+    }
+}

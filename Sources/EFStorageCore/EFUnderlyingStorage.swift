@@ -18,7 +18,7 @@ public extension EFUnderlyingStorage {
 }
 
 @dynamicMemberLookup
-public struct EFUnderlyingStorageWrapper<Base> {
+public final class EFUnderlyingStorageWrapper<Base> {
     public let base: Base
     fileprivate init(_ base: Base) {
         self.base = base
@@ -48,42 +48,3 @@ public extension EFUnderlyingStorageWrapper {
         return Ref.Storage.refForKey(key, in: Ref.Storage.makeDefault())
     }
 }
-
-/*
-public struct EFUnderlyingStorageContentWrapper<Base> {
-    public let baseWrapper: EFUnderlyingStorageWrapper<Base>
-    fileprivate init(_ baseWrapper: EFUnderlyingStorageWrapper<Base>) {
-        self.baseWrapper = baseWrapper
-    }
-}
-
-public extension EFUnderlyingStorage {
-    var efStorageContents: EFUnderlyingStorageContentWrapper<Self> {
-        return EFUnderlyingStorageContentWrapper(efStorage)
-    }
-    
-    static var efStorageContents: EFUnderlyingStorageContentWrapper<Self.Type> {
-        return EFUnderlyingStorageContentWrapper(efStorage)
-    }
-}
-
-public extension EFUnderlyingStorageContentWrapper {
-    subscript<T>(dynamicMember key: String) -> T? where Base == EFUnderlyingStorage {
-        get {
-            return baseWrapper.base.efStorage[dynamicMember: key].content
-        }
-        set {
-            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
-        }
-    }
-    
-    subscript<T>(dynamicMember key: String) -> T? where Base == some EFUnderlyingStorage.Type {
-        get {
-            return baseWrapper.base.efStorage[dynamicMember: key].content
-        }
-        set {
-            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
-        }
-    }
-}
-*/

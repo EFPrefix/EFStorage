@@ -35,6 +35,9 @@ final class ExampleTests: XCTestCase {
         "FETCH EFStorageUserDefaultsRef<String> catSound"
         meow
         meow
+        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        喵
         
         """)
     }

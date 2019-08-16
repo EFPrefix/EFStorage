@@ -20,3 +20,5 @@ let explicitReference = EFStorageUserDefaultsRef<String>.forKey("catSound")
 
 print(explicitReference.content!)
 print(UserDefaults.standard.string(forKey: "catSound")!)
+UserDefaults.efStorage.catSound = "喵"
+print(UserDefaults.standard.efStorage.catSound! as String)

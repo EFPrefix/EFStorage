@@ -98,3 +98,29 @@ public struct EFStorageKeychainAccess<Content: KeychainAccessStorable>: EFSingle
         self.persistDefaultContent = persistDefaultContent
     }
 }
+
+// MARK: - Dynamic Member Lookup
+
+public extension EFUnderlyingStorageWrapper {
+    subscript<T: KeychainAccessStorable>(
+        dynamicMember key: String
+    ) -> T? where Base == Keychain {
+        get {
+            return EFStorageKeychainAccessRef.forKey(key, in: base).content
+        }
+        set {
+            EFStorageKeychainAccessRef.forKey(key, in: base).content = newValue
+        }
+    }
+    
+    subscript<T: KeychainAccessStorable>(
+        dynamicMember key: String
+    ) -> T? where Base == Keychain.Type {
+        get {
+            return EFStorageKeychainAccessRef.forKey(key, in: Keychain.makeDefault()).content
+        }
+        set {
+            EFStorageKeychainAccessRef.forKey(key, in: Keychain.makeDefault()).content = newValue
+        }
+    }
+}
