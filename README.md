@@ -1,5 +1,7 @@
 # EFStorage
 
+An easy way to store anything anywhere.
+
 ## Usage
 
 ### As `@propertyWrapper`
