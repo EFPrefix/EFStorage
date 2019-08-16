@@ -8,9 +8,7 @@
 import Foundation
 import EFStorageCore
 
-// MARK: - Conformance
-
-extension UserDefaults: EFStorageWrapperBase, EFUnderlyingStorage {
+extension UserDefaults: EFUnderlyingStorage {
     public class func makeDefault() -> Self {
         if let this = UserDefaults.standard as? Self {
             return this

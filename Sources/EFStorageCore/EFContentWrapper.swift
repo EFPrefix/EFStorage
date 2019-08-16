@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  EFContentWrapper.swift
+//  EFStorage
 //
 //  Created by ApolloZhu on 2019/8/16.
 //
@@ -11,7 +11,7 @@ import Foundation
 public protocol EFContentWrapper {
     associatedtype Content
     
-    /// Non-optional value for property wrappers and dynamic member lookup based on `content`.
+    /// Non-optional value for property wrappers and dynamic member lookup.
     var wrappedValue: Content { get set }
     
     subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { get }
