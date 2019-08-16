@@ -33,20 +33,43 @@ which can be simplified as
 UserDefaults.efStorage.someKey as String?
 ```
 
-and assign through
+and assign the content through
 
 ```swift
 UserDefaults.efStorage.someKey = "OwO"
 ```
 
+### Non-default Container
+
 Should you need to use a different instance, you can do that too
 
 ```swift
 @EFStorageUserDefaults(forKey: "anotherKey", defaultsTo: true, 
-                       in: UserDefaults.standard, persistDefaultContent: true)
+                       in: UserDefaults.standard, 
+                       persistDefaultContent: true)
 var inAnotherStorage: Bool
 
-UserDefaults.standard.efStorage.anotherKey // either reference or content
+UserDefaults.standard.efStorage.anotherKey // either content or the reference to it
 
 EFStorageUserDefaultsRef<Bool>.forKey("anotherKey", in: UserDefaults.standard)
+```
+
+### Supported Containers
+
+As of now, we offer support for `UserDefaults` and `Keychain` (provided by `KeychainAccess`). 
+You can combine them to form a new type of container, or to support previous keys.
+
+```swift
+@EFStorageComposition(
+    EFStorageUserDefaults(forKey: "isNewUser", defaultsTo: false),
+    EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
+var isNewUser: Bool
+
+@AnyEFStorage(
+    EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
+    + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
+    + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", 
+                            defaultsTo: true,
+                            persistDefaultContent: true))
+var hasPaidBefore: Bool
 ```
