@@ -43,6 +43,16 @@ final class EFStorageTests: XCTestCase {
                                 persistDefaultContent: true))
     var hasPaidBefore: Bool
     
+    
+    @EFStorageComposition(
+        EFStorageUserDefaults<String>(forKey: "sameKey", defaultsTo: "Nah"),
+        EFStorageMigrate(from: EFStorageUserDefaults<Int>(forKey: "sameKey",
+                                                          defaultsTo: 1551,
+                                                          persistDefaultContent: true),
+                         by: { number in String(number) })
+    )
+    var mixedType: String
+    
     var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
     func testExample() {
@@ -51,13 +61,19 @@ final class EFStorageTests: XCTestCase {
         XCTAssertEqual(_text.wrappedValue, "meow")
         _text.removeContentFromUnderlyingStorage()
         XCTAssertEqual(text, EFStorageTests.defaultText)
-        // XCTAssertEqual(text, UserDefaults.efStorageContents.text)
+        XCTAssertEqual(text, UserDefaults.efStorage.text)
         XCTAssertEqual(storageText.content, text)
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
         XCTAssertEqual(hasPaidBeforeRef.content, true)
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
         debugPrint(efStorages)
         XCTAssertEqual(hasPaidBefore, true)
+        XCTAssertEqual(mixedType, "1551")
+        mixedType = "Brand New"
+        XCTAssertTrue(UserDefaults.standard.object(forKey: "sameKey") is String, "IS NOT STRING")
+        XCTAssertFalse(UserDefaults.standard.object(forKey: "sameKey") is Int, "IS NUMBER")
+        XCTAssertEqual(mixedType, "Brand New")
+        XCTAssertEqual(UserDefaults.efStorage.sameKey, "Brand New")
     }
 
     static var allTests = [

@@ -73,3 +73,20 @@ var isNewUser: Bool
                             persistDefaultContent: true))
 var hasPaidBefore: Bool
 ```
+
+To migrate from another data type, you can use a migrator
+
+```swift
+@EFStorageComposition(
+    EFStorageUserDefaults<String>(forKey: "sameKey", 
+                                  defaultsTo: "Nah"),
+    EFStorageMigrate(
+        from: EFStorageUserDefaults<Int>(
+            forKey: "sameKey", 
+            defaultsTo: 1551, 
+            persistDefaultContent: true),
+        by: { number in String(number) }
+    )
+)
+var mixedType: String
+```

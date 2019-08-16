@@ -64,3 +64,26 @@ public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
         self.b = b
     }
 }
+
+/// Only for migration purposes. Setting the content/wrappedValue does nothing.
+public struct EFStorageMigrate<A: EFStorage, OldContent, Content>
+: EFStorage where A.Content == OldContent {
+    public typealias Migrator = (OldContent) -> Content
+    
+    public var wrappedValue: Content {
+        get { return content ?? migrator(a.wrappedValue) }
+        set { }
+    }
+    
+    public var content: Content? {
+        get { return a.content.map(migrator) }
+        set { }
+    }
+    
+    private var a: A
+    private var migrator: Migrator
+    public init(from a: A, by migrator: @escaping Migrator) {
+        self.a = a
+        self.migrator = migrator
+    }
+}
