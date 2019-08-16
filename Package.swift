@@ -9,13 +9,13 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "EFStorage",
-            targets: ["EFStorageCore", "EFStorageKeychain", "EFStorageUserDefaults"]),
+            targets: ["EFStorageCore", "EFStorageKeychainAccess", "EFStorageUserDefaults"]),
         .library(
             name: "EFStorageCore",
             targets: ["EFStorageCore"]),
         .library(
-            name: "EFStorageKeychain",
-            targets: ["EFStorageKeychain"]),
+            name: "EFStorageKeychainAccess",
+            targets: ["EFStorageKeychainAccess"]),
         .library(
             name: "EFStorageUserDefaults",
             targets: ["EFStorageUserDefaults"]),
@@ -32,13 +32,13 @@ let package = Package(
             name: "EFStorageCore",
             dependencies: []),
         .target(
-            name: "EFStorageKeychain",
+            name: "EFStorageKeychainAccess",
             dependencies: ["EFStorageCore", "KeychainAccess"]),
         .target(
             name: "EFStorageUserDefaults",
             dependencies: ["EFStorageCore"]),
         .testTarget(
             name: "EFStorageTests",
-            dependencies: ["EFStorageCore", "EFStorageKeychain", "EFStorageUserDefaults"]),
+            dependencies: ["EFStorageCore", "EFStorageKeychainAccess", "EFStorageUserDefaults"]),
     ]
 )

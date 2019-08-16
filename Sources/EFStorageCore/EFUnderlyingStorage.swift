@@ -7,13 +7,9 @@
 
 public protocol EFUnderlyingStorage: Equatable {
     static func makeDefault() -> Self
-    
-    static func refForKey<T, Ref: EFSingleInstanceStorageReference>(
-        _ key: String, in storage: Ref.Storage
-    ) -> Ref where T == Ref.Content, Self == Ref.Storage
 }
 
-extension EFUnderlyingStorage {
+public extension EFUnderlyingStorage {
     static func refForKey<T, Ref: EFSingleInstanceStorageReference>(
         _ key: String, in storage: Ref.Storage
     ) -> Ref where T == Ref.Content, Self == Ref.Storage {
@@ -53,6 +49,7 @@ public extension EFUnderlyingStorageWrapper {
     }
 }
 
+/*
 public struct EFUnderlyingStorageContentWrapper<Base> {
     public let baseWrapper: EFUnderlyingStorageWrapper<Base>
     fileprivate init(_ baseWrapper: EFUnderlyingStorageWrapper<Base>) {
@@ -70,11 +67,8 @@ public extension EFUnderlyingStorage {
     }
 }
 
-/*
 public extension EFUnderlyingStorageContentWrapper {
-    subscript<T>(
-        dynamicMember key: String
-    ) -> T? where Base: EFUnderlyingStorage {
+    subscript<T>(dynamicMember key: String) -> T? where Base == EFUnderlyingStorage {
         get {
             return baseWrapper.base.efStorage[dynamicMember: key].content
         }
@@ -82,8 +76,8 @@ public extension EFUnderlyingStorageContentWrapper {
             baseWrapper.base.efStorage[dynamicMember: key].content = newValue
         }
     }
-
-    subscript<T>(dynamicMember key: String) -> T? where Base == EFUnderlyingStorage.Type {
+    
+    subscript<T>(dynamicMember key: String) -> T? where Base == some EFUnderlyingStorage.Type {
         get {
             return baseWrapper.base.efStorage[dynamicMember: key].content
         }

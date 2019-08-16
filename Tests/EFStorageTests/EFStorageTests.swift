@@ -1,11 +1,11 @@
 import XCTest
 @testable import EFStorageCore
-@testable import EFStorageKeychain
+@testable import EFStorageKeychainAccess
 @testable import EFStorageUserDefaults
 import KeychainAccess
 
-extension Bool: KeychainStorable {
-    public func asKeychainStorable() -> KeychainStorable! {
+extension Bool: KeychainAccessStorable {
+    public func asKeychainStorable() -> KeychainAccessStorable! {
         return "\(self)"
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Bool? {
@@ -30,14 +30,14 @@ final class EFStorageTests: XCTestCase {
     @EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
     var nsString: NSString
     
-    @EFStorageKeychain(forKey: "password", defaultsTo: "")
+    @EFStorageKeychainAccess(forKey: "password", defaultsTo: "")
     var password: String
     
     @EFStorageComposition(EFStorageUserDefaults(forKey: "isNewUser", defaultsTo: false),
-                          EFStorageKeychain(forKey: "isNewUser", defaultsTo: false))
+                          EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
     var isNewUser: Bool
     
-    @AnyEFStorage(EFStorageKeychain(forKey: "paidBefore", defaultsTo: false)
+    @AnyEFStorage(EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", defaultsTo: true,
                                 persistDefaultContent: true))
@@ -51,7 +51,7 @@ final class EFStorageTests: XCTestCase {
         XCTAssertEqual(_text.wrappedValue, "meow")
         _text.removeContentFromUnderlyingStorage()
         XCTAssertEqual(text, EFStorageTests.defaultText)
-//        XCTAssertEqual(text, UserDefaults.efStorageContents.text)
+        // XCTAssertEqual(text, UserDefaults.efStorageContents.text)
         XCTAssertEqual(storageText.content, text)
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
         XCTAssertEqual(hasPaidBeforeRef.content, true)
