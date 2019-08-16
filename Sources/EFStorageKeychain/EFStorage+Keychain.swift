@@ -133,12 +133,11 @@ public struct EFStorageKeychain<Content: KeychainStorable>: EFSingleInstanceStor
     }
     
     public init(
-        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
-        ref: EFStorageKeychainRef<Content>,
+        __ref: EFStorageKeychainRef<Content>,
         makeDefaultContent: @escaping () -> Content,
         persistDefaultContent: Bool
     ) {
-        self._ref = ref
+        self._ref = __ref
         self.makeDefaultContent = makeDefaultContent
         self.persistDefaultContent = persistDefaultContent
     }

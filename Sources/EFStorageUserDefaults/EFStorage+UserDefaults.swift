@@ -26,42 +26,6 @@ public protocol UserDefaultsStorable {
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self?
 }
 
-/*
-public extension EFStorageWrapper {
-    subscript<T: UserDefaultsStorable, Ref: EFSingleInstanceStorageReference>(
-        dynamicMember key: String
-    ) -> Ref<T> where Base == EFStorageWrapperBase {
-        return Ref<T>.forKey(key, in: base)
-    }
-    
-    subscript<T: UserDefaultsStorable, Ref: EFSingleInstanceStorageReference>(
-        dynamicMember key: String
-    ) -> Ref<T> where Base == EFStorageWrapperBase.Type {
-        return Ref<T>.forKey(key, in: Base.makeDefault())
-    }
-}
-
-public extension EFStorageContentWrapper {
-    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == EFStorageWrapperBase {
-        get {
-            return baseWrapper.base.efStorage[dynamicMember: key].content
-        }
-        set {
-            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
-        }
-    }
-    
-    subscript<T: UserDefaultsStorable>(dynamicMember key: String) -> T? where Base == EFStorageWrapperBase.Type {
-        get {
-            return baseWrapper.base.efStorage[dynamicMember: key].content
-        }
-        set {
-            baseWrapper.base.efStorage[dynamicMember: key].content = newValue
-        }
-    }
-}
- */
-
 // MARK: - Implementation
 
 /// This class should not be copied nor should it be initialized directly;
@@ -113,12 +77,11 @@ public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFSingleInst
     }
     
     public init(
-        iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself ignored: Bool,
-        ref: EFStorageUserDefaultsRef<Content>,
+        __ref: EFStorageUserDefaultsRef<Content>,
         makeDefaultContent: @escaping () -> Content,
         persistDefaultContent: Bool
     ) {
-        self._ref = ref
+        self._ref = __ref
         self.makeDefaultContent = makeDefaultContent
         self.persistDefaultContent = persistDefaultContent
     }
