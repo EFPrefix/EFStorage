@@ -9,6 +9,12 @@ import Foundation
 import EFStorageCore
 
 extension UserDefaults: EFUnderlyingStorage {
+    public static func refForKey<T, Ref: EFSingleInstanceStorageReference>(
+        _ key: String, in storage: Ref.Storage
+    ) -> Ref where Ref.Storage: UserDefaults, T == Ref.Content {
+        return Ref.forKey(key, in: storage)
+    }
+    
     public class func makeDefault() -> Self {
         if let this = UserDefaults.standard as? Self {
             return this
