@@ -30,6 +30,11 @@ final class ExampleTests: XCTestCase {
         "ALLOC EFStorageUserDefaultsRef<String>"
         "CREAT EFStorageUserDefaultsRef<String> catSound"
         nyan
+        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        nyan
+        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        meow
+        meow
         
         """)
     }

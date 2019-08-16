@@ -41,7 +41,10 @@ extension Date: AsIsUserDefaultsStorable { }
 
 extension Float: AsIsUserDefaultsStorable { }
 extension Double: AsIsUserDefaultsStorable { }
+#if canImport(CoreGraphics)
+import CoreGraphics
 extension CGFloat: AsIsUserDefaultsStorable { }
+#endif
 
 extension Int: AsIsUserDefaultsStorable { }
 extension Int8: AsIsUserDefaultsStorable { }

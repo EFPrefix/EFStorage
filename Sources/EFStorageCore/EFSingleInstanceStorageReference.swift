@@ -29,7 +29,7 @@ extension EFSingleInstanceStorageReference {
         return "\(storageName)[\(key)] : \(content.debugDescription)"
     }
     
-    public static func forKey(_ key: String, in storage: Storage) -> Self {
+    public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
             debugPrint("ALLOC \(typeIdentifier)")
