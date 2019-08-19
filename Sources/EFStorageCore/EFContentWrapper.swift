@@ -20,7 +20,7 @@ public protocol EFContentWrapper {
 
 public extension EFContentWrapper where Content: NSString {
     var string: String {
-        mutating get {
+        get {
             return wrappedValue as String
         }
         set {
