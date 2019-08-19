@@ -67,7 +67,7 @@ public class EFStorageKeychainAccessRef<Content: KeychainAccessStorable>: EFSing
     }
     
     deinit {
-        debugPrint("CLEAR \(String(describing: self)) \(key)")
+        _efStorageLog("CLEAR \(String(describing: self)) \(key)")
     }
 }
 

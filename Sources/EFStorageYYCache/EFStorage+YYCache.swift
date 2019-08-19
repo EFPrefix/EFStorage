@@ -46,7 +46,7 @@ public class EFStorageYYCacheRef<Content: YYCacheStorable>
     }
     
     deinit {
-        debugPrint("CLEAR \(String(describing: self)) \(key)")
+        _efStorageLog("CLEAR \(String(describing: self)) \(key)")
     }
 }
 
