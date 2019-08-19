@@ -13,7 +13,7 @@ import EFStorageCore
 
 extension YYCache: EFUnderlyingStorage {
     public class func makeDefault() -> Self {
-        return Self(name: Bundle.main.bundleIdentifier ?? "EFStorage")!
+        return self.init(name: Bundle.main.bundleIdentifier ?? "EFStorage")!
     }
 }
 
@@ -50,7 +50,6 @@ public class EFStorageYYCacheRef<Content: YYCacheStorable>
     }
 }
 
-@propertyWrapper
 public struct EFStorageYYCache<Content: YYCacheStorable>: EFSingleInstanceStorageReferenceWrapper {
     public var _ref: EFStorageYYCacheRef<Content>
     public var wrappedValue: Content {

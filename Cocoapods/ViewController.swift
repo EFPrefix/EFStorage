@@ -7,16 +7,17 @@
 //
 
 import UIKit
+
 import EFStorage
 
-extension UIImage: YYCacheStorable { }
-
 class ViewController: UIViewController {
-    @EFStorageYYCache(forKey: "image", defaultsTo: UIImage(systemName: "hare") ?? UIImage())
-    var image: UIImage
+    
+    let mobile = EFStorageUserDefaultsRef<String>.forKey("mobile")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        print(mobile.content ?? "NO PHONE NUMBER")
+        
     }
 }

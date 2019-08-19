@@ -8,7 +8,6 @@
 @dynamicMemberLookup
 public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 
-@propertyWrapper
 public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
     public var content: Content? {
         get { return storage.content }
@@ -34,7 +33,6 @@ public extension EFStorage {
     }
 }
 
-@propertyWrapper
 public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
 : EFStorage where Content == A.Content, Content == B.Content {
     public var wrappedValue: Content {

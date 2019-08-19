@@ -13,7 +13,7 @@ import EFStorageCore
 
 extension Keychain: EFUnderlyingStorage {
     public class func makeDefault() -> Self {
-        return Self()
+        return self.init()
     }
     
     public static func == (lhs: Keychain, rhs: Keychain) -> Bool {
@@ -71,7 +71,6 @@ public class EFStorageKeychainAccessRef<Content: KeychainAccessStorable>: EFSing
     }
 }
 
-@propertyWrapper
 public struct EFStorageKeychainAccess<Content: KeychainAccessStorable>: EFSingleInstanceStorageReferenceWrapper {
     public var _ref: EFStorageKeychainAccessRef<Content>
     public var wrappedValue: Content {

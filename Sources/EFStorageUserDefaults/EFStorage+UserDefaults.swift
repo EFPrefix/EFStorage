@@ -12,11 +12,7 @@ import EFStorageCore
 
 extension UserDefaults: EFUnderlyingStorage {
     public class func makeDefault() -> Self {
-        if let this = UserDefaults.standard as? Self {
-            return this
-        } else {
-            return Self()
-        }
+        return self.init()
     }
 }
 
@@ -57,7 +53,6 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
     }
 }
 
-@propertyWrapper
 public struct EFStorageUserDefaults<Content: UserDefaultsStorable>: EFSingleInstanceStorageReferenceWrapper {
     public var _ref: EFStorageUserDefaultsRef<Content>
     public var wrappedValue: Content {

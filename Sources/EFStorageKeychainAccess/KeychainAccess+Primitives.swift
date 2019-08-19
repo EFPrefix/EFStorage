@@ -12,7 +12,7 @@ extension String: KeychainAccessStorable {
     public func asKeychainStorable() -> KeychainAccessStorable! {
         return self
     }
-    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {
+    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> String? {
         return try? keychain.getString(key)
     }
 }
@@ -21,7 +21,7 @@ extension Data: KeychainAccessStorable {
     public func asKeychainStorable() -> KeychainAccessStorable! {
         return self
     }
-    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {
+    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Data? {
         return try? keychain.getData(key)
     }
 }

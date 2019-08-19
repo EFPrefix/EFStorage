@@ -7,30 +7,15 @@
 
 import Foundation
 
-@dynamicMemberLookup
+#if swift(>=5.1)
+#error("Please update EFStorage to newest version for @propertyWrapper and more.")
+#endif
+
 public protocol EFContentWrapper {
     associatedtype Content
     
     /// Non-optional value for property wrappers and dynamic member lookup.
     var wrappedValue: Content { get set }
-    
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value { get }
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value { get set }
-}
-
-public extension EFContentWrapper {
-    subscript<Value>(dynamicMember keyPath: KeyPath<Content, Value>) -> Value {
-        return wrappedValue[keyPath: keyPath]
-    }
-    
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value {
-        get {
-            return wrappedValue[keyPath: keyPath]
-        }
-        set {
-            wrappedValue[keyPath: keyPath] = newValue
-        }
-    }
 }
 
 public extension EFContentWrapper where Content: NSString {

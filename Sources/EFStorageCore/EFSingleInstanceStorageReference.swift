@@ -5,7 +5,6 @@
 //  Created by ApolloZhu on 2019/8/16.
 //
 
-@dynamicMemberLookup
 public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWrapper, CustomDebugStringConvertible {
     associatedtype Storage: EFUnderlyingStorage
     
