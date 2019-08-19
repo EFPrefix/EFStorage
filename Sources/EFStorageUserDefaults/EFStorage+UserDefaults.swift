@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(EFStorageCore)
 import EFStorageCore
+#endif
 
 extension UserDefaults: EFUnderlyingStorage {
     public class func makeDefault() -> Self {

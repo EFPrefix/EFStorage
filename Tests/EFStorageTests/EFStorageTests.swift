@@ -1,7 +1,12 @@
 import XCTest
+#if canImport(EFStorageCore)
 @testable import EFStorageCore
 @testable import EFStorageKeychainAccess
 @testable import EFStorageUserDefaults
+@testable import EFStorageYYCache
+#else
+@testable import EFStorage
+#endif
 import KeychainAccess
 
 extension Bool: KeychainAccessStorable {
@@ -27,7 +32,8 @@ final class EFStorageTests: XCTestCase {
                            persistDefaultContent: true)
     var text: String
     
-    @EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
+    @AnyEFStorage(EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
+        + EFStorageYYCache(forKey: "wow", defaultsTo: "cache"))
     var nsString: NSString
     
     @EFStorageKeychainAccess(forKey: "password", defaultsTo: "")

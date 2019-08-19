@@ -1,0 +1,38 @@
+PODS:
+  - EFStorage (0.0.2):
+    - EFStorage/Core (= 0.0.2)
+    - EFStorage/KeychainAccess (= 0.0.2)
+    - EFStorage/UserDefaults (= 0.0.2)
+    - EFStorage/YYCache (= 0.0.2)
+  - EFStorage/Core (0.0.2)
+  - EFStorage/KeychainAccess (0.0.2):
+    - EFStorage/Core
+    - KeychainAccess (~> 3.2.0)
+  - EFStorage/UserDefaults (0.0.2):
+    - EFStorage/Core
+  - EFStorage/YYCache (0.0.2):
+    - EFStorage/Core
+    - YYCache (~> 1.0.4)
+  - KeychainAccess (3.2.0)
+  - YYCache (1.0.4)
+
+DEPENDENCIES:
+  - EFStorage (from `.`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - KeychainAccess
+    - YYCache
+
+EXTERNAL SOURCES:
+  EFStorage:
+    :path: "."
+
+SPEC CHECKSUMS:
+  EFStorage: 3829fe28451cd6049a5b9f653b7730f2a90310a8
+  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  YYCache: 8105b6638f5e849296c71f331ff83891a4942952
+
+PODFILE CHECKSUM: c173f6e9cea956d4815782584be6903e5dce6df2
+
+COCOAPODS: 1.7.5

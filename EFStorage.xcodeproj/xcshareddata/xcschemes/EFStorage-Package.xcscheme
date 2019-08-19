@@ -6,6 +6,22 @@
         <BuildableReference
           BuildableIdentifier = "primary"
           BuildableName = "'lib$(TARGET_NAME)'"
+          BlueprintName = "EFStorageKeychainAccess"
+          ReferencedContainer = "container:EFStorage.xcodeproj">
+        </BuildableReference>
+      </BuildActionEntry>
+      <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
+        <BuildableReference
+          BuildableIdentifier = "primary"
+          BuildableName = "'lib$(TARGET_NAME)'"
+          BlueprintName = "EFStorageYYCache"
+          ReferencedContainer = "container:EFStorage.xcodeproj">
+        </BuildableReference>
+      </BuildActionEntry>
+      <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
+        <BuildableReference
+          BuildableIdentifier = "primary"
+          BuildableName = "'lib$(TARGET_NAME)'"
           BlueprintName = "EFStorageCore"
           ReferencedContainer = "container:EFStorage.xcodeproj">
         </BuildableReference>
@@ -15,14 +31,6 @@
           BuildableIdentifier = "primary"
           BuildableName = "'lib$(TARGET_NAME)'"
           BlueprintName = "EFStorageUserDefaults"
-          ReferencedContainer = "container:EFStorage.xcodeproj">
-        </BuildableReference>
-      </BuildActionEntry>
-      <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
-        <BuildableReference
-          BuildableIdentifier = "primary"
-          BuildableName = "'lib$(TARGET_NAME)'"
-          BlueprintName = "EFStorageKeychainAccess"
           ReferencedContainer = "container:EFStorage.xcodeproj">
         </BuildableReference>
       </BuildActionEntry>

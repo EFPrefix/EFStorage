@@ -7,7 +7,9 @@
 
 import KeychainAccess
 import Foundation
+#if canImport(EFStorageCore)
 import EFStorageCore
+#endif
 
 extension Keychain: EFUnderlyingStorage {
     public class func makeDefault() -> Self {
