@@ -5,7 +5,6 @@
 //  Created by ApolloZhu on 2019/8/7.
 //
 
-@dynamicMemberLookup
 public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 
 public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
