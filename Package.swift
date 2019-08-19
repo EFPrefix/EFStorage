@@ -43,6 +43,6 @@ let package = Package(
         .testTarget(
             name: "EFStorageTests",
             dependencies: ["EFStorageCore", "EFStorageKeychainAccess",
-                           "EFStorageUserDefaults", "EFStorageYYCache"]),
+                           "EFStorageUserDefaults"]),
     ]
 )

@@ -6,7 +6,7 @@
         <BuildableReference
           BuildableIdentifier = "primary"
           BuildableName = "'lib$(TARGET_NAME)'"
-          BlueprintName = "EFStorageKeychainAccess"
+          BlueprintName = "EFStorageYYCache"
           ReferencedContainer = "container:EFStorage.xcodeproj">
         </BuildableReference>
       </BuildActionEntry>
@@ -14,7 +14,7 @@
         <BuildableReference
           BuildableIdentifier = "primary"
           BuildableName = "'lib$(TARGET_NAME)'"
-          BlueprintName = "EFStorageYYCache"
+          BlueprintName = "EFStorageKeychainAccess"
           ReferencedContainer = "container:EFStorage.xcodeproj">
         </BuildableReference>
       </BuildActionEntry>

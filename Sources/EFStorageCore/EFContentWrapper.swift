@@ -35,20 +35,11 @@ public extension EFContentWrapper {
 
 public extension EFContentWrapper where Content: NSString {
     var string: String {
-        mutating get {
+        get {
             return wrappedValue as String
         }
         set {
             wrappedValue = newValue as NSString as! Content
         }
-    }
-    
-    subscript<Value>(dynamicMember keyPath: KeyPath<String, Value>) -> Value {
-        mutating get { return string[keyPath: keyPath] }
-    }
-    
-    subscript<Value>(dynamicMember keyPath: WritableKeyPath<String, Value>) -> Value {
-        mutating get { return string[keyPath: keyPath] }
-        set { string[keyPath: keyPath] = newValue }
     }
 }

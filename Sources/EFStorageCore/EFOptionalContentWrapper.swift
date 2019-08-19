@@ -5,6 +5,8 @@
 //  Created by ApolloZhu on 2019/8/16.
 //
 
+import Foundation
+
 @dynamicMemberLookup
 public protocol EFOptionalContentWrapper {
     associatedtype Content
@@ -24,5 +26,16 @@ public extension EFOptionalContentWrapper {
     subscript<Value>(dynamicMember keyPath: WritableKeyPath<Content, Value>) -> Value? {
         get { return content?[keyPath: keyPath] }
         set { newValue.map { content?[keyPath: keyPath] = $0 } }
+    }
+}
+
+public extension EFOptionalContentWrapper where Content: NSString {
+    var string: String? {
+        get {
+            return content as String?
+        }
+        set {
+            content = newValue as NSString? as? Content
+        }
     }
 }

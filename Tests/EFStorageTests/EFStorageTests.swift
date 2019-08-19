@@ -3,7 +3,6 @@ import XCTest
 @testable import EFStorageCore
 @testable import EFStorageKeychainAccess
 @testable import EFStorageUserDefaults
-@testable import EFStorageYYCache
 #else
 @testable import EFStorage
 #endif
@@ -32,8 +31,7 @@ final class EFStorageTests: XCTestCase {
                            persistDefaultContent: true)
     var text: String
     
-    @AnyEFStorage(EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
-        + EFStorageYYCache(forKey: "wow", defaultsTo: "cache"))
+    @EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
     var nsString: NSString
     
     @EFStorageKeychainAccess(forKey: "password", defaultsTo: "")
