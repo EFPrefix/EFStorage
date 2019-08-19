@@ -16,11 +16,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(nsString.content ?? "NOTHING")
+        print(nsString.string ?? "NOTHING")
         nsString.content = nil
-        print(nsString.content ?? "NOTHING")
+        print(nsString.string ?? "NOTHING")
         nsString.content = "WOW"
-        print(nsString.content ?? "NOTHING")
+        print(nsString.string ?? "NOTHING")
         print(mobile.content ?? "NO PHONE NUMBER")
     }
 }

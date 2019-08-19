@@ -18,7 +18,7 @@ public extension EFOptionalContentWrapper where Content: NSString {
             return content as String?
         }
         set {
-            content = newValue as NSString? as! Content?
+            content = newValue as NSString? as? Content
         }
     }
 }
