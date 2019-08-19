@@ -72,7 +72,7 @@ final class EFStorageTests: XCTestCase {
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
         XCTAssertEqual(hasPaidBeforeRef.content, true)
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
-        debugPrint(efStorages)
+        print(efStorages)
         XCTAssertEqual(hasPaidBefore, true)
         XCTAssertEqual(mixedType, "1551")
         mixedType = "Brand New"

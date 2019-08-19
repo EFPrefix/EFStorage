@@ -49,7 +49,7 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
     }
     
     deinit {
-        debugPrint("CLEAR \(String(describing: self)) \(key)")
+        _efStorageLog("CLEAR \(String(describing: self)) \(key)")
     }
 }
 

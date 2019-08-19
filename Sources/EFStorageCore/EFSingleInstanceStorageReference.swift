@@ -22,6 +22,13 @@ import Foundation
 
 var efStorages = [String: NSMapTable<NSString, AnyObject>]()
 
+@inlinable
+public func _efStorageLog(_ s: String) {
+    #if DEBUG
+    print(s)
+    #endif
+}
+
 extension EFSingleInstanceStorageReference {
     public var debugDescription: String {
         let storageName = String(describing: Storage.self)
@@ -31,12 +38,12 @@ extension EFSingleInstanceStorageReference {
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
-            debugPrint("ALLOC \(typeIdentifier)")
+            _efStorageLog("ALLOC \(typeIdentifier)")
             efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.strongToWeakObjects()
         }
         if let object = efStorages[typeIdentifier]?.object(forKey: key as NSString),
             let instanceOfSelfType = object as? Self, storage == storage {
-            debugPrint("FETCH \(typeIdentifier) \(key)")
+            _efStorageLog("FETCH \(typeIdentifier) \(key)")
             return instanceOfSelfType
         }
         let newInstance = Self(
@@ -44,7 +51,7 @@ extension EFSingleInstanceStorageReference {
             forKey: key, in: storage
         )
         efStorages[typeIdentifier]?.setObject(newInstance, forKey: key as NSString)
-        debugPrint("CREAT \(typeIdentifier) \(key)")
+        _efStorageLog("CREAT \(typeIdentifier) \(key)")
         return newInstance
     }
 }
