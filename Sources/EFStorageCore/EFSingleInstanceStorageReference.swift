@@ -21,6 +21,16 @@ public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWr
 import Foundation
 
 var efStorages = [String: NSMapTable<NSString, AnyObject>]()
+var efStoragesLock = NSLock()
+
+private func organizeEFStorages() {
+    #warning("需要找一个时机调用来清理不需要的容器")
+    #warning("Needs performance test once integrated")
+    efStoragesLock.lock()
+    defer { efStoragesLock.unlock() }
+    // http://cocoamine.net/blog/2013/12/13/nsmaptable-and-zeroing-weak-references/
+    efStorages = efStorages.filter { $0.value.keyEnumerator().allObjects.count == 0 }
+}
 
 @inlinable
 public func _efStorageLog(_ s: String) {
@@ -36,6 +46,8 @@ extension EFSingleInstanceStorageReference {
     }
     
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
+        efStoragesLock.lock()
+        defer { efStoragesLock.unlock() }
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
             _efStorageLog("ALLOC \(typeIdentifier)")
