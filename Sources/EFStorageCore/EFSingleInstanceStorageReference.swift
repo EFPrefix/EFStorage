@@ -20,16 +20,38 @@ public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWr
 
 import Foundation
 
-var efStorages = [String: NSMapTable<NSString, AnyObject>]()
-var efStoragesLock = NSLock()
+internal enum _EFStorages {
+    internal typealias Table = [String: NSMapTable<NSString, AnyObject>]
+    
+    private static var _efStorages = Table() {
+        didSet {
+            if oldValue.capacity != _efStorages.capacity {
+                modify(by: organize)
+            }
+        }
+    }
+    
+    /// `organize` happens when `lock` is obtained, so it has to be recursive
+    private static var lock = NSRecursiveLock()
 
-private func organizeEFStorages() {
-    #warning("需要找一个时机调用来清理不需要的容器")
-    #warning("Needs performance test once integrated")
-    efStoragesLock.lock()
-    defer { efStoragesLock.unlock() }
-    // http://cocoamine.net/blog/2013/12/13/nsmaptable-and-zeroing-weak-references/
-    efStorages = efStorages.filter { $0.value.keyEnumerator().allObjects.count == 0 }
+    internal static func modify<T>(by mutate: (inout Table) throws -> T) rethrows -> T {
+        lock.lock()
+        defer { lock.unlock() }
+        return try mutate(&_efStorages)
+    }
+    
+    internal static func read<T>(by access: (Table) throws -> T) rethrows -> T {
+        lock.lock()
+        defer { lock.unlock() }
+        return try access(_efStorages)
+    }
+    
+    private static func organize(_ efStorages: inout Table) {
+        _efStorageLog("CLEAN START \(efStorages.count)")
+        // http://cocoamine.net/blog/2013/12/13/nsmaptable-and-zeroing-weak-references/
+        efStorages = efStorages.filter { !$0.value.keyEnumerator().allObjects.isEmpty }
+        _efStorageLog("CLEAN AFTER \(efStorages.count)")
+    }
 }
 
 @inlinable
@@ -46,8 +68,13 @@ extension EFSingleInstanceStorageReference {
     }
     
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
-        efStoragesLock.lock()
-        defer { efStoragesLock.unlock() }
+        return _EFStorages.modify { efStorages in
+            return make(forKey: key, in: storage, efStorages: &efStorages)
+        }
+    }
+    
+    private static func make(forKey key: String, in storage: Storage,
+                             efStorages: inout _EFStorages.Table) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
             _efStorageLog("ALLOC \(typeIdentifier)")

@@ -61,7 +61,23 @@ final class EFStorageTests: XCTestCase {
     
     var storageText: EFStorageUserDefaultsRef<String> = UserDefaults.efStorage.text
     
+    private func printValue<T: CustomStringConvertible>(_ t: T?, ofType type: T.Type,
+                                                        or defaultValue: @autoclosure () -> String) {
+        print("VALUE \(t?.description ?? defaultValue())")
+    }
+    
     func testExample() {
+        printValue(UserDefaults.efStorage.nonExisting, ofType: CGFloat.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: Data.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: NSArray.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: Int8.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: Int16.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: Int32.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: Int64.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: UInt8.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: UInt16.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: UInt32.self, or: "SHOULD DISAPPEAR")
+        printValue(UserDefaults.efStorage.nonExisting, ofType: UInt64.self, or: "SHOULD DISAPPEAR")
         XCTAssertEqual(text, EFStorageTests.defaultText)
         text = "meow"
         XCTAssertEqual(_text.wrappedValue, "meow")
@@ -72,7 +88,7 @@ final class EFStorageTests: XCTestCase {
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
         XCTAssertEqual(hasPaidBeforeRef.content, true)
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
-        print(efStorages)
+        _EFStorages.read { print($0) }
         XCTAssertEqual(hasPaidBefore, true)
         XCTAssertEqual(mixedType, "1551")
         mixedType = "Brand New"
