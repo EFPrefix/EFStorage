@@ -5,6 +5,8 @@
 //  Created by ApolloZhu on 2019/8/16.
 //
 
+import Foundation
+
 public protocol EFOptionalContentWrapper {
     associatedtype Content
     
