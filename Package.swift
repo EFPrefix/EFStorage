@@ -8,8 +8,12 @@ let package = Package(
     products: [
         .library(
             name: "EFStorage",
-            targets: ["EFStorageCore", "EFStorageKeychainAccess",
-                      "EFStorageUserDefaults", "EFStorageYYCache"]),
+            targets: [
+                "EFStorageCore",
+                "EFStorageKeychainAccess",
+                "EFStorageUserDefaults",
+                "EFStorageYYCache",
+        ]),
         .library(
             name: "EFStorageCore",
             targets: ["EFStorageCore"]),
@@ -42,7 +46,10 @@ let package = Package(
             dependencies: ["EFStorageCore", "YYCache"]),
         .testTarget(
             name: "EFStorageTests",
-            dependencies: ["EFStorageCore", "EFStorageKeychainAccess",
-                           "EFStorageUserDefaults"]),
+            dependencies: [
+                "EFStorageCore",
+                "EFStorageKeychainAccess",
+                "EFStorageUserDefaults",
+        ]),
     ]
 )

@@ -1509,12 +1509,12 @@
       "OBJ_52" = {
          isa = "PBXGroup";
          children = (
-            "KeychainAccess::KeychainAccess::Product",
-            "EFStorage::EFStorageCore::Product",
+            "EFStorage::EFStorageKeychainAccess::Product",
+            "EFStorage::EFStorageTests::Product",
             "YYCache::YYCache::Product",
             "EFStorage::EFStorageYYCache::Product",
-            "EFStorage::EFStorageTests::Product",
-            "EFStorage::EFStorageKeychainAccess::Product",
+            "KeychainAccess::KeychainAccess::Product",
+            "EFStorage::EFStorageCore::Product",
             "EFStorage::EFStorageUserDefaults::Product"
          );
          name = "Products";
