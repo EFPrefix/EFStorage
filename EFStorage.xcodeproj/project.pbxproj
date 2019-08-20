@@ -263,7 +263,7 @@
                "-sdk",
                "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
                "-package-description-version",
-               "5.1"
+               "5"
             );
             SWIFT_VERSION = "5.0";
          };
@@ -288,7 +288,7 @@
                "-sdk",
                "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
                "-package-description-version",
-               "5.1"
+               "5"
             );
             SWIFT_VERSION = "5.0";
          };
@@ -1532,12 +1532,12 @@
          isa = "PBXGroup";
          children = (
             "EFStorage::EFStorageCore::Product",
+            "EFStorage::EFStorageYYCache::Product",
             "EFStorage::EFStorageKeychainAccess::Product",
-            "YYCache::YYCache::Product",
-            "EFStorage::EFStorageUserDefaults::Product",
             "KeychainAccess::KeychainAccess::Product",
             "EFStorage::EFStorageTests::Product",
-            "EFStorage::EFStorageYYCache::Product"
+            "YYCache::YYCache::Product",
+            "EFStorage::EFStorageUserDefaults::Product"
          );
          name = "Products";
          path = "";
