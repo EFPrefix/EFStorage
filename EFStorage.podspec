@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EFStorage'
-  s.version          = '0.0.2'
+  s.version          = '0.1.0'
   s.summary          = 'Store anything anywhere with ease.'
 
 # This description is used to generate tags and improve search results.
