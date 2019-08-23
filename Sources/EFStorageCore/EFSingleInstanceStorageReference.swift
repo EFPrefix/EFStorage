@@ -25,7 +25,7 @@ internal enum _EFStorages {
     internal typealias Record = [String: NSMapTable<NSString, AnyObject>]
     
     private static var _efStorages = Record()
-    private static var lock = NSLock()
+    private static let lock = NSLock()
     
     /// Modifies _efStorages.
     /// - Parameter mutate: mutating action to perform on _efStorages.
