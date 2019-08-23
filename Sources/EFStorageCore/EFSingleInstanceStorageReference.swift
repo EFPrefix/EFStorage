@@ -21,32 +21,35 @@ public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWr
 import Foundation
 
 internal enum _EFStorages {
-    internal typealias Table = [String: NSMapTable<NSString, AnyObject>]
+    internal typealias Record = [String: NSMapTable<NSString, AnyObject>]
     
-    private static var _efStorages = Table() {
-        didSet {
-            if oldValue.capacity != _efStorages.capacity {
-                modify(by: organize)
-            }
-        }
-    }
+    private static var _efStorages = Record()
+    private static var lock = NSLock()
     
-    /// `organize` happens when `lock` is obtained, so it has to be recursive
-    private static var lock = NSRecursiveLock()
-
-    internal static func modify<T>(by mutate: (inout Table) throws -> T) rethrows -> T {
+    /// Modifies _efStorages.
+    /// - Parameter mutate: mutating action to perform on _efStorages.
+    /// - Warning: calling this method or `read` within each other results in dead lock.
+    internal static func modify<T>(by mutate: (inout Record) throws -> T) rethrows -> T {
         lock.lock()
         defer { lock.unlock() }
         return try mutate(&_efStorages)
     }
     
-    internal static func read<T>(by access: (Table) throws -> T) rethrows -> T {
+    /// Accesses _efStorages.
+    /// - Parameter access: non-mutating action to perform on _efStorages.
+    /// - Warning: calling this method or `modify` within each other results in dead lock.
+    internal static func read<T>(to access: (Record) throws -> T) rethrows -> T {
         lock.lock()
         defer { lock.unlock() }
         return try access(_efStorages)
     }
     
-    private static func organize(_ efStorages: inout Table) {
+    /// Remove all map tables that no longer holds any refrence.
+    /// - Parameter efStorages: efStorages to clean up.
+    /// - Precondition: with lock obtained.
+    fileprivate static func cleanUpIfNeeded(_ efStorages: inout Record) {
+        if efStorages.isEmpty { return }
+        if efStorages.capacity > efStorages.count { return }
         _efStorageLog("CLEAN START \(efStorages.count)")
         // http://cocoamine.net/blog/2013/12/13/nsmaptable-and-zeroing-weak-references/
         efStorages = efStorages.filter { !$0.value.keyEnumerator().allObjects.isEmpty }
@@ -68,15 +71,17 @@ extension EFSingleInstanceStorageReference {
     }
     
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
-        return _EFStorages.modify { efStorages in
-            return make(forKey: key, in: storage, efStorages: &efStorages)
+        return _EFStorages.modify { record in
+            return make(forKey: key, in: storage, record: &record)
         }
     }
     
+    /// - Precondition: with _EFStorages lock obtained.
     private static func make(forKey key: String, in storage: Storage,
-                             efStorages: inout _EFStorages.Table) -> Self {
+                             record efStorages: inout _EFStorages.Record) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
+            _EFStorages.cleanUpIfNeeded(&efStorages)
             _efStorageLog("ALLOC \(typeIdentifier)")
             efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.strongToWeakObjects()
         }
