@@ -35,6 +35,7 @@ Pod::Spec.new do |s|
 
   s.swift_version = "5.1"
   s.source_files = 'Sources/**/*.swift'
+  s.osx.exclude_files = 'Sources/EFStorageYYCache'
 
   s.frameworks = 'Foundation'
   
@@ -54,6 +55,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'YYCache' do |sp|
+    sp.platform = :ios
     sp.source_files = 'Sources/YYCache'
     sp.dependency 'YYCache', '~> 1.0.4'
     sp.dependency 'EFStorage/Core'
