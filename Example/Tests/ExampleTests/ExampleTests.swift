@@ -27,16 +27,16 @@ final class ExampleTests: XCTestCase {
         let output = String(data: data, encoding: .utf8)
 
         XCTAssertEqual(output, """
-        "ALLOC EFStorageUserDefaultsRef<String>"
-        "CREAT EFStorageUserDefaultsRef<String> catSound"
+        ALLOC EFStorageUserDefaultsRef<String>
+        CREAT EFStorageUserDefaultsRef<String> catSound
         nyan
-        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        FETCH EFStorageUserDefaultsRef<String> catSound
         nyan
-        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        FETCH EFStorageUserDefaultsRef<String> catSound
         meow
         meow
-        "FETCH EFStorageUserDefaultsRef<String> catSound"
-        "FETCH EFStorageUserDefaultsRef<String> catSound"
+        FETCH EFStorageUserDefaultsRef<String> catSound
+        FETCH EFStorageUserDefaultsRef<String> catSound
         喵
         
         """)

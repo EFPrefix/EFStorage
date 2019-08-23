@@ -9,6 +9,15 @@
           "revision": "0046db4ab8fd7be31a59e57912dbb96639ad8ce9",
           "version": "3.2.0"
         }
+      },
+      {
+        "package": "YYCache",
+        "repositoryURL": "https://github.com/EFPrefix/YYCache.git",
+        "state": {
+          "branch": "master",
+          "revision": "361a68810ef2fae4d6794a032558bc39b84527b0",
+          "version": null
+        }
       }
     ]
   },
