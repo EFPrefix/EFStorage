@@ -5,6 +5,7 @@
 //  Created by ApolloZhu on 2019/8/19.
 //
 
+#if canImport(YYCache)
 import Foundation
 import YYCache
 
@@ -20,3 +21,4 @@ public extension YYCacheStorable where Self: NSCoding {
 extension NSData: YYCacheStorable { }
 extension NSArray: YYCacheStorable { }
 extension NSNumber: YYCacheStorable { }
+#endif

@@ -5,6 +5,7 @@
 //  Created by ApolloZhu on 2019/8/19.
 //
 
+#if canImport(YYCache)
 import Foundation
 import YYCache
 #if canImport(EFStorageCore)
@@ -102,3 +103,8 @@ public extension EFUnderlyingStorageWrapper {
         }
     }
 }
+#elseif canImport(EFStorageCore)
+#warning("EFStorageYYCache is not available")
+#else
+#warning("EFStorage/YYCache is not available")
+#endif
