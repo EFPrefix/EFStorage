@@ -1,0 +1,19 @@
+# Uncomment the next line to define a global platform for your project
+
+target 'Cocoapods' do
+  platform :ios, '8.0'
+  use_frameworks!
+
+  # Pods for Cocoapods
+  pod 'EFStorage', :path=>'..'
+
+end
+
+target 'CocoaPods-macOS' do
+  platform :osx, '10.9'
+  use_frameworks!
+
+  # Pods for CocoaPods-macOS
+  pod 'EFStorage', :path=>'..'
+
+end
