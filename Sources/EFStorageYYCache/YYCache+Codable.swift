@@ -5,6 +5,7 @@
 //  Created by ApolloZhu on 2019/8/19.
 //
 
+#if canImport(YYCache)
 import Foundation
 import YYCache
 
@@ -23,3 +24,4 @@ extension YYCacheStorable where Self: Codable {
         }
     }
 }
+#endif
