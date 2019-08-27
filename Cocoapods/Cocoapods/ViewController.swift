@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     let mobile = EFStorageUserDefaultsRef<String>.forKey("mobile")
     let nsString = EFStorageUserDefaultsRef<NSString>.forKey("hmm")
+    let array = EFStorageUserDefaultsRef<[String]>.forKey("array")
     
     override func viewDidLoad() {
         super.viewDidLoad()

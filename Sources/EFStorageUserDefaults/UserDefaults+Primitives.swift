@@ -17,7 +17,7 @@ extension URL: UserDefaultsStorable {
 }
 
 // MARK: - As Is UserDefaults Storable
-
+@usableFromInline
 protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
 
 extension AsIsUserDefaultsStorable {
@@ -56,12 +56,8 @@ extension UInt32: AsIsUserDefaultsStorable { }
 extension Int64: AsIsUserDefaultsStorable { }
 extension UInt64: AsIsUserDefaultsStorable { }
 
-extension Dictionary: AsIsUserDefaultsStorable
-where Key == String, Value: AsIsUserDefaultsStorable { }
-extension Dictionary: UserDefaultsStorable
+extension Dictionary: AsIsUserDefaultsStorable, UserDefaultsStorable
 where Key == String, Value: AsIsUserDefaultsStorable { }
 
-extension Array: AsIsUserDefaultsStorable
-where Element: AsIsUserDefaultsStorable { }
-extension Array: UserDefaultsStorable
+extension Array: AsIsUserDefaultsStorable, UserDefaultsStorable
 where Element: AsIsUserDefaultsStorable { }
