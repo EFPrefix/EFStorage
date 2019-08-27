@@ -28,6 +28,9 @@ class ViewController: NSViewController {
     
     @EFStorageUserDefaults(forKey: "username", defaultsTo: "EFS")
     var username: String
+    
+    @EFStorageUserDefaults(forKey: "a", defaultsTo: [])
+    var array: [String]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +38,5 @@ class ViewController: NSViewController {
         print("\(username) is \(isNewUser ? "new" : "old") user")
         isNewUser = false
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
-
 }
 

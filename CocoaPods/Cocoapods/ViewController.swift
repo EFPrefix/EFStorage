@@ -47,6 +47,9 @@ class ViewController: UIViewController {
     @EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: true)
     var isNewUser: Bool
     
+    @EFStorageUserDefaults(forKey: "legacyNames", defaultsTo: [])
+    var usedNames: [String]
+    
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -74,8 +77,11 @@ class ViewController: UIViewController {
     
     @objc private func updateUsername() {
         username = textField.text
-        if let text = username, let image = UIImage(systemName: text) {
-            avatar = image
-        }
+        
+        guard let text = username else { return }
+        usedNames.append(text)
+        
+        guard let image = UIImage(systemName: text) else { return }
+        avatar = image
     }
 }
