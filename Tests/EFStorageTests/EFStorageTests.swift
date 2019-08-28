@@ -86,10 +86,10 @@ final class EFStorageTests: XCTestCase {
         let hasPaidBeforeRef: EFStorageUserDefaultsRef<Bool> = UserDefaults.efStorage.oldHasPaidBeforeKey
         XCTAssertEqual(hasPaidBeforeRef.content, true)
         XCTAssertEqual(UserDefaults.standard.bool(forKey: "oldHasPaidBeforeKey"), true)
-        _EFStorages.read {
+        _EFStorageInternal.read {
             let wasted = $0.values.lazy.filter { $0.keyEnumerator().allObjects.isEmpty }.count
             print("""
-            SSTAT --------------------
+            ----- SSTAT START--------------------
             
             WASTE \(wasted)
             USING \($0.count - wasted)
@@ -98,7 +98,7 @@ final class EFStorageTests: XCTestCase {
             
             STORE \($0)
             
-            SSTAT --------------------
+            ----- SSTAT END-----------------------
             """)
         }
         XCTAssertEqual(hasPaidBefore, true)
