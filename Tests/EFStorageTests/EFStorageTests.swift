@@ -33,6 +33,21 @@ final class EFStorageTests: XCTestCase {
         storageText.content = EFStorageTests.defaultText
         XCTAssertTrue(UserDefaults.standard.object(forKey: "text") is String, "IS NOT STRING")
         XCTAssertEqual(UserDefaults.standard.object(forKey: "text") as? String, storageText.content)
+        _EFStorageInternal.read {
+            let wasted = $0.values.lazy.filter { $0.keyEnumerator().allObjects.isEmpty }.count
+            print("""
+            ----- SSTAT START--------------------
+            
+            WASTE \(wasted)
+            USING \($0.count - wasted)
+            TOTAL \($0.count)
+            LIMIT \($0.capacity)
+            
+            STORE \($0)
+            
+            ----- SSTAT END-----------------------
+            """)
+        }
     }
 
     static var allTests = [

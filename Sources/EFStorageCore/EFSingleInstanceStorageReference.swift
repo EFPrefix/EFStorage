@@ -20,7 +20,11 @@ public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWr
 
 import Foundation
 
-internal enum _EFStorages {
+public enum _EFStorageInternal {
+    /// Minimum number of entries for different types of singleton refrences
+    /// in cache before cleanup happens. Default is (arbitrarily chosen as) 10.
+    public static var threshold: UInt = 10
+    
     internal typealias Record = [String: NSMapTable<NSString, AnyObject>]
     
     private static var _efStorages = Record()
@@ -48,8 +52,8 @@ internal enum _EFStorages {
     /// - Parameter efStorages: efStorages to clean up.
     /// - Precondition: with lock obtained.
     fileprivate static func cleanUpIfNeeded(_ efStorages: inout Record) {
-        if efStorages.isEmpty { return }
         if efStorages.capacity > efStorages.count { return }
+        if threshold > efStorages.count { return }
         _efStorageLog("CLEAN START \(efStorages.count)")
         // http://cocoamine.net/blog/2013/12/13/nsmaptable-and-zeroing-weak-references/
         efStorages = efStorages.filter { !$0.value.keyEnumerator().allObjects.isEmpty }
@@ -60,6 +64,7 @@ internal enum _EFStorages {
 @inlinable
 public func _efStorageLog(_ s: String) {
     #if DEBUG
+    print("EFStorage", terminator: " ")
     print(s)
     #endif
 }
@@ -71,17 +76,17 @@ extension EFSingleInstanceStorageReference {
     }
     
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
-        return _EFStorages.modify { record in
+        return _EFStorageInternal.modify { record in
             return make(forKey: key, in: storage, record: &record)
         }
     }
     
     /// - Precondition: with _EFStorages lock obtained.
     private static func make(forKey key: String, in storage: Storage,
-                             record efStorages: inout _EFStorages.Record) -> Self {
+                             record efStorages: inout _EFStorageInternal.Record) -> Self {
         let typeIdentifier = String(describing: self)
         if efStorages[typeIdentifier] == nil {
-            _EFStorages.cleanUpIfNeeded(&efStorages)
+            _EFStorageInternal.cleanUpIfNeeded(&efStorages)
             _efStorageLog("ALLOC \(typeIdentifier)")
             efStorages[typeIdentifier] = NSMapTable<NSString, AnyObject>.strongToWeakObjects()
         }
