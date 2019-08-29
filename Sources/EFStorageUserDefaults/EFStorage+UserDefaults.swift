@@ -11,12 +11,8 @@ import EFStorageCore
 #endif
 
 extension UserDefaults: EFUnderlyingStorage {
-    public class func makeDefault() -> Self {
-        if let this = UserDefaults.standard as? Self {
-            return this
-        } else {
-            return Self()
-        }
+    public dynamic class func makeDefault() -> Self {
+        return (UserDefaults.standard as? Self) ?? Self()
     }
 }
 

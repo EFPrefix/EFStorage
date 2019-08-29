@@ -12,7 +12,7 @@ import EFStorageCore
 #endif
 
 extension Keychain: EFUnderlyingStorage {
-    public class func makeDefault() -> Self {
+    public dynamic class func makeDefault() -> Self {
         return Self()
     }
     

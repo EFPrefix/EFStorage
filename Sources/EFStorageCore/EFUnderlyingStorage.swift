@@ -9,6 +9,22 @@ public protocol EFUnderlyingStorage: Equatable {
     static func makeDefault() -> Self
 }
 
+public protocol EFFailableUnderlyingStorage: EFUnderlyingStorage {
+    static func makeDefault() -> Self?
+}
+
+extension EFFailableUnderlyingStorage {
+    public dynamic static func makeDefault() -> Self {
+        return makeDefault()!
+    }
+}
+
+extension Optional: EFUnderlyingStorage where Wrapped: EFFailableUnderlyingStorage {
+    public dynamic static func makeDefault() -> Self {
+        return Wrapped.makeDefault() ?? nil
+    }
+}
+
 public extension EFUnderlyingStorage {
     static func refForKey<T, Ref: EFSingleInstanceStorageReference>(
         _ key: String, in storage: Ref.Storage
