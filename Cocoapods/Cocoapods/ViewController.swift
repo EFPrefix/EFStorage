@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     let mobile = EFStorageUserDefaultsRef<String>.forKey("mobile")
     let nsString = EFStorageUserDefaultsRef<NSString>.forKey("hmm")
     let array = EFStorageUserDefaultsRef<[String]>.forKey("array")
+    let cache = EFStorageYYCacheRef<NSArray>.forKey("just test")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,5 +24,6 @@ class ViewController: UIViewController {
         nsString.content = "WOW"
         print(nsString.string ?? "NOTHING")
         print(mobile.content ?? "NO PHONE NUMBER")
+        print(cache.content ?? "NO CACHE")
     }
 }

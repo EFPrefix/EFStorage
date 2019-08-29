@@ -10,9 +10,11 @@ import Foundation
 import EFStorageCore
 #endif
 
-extension UserDefaults: EFUnderlyingStorage {
-    public class func makeDefault() -> Self {
-        return self.init()
+extension UserDefaults: EFUnderlyingStorage { }
+
+extension EFUnderlyingStorage where Self: UserDefaults {
+    public dynamic static func makeDefault() -> Self {
+        return (UserDefaults.standard as? Self) ?? Self()
     }
 }
 

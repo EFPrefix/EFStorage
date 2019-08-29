@@ -92,7 +92,7 @@ extension EFSingleInstanceStorageReference {
         }
         if let object = efStorages[typeIdentifier]?.object(forKey: key as NSString),
             let instanceOfSelfType = object as? Self, storage == storage {
-            _efStorageLog("FETCH \(typeIdentifier) \(key)")
+            _efStorageLog("FETCH \(typeIdentifier) \(key) FROM \(storage)")
             return instanceOfSelfType
         }
         let newInstance = Self(
@@ -100,7 +100,7 @@ extension EFSingleInstanceStorageReference {
             forKey: key, in: storage
         )
         efStorages[typeIdentifier]?.setObject(newInstance, forKey: key as NSString)
-        _efStorageLog("CREAT \(typeIdentifier) \(key)")
+        _efStorageLog("CREAT \(typeIdentifier) \(key) IN \(storage)")
         return newInstance
     }
 }

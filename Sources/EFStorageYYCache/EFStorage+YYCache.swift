@@ -12,9 +12,14 @@ import YYCache
 import EFStorageCore
 #endif
 
-extension YYCache: EFUnderlyingStorage {
-    public class func makeDefault() -> Self {
-        return self.init(name: Bundle.main.bundleIdentifier ?? "EFStorage")!
+extension YYCache: EFFailableUnderlyingStorage {
+    fileprivate static let name = Bundle.main.bundleIdentifier ?? "EFStorage"
+    fileprivate static var shared = YYCache(name: name)
+}
+
+extension EFFailableUnderlyingStorage where Self: YYCache {
+    public dynamic static func makeDefault() -> Self? {
+        return (shared as? Self) ?? Self(name: name)
     }
 }
 
@@ -27,21 +32,21 @@ public class EFStorageYYCacheRef<Content: YYCacheStorable>
 : EFSingleInstanceStorageReference {
     public required init(
         iKnowIShouldNotCallThisDirectlyAndIsResponsibleForUnexpectedBehaviorMyself: Bool,
-        forKey key: String, in storage: YYCache
+        forKey key: String, in storage: YYCache?
     ) {
         self.key = key
         self.storage = storage
-        self.content = Content.fromYYCache(storage, forKey: key)
+        self.content = storage.flatMap { Content.fromYYCache($0, forKey: key) }
     }
     
     public let key: String
-    public let storage: YYCache
+    public let storage: YYCache?
     public var content: Content? {
         didSet {
             if let newValue = content {
-                storage.setObject(newValue.asYYCacheStorable() as? NSCoding, forKey: key)
+                storage?.setObject(newValue.asYYCacheStorable() as? NSCoding, forKey: key)
             } else {
-                storage.removeObject(forKey: key)
+                storage?.removeObject(forKey: key)
             }
         }
     }
