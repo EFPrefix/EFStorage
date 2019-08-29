@@ -9,6 +9,19 @@
 import UIKit
 import EFStorage
 import KeychainAccess
+import YYCache
+
+extension UserDefaults {
+    private static let forAppGroup = UserDefaults(
+        suiteName: kSecAttrAccessGroup as String
+    )
+    
+    @_dynamicReplacement(for: makeDefault())
+    class func makeDefaultForGroup() -> Self {
+        _efStorageLog("SWAP: \(forAppGroup?.description ?? "FAILED")")
+        return (forAppGroup as? Self) ?? makeDefault()
+    }
+}
 
 extension UIImage: YYCacheStorable { }
 
@@ -63,6 +76,7 @@ class ViewController: UIViewController {
         assert(nsString.string == "WOW")
         nsString.content = nil
         assert(nsString.string == nil)
+        print(usedNames)
         
         avatarView.image = avatar
         if !isNewUser {

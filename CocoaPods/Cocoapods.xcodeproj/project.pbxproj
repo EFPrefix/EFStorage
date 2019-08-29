@@ -24,6 +24,7 @@
 /* Begin PBXFileReference section */
 		0A4959AE69C35E25542D4D8C /* Pods_CocoaPods_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CocoaPods_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		491FC3F856F0991564F61038 /* Pods-Cocoapods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cocoapods.release.xcconfig"; path = "Target Support Files/Pods-Cocoapods/Pods-Cocoapods.release.xcconfig"; sourceTree = "<group>"; };
+		529ED188231784F50011606E /* Cocoapods.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cocoapods.entitlements; sourceTree = "<group>"; };
 		52BAC9CA230A478800982784 /* Cocoapods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocoapods.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BAC9CD230A478800982784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52BAC9CF230A478800982784 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		52BAC9CC230A478800982784 /* Cocoapods */ = {
 			isa = PBXGroup;
 			children = (
+				529ED188231784F50011606E /* Cocoapods.entitlements */,
 				52BAC9CD230A478800982784 /* AppDelegate.swift */,
 				52BAC9CF230A478800982784 /* SceneDelegate.swift */,
 				52BAC9D1230A478800982784 /* ViewController.swift */,
@@ -482,13 +484,15 @@
 			baseConfigurationReference = C89E83C8A8FA89020C406371 /* Pods-Cocoapods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cocoapods/Cocoapods.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KZ7D8X3PRK;
 				INFOPLIST_FILE = Cocoapods/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.EFStorage.Cocoapods;
+				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.az.EFStorage.Cocoapods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,13 +504,15 @@
 			baseConfigurationReference = 491FC3F856F0991564F61038 /* Pods-Cocoapods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cocoapods/Cocoapods.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KZ7D8X3PRK;
 				INFOPLIST_FILE = Cocoapods/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.EFStorage.Cocoapods;
+				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.az.EFStorage.Cocoapods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -527,7 +533,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.EFStorage.CocoaPods-macOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.az.EFStorage.CocoaPods-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -548,7 +554,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.EFStorage.CocoaPods-macOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.az.EFStorage.CocoaPods-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
