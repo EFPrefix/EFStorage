@@ -83,7 +83,7 @@ class ViewController: UIViewController {
             label.text = "Welcome back,"
         }
         textField.text = username
-        isNewUser = false
+        Keychain.efStorage.isNewUser = false
         
         textField.addTarget(self, action: #selector(updateUsername),
                             for: .allEditingEvents)
@@ -97,5 +97,17 @@ class ViewController: UIViewController {
         
         guard let image = UIImage(systemName: text) else { return }
         avatar = image
+    }
+    
+    @IBAction func sync() {
+        UserDefaults.makeDefault().synchronize()
+    }
+    
+    @IBAction func cleanUp() {
+        try? Keychain.makeDefault().removeAll()
+        YYCache.makeDefault()?.removeAllObjects()
+        let defaults = UserDefaults.makeDefault()
+        defaults.dictionaryRepresentation().keys
+            .forEach { defaults.removeObject(forKey: $0) }
     }
 }
