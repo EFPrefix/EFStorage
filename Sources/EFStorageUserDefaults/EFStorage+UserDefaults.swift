@@ -42,11 +42,17 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
     public let storage: UserDefaults
     public var content: Content? {
         didSet {
-            if let newValue = content {
-                storage.set(newValue.asUserDefaultsStorable(), forKey: key)
-            } else {
-                storage.removeObject(forKey: key)
+            guard let newValue = content else {
+                return storage.removeObject(forKey: key)
             }
+            guard let storable = newValue.asUserDefaultsStorable() else {
+                assertionFailure("""
+                \(newValue) of type \(type(of: newValue)) \
+                is not storable in user defaults.
+                """)
+                return storage.removeObject(forKey: key)
+            }
+            storage.set(storable, forKey: key)
         }
     }
     

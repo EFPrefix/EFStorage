@@ -11,7 +11,12 @@ import YYCache
 
 extension YYCacheStorable where Self: Codable {
     func asYYCacheStorable() -> YYCacheStorable! {
-        return try? JSONEncoder().encode(self) as NSData
+        do {
+            return try JSONEncoder().encode(self) as NSData
+        } catch {
+            assertionFailure(error.localizedDescription)
+            return nil
+        }
     }
     static func fromYYCache(_ yyCache: YYCache, forKey key: String) -> Self? {
         return NSData.fromYYCache(yyCache, forKey: key).flatMap {
