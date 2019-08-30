@@ -119,10 +119,10 @@ public extension EFUnderlyingStorageWrapper {
         dynamicMember key: String
     ) -> T? where Base == Keychain.Type {
         get {
-            return EFStorageKeychainAccessRef.forKey(key, in: Keychain.makeDefault()).content
+            return EFStorageKeychainAccessRef.forKey(key).content
         }
         set {
-            EFStorageKeychainAccessRef.forKey(key, in: Keychain.makeDefault()).content = newValue
+            EFStorageKeychainAccessRef.forKey(key).content = newValue
         }
     }
 }

@@ -101,10 +101,10 @@ public extension EFUnderlyingStorageWrapper {
         dynamicMember key: String
     ) -> T? where Base == UserDefaults.Type {
         get {
-            return EFStorageUserDefaultsRef.forKey(key, in: UserDefaults.makeDefault()).content
+            return EFStorageUserDefaultsRef.forKey(key).content
         }
         set {
-            EFStorageUserDefaultsRef.forKey(key, in: UserDefaults.makeDefault()).content = newValue
+            EFStorageUserDefaultsRef.forKey(key).content = newValue
         }
     }
 }

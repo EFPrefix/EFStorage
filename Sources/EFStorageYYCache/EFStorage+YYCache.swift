@@ -99,10 +99,10 @@ public extension EFUnderlyingStorageWrapper {
         dynamicMember key: String
     ) -> T? where Base == YYCache.Type {
         get {
-            return EFStorageYYCacheRef.forKey(key, in: YYCache.makeDefault()).content
+            return EFStorageYYCacheRef.forKey(key).content
         }
         set {
-            EFStorageYYCacheRef.forKey(key, in: YYCache.makeDefault()).content = newValue
+            EFStorageYYCacheRef.forKey(key).content = newValue
         }
     }
 }
