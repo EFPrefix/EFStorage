@@ -9,7 +9,7 @@
 public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 
 @propertyWrapper
-public class AnyEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
+public class SomeEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
     public var content: Content? {
         get { return storage.content }
         set { storage.content = newValue }

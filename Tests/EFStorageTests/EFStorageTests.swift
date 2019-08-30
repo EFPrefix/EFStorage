@@ -41,7 +41,7 @@ final class EFStorageTests: XCTestCase {
                           EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
     var isNewUser: Bool
     
-    @AnyEFStorage(EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
+    @SomeEFStorage(EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", defaultsTo: true,
                                 persistDefaultContent: true))
