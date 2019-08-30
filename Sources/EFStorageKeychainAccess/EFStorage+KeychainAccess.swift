@@ -61,7 +61,10 @@ public class EFStorageKeychainAccessRef<Content: KeychainAccessStorable>: EFSing
             case let data as Data:
                 try? storage.set(data, key: key)
             default:
-                fatalError("\(newValue) of type \(type(of: newValue)) is not storable in keychain")
+                assertionFailure("""
+                \(newValue) of type \(type(of: newValue)) \
+                is not storable in keychain.
+                """)
             }
         }
     }

@@ -9,7 +9,12 @@ import Foundation
 
 public extension UserDefaultsStorable where Self: Codable {
     func asUserDefaultsStorable() -> UserDefaultsStorable! {
-        return try? JSONEncoder().encode(self)
+        do {
+            return try JSONEncoder().encode(self)
+        } catch {
+            assertionFailure(error.localizedDescription)
+            return nil
+        }
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
         return Data.fromUserDefaults(userDefaults, forKey: key).flatMap {

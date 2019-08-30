@@ -40,11 +40,19 @@ public class EFStorageYYCacheRef<Content: YYCacheStorable>
     public let storage: YYCache?
     public var content: Content? {
         didSet {
-            if let newValue = content {
-                storage?.setObject(newValue.asYYCacheStorable() as? NSCoding, forKey: key)
-            } else {
+            guard let newValue = content else {
                 storage?.removeObject(forKey: key)
+                return
             }
+            guard let storable = newValue.asYYCacheStorable() as? NSCoding else {
+                assertionFailure("""
+                \(newValue) of type \(type(of: newValue)) \
+                is not storable in YYCache.
+                """)
+                storage?.removeObject(forKey: key)
+                return
+            }
+            storage?.setObject(storable, forKey: key)
         }
     }
     
