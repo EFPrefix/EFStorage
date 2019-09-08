@@ -5,24 +5,24 @@
    objects = {
       "EFStorage::EFStorage::ProductTarget" = {
          isa = "PBXAggregateTarget";
-         buildConfigurationList = "OBJ_70";
+         buildConfigurationList = "OBJ_68";
          buildPhases = (
          );
          dependencies = (
+            "OBJ_71",
             "OBJ_73",
             "OBJ_75",
-            "OBJ_77",
-            "OBJ_79"
+            "OBJ_77"
          );
          name = "EFStorage";
          productName = "EFStorage";
       };
       "EFStorage::EFStorageCore" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_81";
+         buildConfigurationList = "OBJ_79";
          buildPhases = (
-            "OBJ_84",
-            "OBJ_91"
+            "OBJ_82",
+            "OBJ_90"
          );
          dependencies = (
          );
@@ -38,14 +38,14 @@
       };
       "EFStorage::EFStorageKeychainAccess" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_92";
+         buildConfigurationList = "OBJ_91";
          buildPhases = (
-            "OBJ_95",
-            "OBJ_101"
+            "OBJ_94",
+            "OBJ_100"
          );
          dependencies = (
-            "OBJ_104",
-            "OBJ_106"
+            "OBJ_103",
+            "OBJ_105"
          );
          name = "EFStorageKeychainAccess";
          productName = "EFStorageKeychainAccess";
@@ -59,29 +59,29 @@
       };
       "EFStorage::EFStoragePackageTests::ProductTarget" = {
          isa = "PBXAggregateTarget";
-         buildConfigurationList = "OBJ_114";
+         buildConfigurationList = "OBJ_113";
          buildPhases = (
          );
          dependencies = (
-            "OBJ_117"
+            "OBJ_116"
          );
          name = "EFStoragePackageTests";
          productName = "EFStoragePackageTests";
       };
       "EFStorage::EFStorageTests" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_119";
+         buildConfigurationList = "OBJ_118";
          buildPhases = (
-            "OBJ_122",
-            "OBJ_125"
+            "OBJ_121",
+            "OBJ_124"
          );
          dependencies = (
+            "OBJ_131",
             "OBJ_132",
-            "OBJ_133",
+            "OBJ_134",
             "OBJ_135",
             "OBJ_136",
-            "OBJ_137",
-            "OBJ_138"
+            "OBJ_137"
          );
          name = "EFStorageTests";
          productName = "EFStorageTests";
@@ -95,13 +95,13 @@
       };
       "EFStorage::EFStorageUserDefaults" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_139";
+         buildConfigurationList = "OBJ_138";
          buildPhases = (
-            "OBJ_142",
-            "OBJ_148"
+            "OBJ_141",
+            "OBJ_147"
          );
          dependencies = (
-            "OBJ_150"
+            "OBJ_149"
          );
          name = "EFStorageUserDefaults";
          productName = "EFStorageUserDefaults";
@@ -115,14 +115,14 @@
       };
       "EFStorage::EFStorageYYCache" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_151";
+         buildConfigurationList = "OBJ_150";
          buildPhases = (
-            "OBJ_154",
-            "OBJ_158"
+            "OBJ_153",
+            "OBJ_157"
          );
          dependencies = (
-            "OBJ_161",
-            "OBJ_162"
+            "OBJ_160",
+            "OBJ_161"
          );
          name = "EFStorageYYCache";
          productName = "EFStorageYYCache";
@@ -136,9 +136,9 @@
       };
       "EFStorage::SwiftPMPackageDescription" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_108";
+         buildConfigurationList = "OBJ_107";
          buildPhases = (
-            "OBJ_111"
+            "OBJ_110"
          );
          dependencies = (
          );
@@ -148,10 +148,10 @@
       };
       "KeychainAccess::KeychainAccess" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_163";
+         buildConfigurationList = "OBJ_162";
          buildPhases = (
-            "OBJ_166",
-            "OBJ_168"
+            "OBJ_165",
+            "OBJ_167"
          );
          dependencies = (
          );
@@ -167,9 +167,9 @@
       };
       "KeychainAccess::SwiftPMPackageDescription" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_170";
+         buildConfigurationList = "OBJ_169";
          buildPhases = (
-            "OBJ_173"
+            "OBJ_172"
          );
          dependencies = (
          );
@@ -185,13 +185,13 @@
          };
          buildConfigurationList = "OBJ_2";
          compatibilityVersion = "Xcode 3.2";
-         developmentRegion = "en";
+         developmentRegion = "English";
          hasScannedForEncodings = "0";
          knownRegions = (
             "en"
          );
          mainGroup = "OBJ_5";
-         productRefGroup = "OBJ_52";
+         productRefGroup = "OBJ_53";
          projectDirPath = ".";
          targets = (
             "EFStorage::EFStorage::ProductTarget",
@@ -214,40 +214,54 @@
          sourceTree = "<group>";
       };
       "OBJ_100" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_20";
-      };
-      "OBJ_101" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
-            "OBJ_102",
-            "OBJ_103"
+            "OBJ_101",
+            "OBJ_102"
          );
       };
-      "OBJ_102" = {
+      "OBJ_101" = {
          isa = "PBXBuildFile";
          fileRef = "KeychainAccess::KeychainAccess::Product";
       };
-      "OBJ_103" = {
+      "OBJ_102" = {
          isa = "PBXBuildFile";
          fileRef = "EFStorage::EFStorageCore::Product";
       };
-      "OBJ_104" = {
+      "OBJ_103" = {
          isa = "PBXTargetDependency";
          target = "KeychainAccess::KeychainAccess";
       };
-      "OBJ_106" = {
+      "OBJ_105" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageCore";
       };
-      "OBJ_108" = {
+      "OBJ_107" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_109",
-            "OBJ_110"
+            "OBJ_108",
+            "OBJ_109"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_108" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            LD = "/usr/bin/true";
+            OTHER_SWIFT_FLAGS = (
+               "-swift-version",
+               "5",
+               "-I",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
+               "-target",
+               "x86_64-apple-macosx10.10",
+               "-sdk",
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
+            );
+            SWIFT_VERSION = "5.0";
+         };
+         name = "Debug";
       };
       "OBJ_109" = {
          isa = "XCBuildConfiguration";
@@ -261,13 +275,11 @@
                "-target",
                "x86_64-apple-macosx10.10",
                "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5"
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
             );
             SWIFT_VERSION = "5.0";
          };
-         name = "Debug";
+         name = "Release";
       };
       "OBJ_11" = {
          isa = "PBXFileReference";
@@ -275,68 +287,88 @@
          sourceTree = "<group>";
       };
       "OBJ_110" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Release";
-      };
-      "OBJ_111" = {
          isa = "PBXSourcesBuildPhase";
          files = (
-            "OBJ_112"
+            "OBJ_111"
          );
       };
-      "OBJ_112" = {
+      "OBJ_111" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_6";
       };
-      "OBJ_114" = {
+      "OBJ_113" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_115",
-            "OBJ_116"
+            "OBJ_114",
+            "OBJ_115"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
       };
-      "OBJ_115" = {
+      "OBJ_114" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
          };
          name = "Debug";
       };
-      "OBJ_116" = {
+      "OBJ_115" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
          };
          name = "Release";
       };
-      "OBJ_117" = {
+      "OBJ_116" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageTests";
       };
-      "OBJ_119" = {
+      "OBJ_118" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_120",
-            "OBJ_121"
+            "OBJ_119",
+            "OBJ_120"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_119" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            CLANG_ENABLE_MODULES = "YES";
+            EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
+            );
+            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageTests_Info.plist";
+            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(inherited)",
+               "@loader_path/../Frameworks",
+               "@loader_path/Frameworks"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_CFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)"
+            );
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)"
+            );
+            SWIFT_VERSION = "5.0";
+            TARGET_NAME = "EFStorageTests";
+            TVOS_DEPLOYMENT_TARGET = "9.0";
+            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+         };
+         name = "Debug";
       };
       "OBJ_12" = {
          isa = "PBXFileReference";
@@ -381,27 +413,112 @@
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Debug";
+         name = "Release";
       };
       "OBJ_121" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_122",
+            "OBJ_123"
+         );
+      };
+      "OBJ_122" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_34";
+      };
+      "OBJ_123" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_35";
+      };
+      "OBJ_124" = {
+         isa = "PBXFrameworksBuildPhase";
+         files = (
+            "OBJ_125",
+            "OBJ_126",
+            "OBJ_127",
+            "OBJ_128",
+            "OBJ_129",
+            "OBJ_130"
+         );
+      };
+      "OBJ_125" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageYYCache::Product";
+      };
+      "OBJ_126" = {
+         isa = "PBXBuildFile";
+         fileRef = "YYCache::YYCache::Product";
+      };
+      "OBJ_127" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageUserDefaults::Product";
+      };
+      "OBJ_128" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageKeychainAccess::Product";
+      };
+      "OBJ_129" = {
+         isa = "PBXBuildFile";
+         fileRef = "KeychainAccess::KeychainAccess::Product";
+      };
+      "OBJ_13" = {
+         isa = "PBXFileReference";
+         path = "EFStorage.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_130" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageCore::Product";
+      };
+      "OBJ_131" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageYYCache";
+      };
+      "OBJ_132" = {
+         isa = "PBXTargetDependency";
+         target = "YYCache::YYCache";
+      };
+      "OBJ_134" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageUserDefaults";
+      };
+      "OBJ_135" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageKeychainAccess";
+      };
+      "OBJ_136" = {
+         isa = "PBXTargetDependency";
+         target = "KeychainAccess::KeychainAccess";
+      };
+      "OBJ_137" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageCore";
+      };
+      "OBJ_138" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_139",
+            "OBJ_140"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_139" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
-            CLANG_ENABLE_MODULES = "YES";
-            EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
+            ENABLE_TESTABILITY = "YES";
             FRAMEWORK_SEARCH_PATHS = (
                "$(inherited)",
                "$(PLATFORM_DIR)/Developer/Library/Frameworks"
             );
             HEADER_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
+               "$(inherited)"
             );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageTests_Info.plist";
+            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageUserDefaults_Info.plist";
             IPHONEOS_DEPLOYMENT_TARGET = "8.0";
             LD_RUNPATH_SEARCH_PATHS = (
                "$(inherited)",
-               "@loader_path/../Frameworks",
-               "@loader_path/Frameworks"
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
             );
             MACOSX_DEPLOYMENT_TARGET = "10.10";
             OTHER_CFLAGS = (
@@ -413,107 +530,23 @@
             OTHER_SWIFT_FLAGS = (
                "$(inherited)"
             );
+            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageUserDefaults";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
             SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
                "$(inherited)"
             );
             SWIFT_VERSION = "5.0";
-            TARGET_NAME = "EFStorageTests";
+            TARGET_NAME = "EFStorageUserDefaults";
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Release";
-      };
-      "OBJ_122" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_123",
-            "OBJ_124"
-         );
-      };
-      "OBJ_123" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_33";
-      };
-      "OBJ_124" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_34";
-      };
-      "OBJ_125" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-            "OBJ_126",
-            "OBJ_127",
-            "OBJ_128",
-            "OBJ_129",
-            "OBJ_130",
-            "OBJ_131"
-         );
-      };
-      "OBJ_126" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageYYCache::Product";
-      };
-      "OBJ_127" = {
-         isa = "PBXBuildFile";
-         fileRef = "YYCache::YYCache::Product";
-      };
-      "OBJ_128" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageUserDefaults::Product";
-      };
-      "OBJ_129" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageKeychainAccess::Product";
-      };
-      "OBJ_13" = {
-         isa = "PBXFileReference";
-         path = "EFStorage.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_130" = {
-         isa = "PBXBuildFile";
-         fileRef = "KeychainAccess::KeychainAccess::Product";
-      };
-      "OBJ_131" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageCore::Product";
-      };
-      "OBJ_132" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageYYCache";
-      };
-      "OBJ_133" = {
-         isa = "PBXTargetDependency";
-         target = "YYCache::YYCache";
-      };
-      "OBJ_135" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageUserDefaults";
-      };
-      "OBJ_136" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageKeychainAccess";
-      };
-      "OBJ_137" = {
-         isa = "PBXTargetDependency";
-         target = "KeychainAccess::KeychainAccess";
-      };
-      "OBJ_138" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageCore";
-      };
-      "OBJ_139" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_140",
-            "OBJ_141"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
+         name = "Debug";
       };
       "OBJ_14" = {
          isa = "PBXFileReference";
-         path = "EFUnderlyingStorage.swift";
+         path = "EFStorageInternal.swift";
          sourceTree = "<group>";
       };
       "OBJ_140" = {
@@ -555,9 +588,67 @@
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Debug";
+         name = "Release";
       };
       "OBJ_141" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_142",
+            "OBJ_143",
+            "OBJ_144",
+            "OBJ_145",
+            "OBJ_146"
+         );
+      };
+      "OBJ_142" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_23";
+      };
+      "OBJ_143" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_24";
+      };
+      "OBJ_144" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_25";
+      };
+      "OBJ_145" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_26";
+      };
+      "OBJ_146" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_27";
+      };
+      "OBJ_147" = {
+         isa = "PBXFrameworksBuildPhase";
+         files = (
+            "OBJ_148"
+         );
+      };
+      "OBJ_148" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageCore::Product";
+      };
+      "OBJ_149" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageCore";
+      };
+      "OBJ_15" = {
+         isa = "PBXFileReference";
+         path = "EFUnderlyingStorage.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_150" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_151",
+            "OBJ_152"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_151" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -566,9 +657,10 @@
                "$(PLATFORM_DIR)/Developer/Library/Frameworks"
             );
             HEADER_SEARCH_PATHS = (
-               "$(inherited)"
+               "$(inherited)",
+               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
             );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageUserDefaults_Info.plist";
+            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageYYCache_Info.plist";
             IPHONEOS_DEPLOYMENT_TARGET = "8.0";
             LD_RUNPATH_SEARCH_PATHS = (
                "$(inherited)",
@@ -584,7 +676,7 @@
             OTHER_SWIFT_FLAGS = (
                "$(inherited)"
             );
-            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageUserDefaults";
+            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageYYCache";
             PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
             PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
             SKIP_INSTALL = "YES";
@@ -592,77 +684,11 @@
                "$(inherited)"
             );
             SWIFT_VERSION = "5.0";
-            TARGET_NAME = "EFStorageUserDefaults";
+            TARGET_NAME = "EFStorageYYCache";
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Release";
-      };
-      "OBJ_142" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_143",
-            "OBJ_144",
-            "OBJ_145",
-            "OBJ_146",
-            "OBJ_147"
-         );
-      };
-      "OBJ_143" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_22";
-      };
-      "OBJ_144" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_23";
-      };
-      "OBJ_145" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_24";
-      };
-      "OBJ_146" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_25";
-      };
-      "OBJ_147" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_26";
-      };
-      "OBJ_148" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-            "OBJ_149"
-         );
-      };
-      "OBJ_149" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageCore::Product";
-      };
-      "OBJ_15" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_16",
-            "OBJ_17",
-            "OBJ_18",
-            "OBJ_19",
-            "OBJ_20"
-         );
-         name = "EFStorageKeychainAccess";
-         path = "Sources/EFStorageKeychainAccess";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_150" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageCore";
-      };
-      "OBJ_151" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_152",
-            "OBJ_153"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
+         name = "Debug";
       };
       "OBJ_152" = {
          isa = "XCBuildConfiguration";
@@ -704,9 +730,74 @@
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Debug";
+         name = "Release";
       };
       "OBJ_153" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_154",
+            "OBJ_155",
+            "OBJ_156"
+         );
+      };
+      "OBJ_154" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_29";
+      };
+      "OBJ_155" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_30";
+      };
+      "OBJ_156" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_31";
+      };
+      "OBJ_157" = {
+         isa = "PBXFrameworksBuildPhase";
+         files = (
+            "OBJ_158",
+            "OBJ_159"
+         );
+      };
+      "OBJ_158" = {
+         isa = "PBXBuildFile";
+         fileRef = "YYCache::YYCache::Product";
+      };
+      "OBJ_159" = {
+         isa = "PBXBuildFile";
+         fileRef = "EFStorage::EFStorageCore::Product";
+      };
+      "OBJ_16" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_17",
+            "OBJ_18",
+            "OBJ_19",
+            "OBJ_20",
+            "OBJ_21"
+         );
+         name = "EFStorageKeychainAccess";
+         path = "Sources/EFStorageKeychainAccess";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_160" = {
+         isa = "PBXTargetDependency";
+         target = "YYCache::YYCache";
+      };
+      "OBJ_161" = {
+         isa = "PBXTargetDependency";
+         target = "EFStorage::EFStorageCore";
+      };
+      "OBJ_162" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_163",
+            "OBJ_164"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_163" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -715,16 +806,13 @@
                "$(PLATFORM_DIR)/Developer/Library/Frameworks"
             );
             HEADER_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
+               "$(inherited)"
             );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageYYCache_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
+            INFOPLIST_FILE = "EFStorage.xcodeproj/KeychainAccess_Info.plist";
             LD_RUNPATH_SEARCH_PATHS = (
                "$(inherited)",
                "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
             );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
             OTHER_CFLAGS = (
                "$(inherited)"
             );
@@ -734,76 +822,17 @@
             OTHER_SWIFT_FLAGS = (
                "$(inherited)"
             );
-            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageYYCache";
+            PRODUCT_BUNDLE_IDENTIFIER = "KeychainAccess";
             PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
             PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
             SKIP_INSTALL = "YES";
             SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
                "$(inherited)"
             );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "EFStorageYYCache";
-            TVOS_DEPLOYMENT_TARGET = "9.0";
-            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+            SWIFT_VERSION = "4.0";
+            TARGET_NAME = "KeychainAccess";
          };
-         name = "Release";
-      };
-      "OBJ_154" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_155",
-            "OBJ_156",
-            "OBJ_157"
-         );
-      };
-      "OBJ_155" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_28";
-      };
-      "OBJ_156" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_29";
-      };
-      "OBJ_157" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_30";
-      };
-      "OBJ_158" = {
-         isa = "PBXFrameworksBuildPhase";
-         files = (
-            "OBJ_159",
-            "OBJ_160"
-         );
-      };
-      "OBJ_159" = {
-         isa = "PBXBuildFile";
-         fileRef = "YYCache::YYCache::Product";
-      };
-      "OBJ_16" = {
-         isa = "PBXFileReference";
-         path = "EFStorage+KeychainAccess.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_160" = {
-         isa = "PBXBuildFile";
-         fileRef = "EFStorage::EFStorageCore::Product";
-      };
-      "OBJ_161" = {
-         isa = "PBXTargetDependency";
-         target = "YYCache::YYCache";
-      };
-      "OBJ_162" = {
-         isa = "PBXTargetDependency";
-         target = "EFStorage::EFStorageCore";
-      };
-      "OBJ_163" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_164",
-            "OBJ_165"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
+         name = "Debug";
       };
       "OBJ_164" = {
          isa = "XCBuildConfiguration";
@@ -840,73 +869,54 @@
             SWIFT_VERSION = "4.0";
             TARGET_NAME = "KeychainAccess";
          };
-         name = "Debug";
-      };
-      "OBJ_165" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/KeychainAccess_Info.plist";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "KeychainAccess";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "4.0";
-            TARGET_NAME = "KeychainAccess";
-         };
          name = "Release";
       };
-      "OBJ_166" = {
+      "OBJ_165" = {
          isa = "PBXSourcesBuildPhase";
          files = (
-            "OBJ_167"
+            "OBJ_166"
          );
       };
-      "OBJ_167" = {
+      "OBJ_166" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_50";
+         fileRef = "OBJ_51";
       };
-      "OBJ_168" = {
+      "OBJ_167" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
          );
       };
-      "OBJ_17" = {
-         isa = "PBXFileReference";
-         path = "KeychainAccess+Codable.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_170" = {
+      "OBJ_169" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_171",
-            "OBJ_172"
+            "OBJ_170",
+            "OBJ_171"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_17" = {
+         isa = "PBXFileReference";
+         path = "EFStorage+KeychainAccess.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_170" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            LD = "/usr/bin/true";
+            OTHER_SWIFT_FLAGS = (
+               "-swift-version",
+               "4",
+               "-I",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4",
+               "-target",
+               "x86_64-apple-macosx10.10",
+               "-sdk",
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
+            );
+            SWIFT_VERSION = "4.0";
+         };
+         name = "Debug";
       };
       "OBJ_171" = {
          isa = "XCBuildConfiguration";
@@ -920,52 +930,73 @@
                "-target",
                "x86_64-apple-macosx10.10",
                "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "4"
-            );
-            SWIFT_VERSION = "4.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_172" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "4",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "4"
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
             );
             SWIFT_VERSION = "4.0";
          };
          name = "Release";
       };
-      "OBJ_173" = {
+      "OBJ_172" = {
          isa = "PBXSourcesBuildPhase";
          files = (
-            "OBJ_174"
+            "OBJ_173"
          );
       };
-      "OBJ_174" = {
+      "OBJ_173" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_51";
+         fileRef = "OBJ_52";
       };
-      "OBJ_175" = {
+      "OBJ_174" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_176",
-            "OBJ_177"
+            "OBJ_175",
+            "OBJ_176"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_175" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            CLANG_ENABLE_MODULES = "YES";
+            DEFINES_MODULE = "YES";
+            ENABLE_TESTABILITY = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
+            );
+            INFOPLIST_FILE = "EFStorage.xcodeproj/YYCache_Info.plist";
+            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_CFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)"
+            );
+            PRODUCT_BUNDLE_IDENTIFIER = "YYCache";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)"
+            );
+            TARGET_NAME = "YYCache";
+            TVOS_DEPLOYMENT_TARGET = "9.0";
+            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+         };
+         name = "Debug";
       };
       "OBJ_176" = {
          isa = "XCBuildConfiguration";
@@ -1008,100 +1039,48 @@
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Debug";
-      };
-      "OBJ_177" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            CLANG_ENABLE_MODULES = "YES";
-            DEFINES_MODULE = "YES";
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(SRCROOT)/.build/checkouts/YYCache/YYCache/include"
-            );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/YYCache_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "YYCache";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            TARGET_NAME = "YYCache";
-            TVOS_DEPLOYMENT_TARGET = "9.0";
-            WATCHOS_DEPLOYMENT_TARGET = "2.0";
-         };
          name = "Release";
       };
-      "OBJ_178" = {
+      "OBJ_177" = {
          isa = "PBXSourcesBuildPhase";
          files = (
+            "OBJ_178",
             "OBJ_179",
             "OBJ_180",
-            "OBJ_181",
-            "OBJ_182"
+            "OBJ_181"
          );
+      };
+      "OBJ_178" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_39";
       };
       "OBJ_179" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_38";
+         fileRef = "OBJ_40";
       };
       "OBJ_18" = {
          isa = "PBXFileReference";
-         path = "KeychainAccess+NSCoding.swift";
+         path = "KeychainAccess+Codable.swift";
          sourceTree = "<group>";
       };
       "OBJ_180" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_39";
+         fileRef = "OBJ_41";
       };
       "OBJ_181" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_40";
+         fileRef = "OBJ_42";
       };
       "OBJ_182" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_41";
-      };
-      "OBJ_183" = {
          isa = "PBXHeadersBuildPhase";
          files = (
+            "OBJ_183",
             "OBJ_184",
             "OBJ_185",
-            "OBJ_186",
-            "OBJ_187"
+            "OBJ_186"
          );
       };
-      "OBJ_184" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_43";
-         settings = {
-            ATTRIBUTES = (
-               "Public"
-            );
-         };
-      };
-      "OBJ_185" = {
+      "OBJ_183" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_44";
          settings = {
@@ -1110,7 +1089,7 @@
             );
          };
       };
-      "OBJ_186" = {
+      "OBJ_184" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_45";
          settings = {
@@ -1119,7 +1098,7 @@
             );
          };
       };
-      "OBJ_187" = {
+      "OBJ_185" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_46";
          settings = {
@@ -1128,24 +1107,51 @@
             );
          };
       };
-      "OBJ_188" = {
+      "OBJ_186" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_47";
+         settings = {
+            ATTRIBUTES = (
+               "Public"
+            );
+         };
+      };
+      "OBJ_187" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
          );
       };
-      "OBJ_19" = {
-         isa = "PBXFileReference";
-         path = "KeychainAccess+Primitives.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_190" = {
+      "OBJ_189" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_191",
-            "OBJ_192"
+            "OBJ_190",
+            "OBJ_191"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_19" = {
+         isa = "PBXFileReference";
+         path = "KeychainAccess+NSCoding.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_190" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            LD = "/usr/bin/true";
+            OTHER_SWIFT_FLAGS = (
+               "-swift-version",
+               "5",
+               "-I",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
+               "-target",
+               "x86_64-apple-macosx10.10",
+               "-sdk",
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
+            );
+            SWIFT_VERSION = "5.0";
+         };
+         name = "Debug";
       };
       "OBJ_191" = {
          isa = "XCBuildConfiguration";
@@ -1159,43 +1165,21 @@
                "-target",
                "x86_64-apple-macosx10.10",
                "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.1"
-            );
-            SWIFT_VERSION = "5.0";
-         };
-         name = "Debug";
-      };
-      "OBJ_192" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            LD = "/usr/bin/true";
-            OTHER_SWIFT_FLAGS = (
-               "-swift-version",
-               "5",
-               "-I",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/pm/4_2",
-               "-target",
-               "x86_64-apple-macosx10.10",
-               "-sdk",
-               "/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk",
-               "-package-description-version",
-               "5.1"
+               "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk"
             );
             SWIFT_VERSION = "5.0";
          };
          name = "Release";
       };
-      "OBJ_193" = {
+      "OBJ_192" = {
          isa = "PBXSourcesBuildPhase";
          files = (
-            "OBJ_194"
+            "OBJ_193"
          );
       };
-      "OBJ_194" = {
+      "OBJ_193" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_47";
+         fileRef = "OBJ_48";
       };
       "OBJ_2" = {
          isa = "XCConfigurationList";
@@ -1208,66 +1192,66 @@
       };
       "OBJ_20" = {
          isa = "PBXFileReference";
-         path = "KeychainAccess+RawRepresentable.swift";
+         path = "KeychainAccess+Primitives.swift";
          sourceTree = "<group>";
       };
       "OBJ_21" = {
+         isa = "PBXFileReference";
+         path = "KeychainAccess+RawRepresentable.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_22" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_22",
             "OBJ_23",
             "OBJ_24",
             "OBJ_25",
-            "OBJ_26"
+            "OBJ_26",
+            "OBJ_27"
          );
          name = "EFStorageUserDefaults";
          path = "Sources/EFStorageUserDefaults";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_22" = {
+      "OBJ_23" = {
          isa = "PBXFileReference";
          path = "EFStorage+UserDefaults.swift";
          sourceTree = "<group>";
       };
-      "OBJ_23" = {
+      "OBJ_24" = {
          isa = "PBXFileReference";
          path = "UserDefaults+Codable.swift";
          sourceTree = "<group>";
       };
-      "OBJ_24" = {
+      "OBJ_25" = {
          isa = "PBXFileReference";
          path = "UserDefaults+NSCoding.swift";
          sourceTree = "<group>";
       };
-      "OBJ_25" = {
+      "OBJ_26" = {
          isa = "PBXFileReference";
          path = "UserDefaults+Primitives.swift";
          sourceTree = "<group>";
       };
-      "OBJ_26" = {
+      "OBJ_27" = {
          isa = "PBXFileReference";
          path = "UserDefaults+RawRepresentable.swift";
          sourceTree = "<group>";
       };
-      "OBJ_27" = {
+      "OBJ_28" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_28",
             "OBJ_29",
-            "OBJ_30"
+            "OBJ_30",
+            "OBJ_31"
          );
          name = "EFStorageYYCache";
          path = "Sources/EFStorageYYCache";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_28" = {
-         isa = "PBXFileReference";
-         path = "EFStorage+YYCache.swift";
-         sourceTree = "<group>";
-      };
       "OBJ_29" = {
          isa = "PBXFileReference";
-         path = "YYCache+Codable.swift";
+         path = "EFStorage+YYCache.swift";
          sourceTree = "<group>";
       };
       "OBJ_3" = {
@@ -1288,7 +1272,6 @@
             MACOSX_DEPLOYMENT_TARGET = "10.10";
             ONLY_ACTIVE_ARCH = "YES";
             OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
                "-DXcode"
             );
             PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1314,79 +1297,79 @@
       };
       "OBJ_30" = {
          isa = "PBXFileReference";
-         path = "YYCache+NSCoding.swift";
+         path = "YYCache+Codable.swift";
          sourceTree = "<group>";
       };
       "OBJ_31" = {
+         isa = "PBXFileReference";
+         path = "YYCache+NSCoding.swift";
+         sourceTree = "<group>";
+      };
+      "OBJ_32" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_32"
+            "OBJ_33"
          );
          name = "Tests";
          path = "";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_32" = {
+      "OBJ_33" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_33",
-            "OBJ_34"
+            "OBJ_34",
+            "OBJ_35"
          );
          name = "EFStorageTests";
          path = "Tests/EFStorageTests";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_33" = {
+      "OBJ_34" = {
          isa = "PBXFileReference";
          path = "EFStorageTests.swift";
          sourceTree = "<group>";
       };
-      "OBJ_34" = {
+      "OBJ_35" = {
          isa = "PBXFileReference";
          path = "XCTestManifests.swift";
-         sourceTree = "<group>";
-      };
-      "OBJ_35" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_36",
-            "OBJ_48"
-         );
-         name = "Dependencies";
-         path = "";
          sourceTree = "<group>";
       };
       "OBJ_36" = {
          isa = "PBXGroup";
          children = (
             "OBJ_37",
-            "OBJ_47"
+            "OBJ_49"
          );
-         name = "YYCache";
+         name = "Dependencies";
          path = "";
-         sourceTree = "SOURCE_ROOT";
+         sourceTree = "<group>";
       };
       "OBJ_37" = {
          isa = "PBXGroup";
          children = (
             "OBJ_38",
+            "OBJ_48"
+         );
+         name = "YYCache";
+         path = "";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_38" = {
+         isa = "PBXGroup";
+         children = (
             "OBJ_39",
             "OBJ_40",
             "OBJ_41",
-            "OBJ_42"
+            "OBJ_42",
+            "OBJ_43"
          );
          name = "YYCache";
          path = ".build/checkouts/YYCache/YYCache";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_38" = {
-         isa = "PBXFileReference";
-         path = "YYCache.m";
-         sourceTree = "<group>";
-      };
       "OBJ_39" = {
          isa = "PBXFileReference";
-         path = "YYDiskCache.m";
+         path = "YYCache.m";
          sourceTree = "<group>";
       };
       "OBJ_4" = {
@@ -1404,7 +1387,6 @@
             );
             MACOSX_DEPLOYMENT_TARGET = "10.10";
             OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
                "-DXcode"
             );
             PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1429,70 +1411,66 @@
       };
       "OBJ_40" = {
          isa = "PBXFileReference";
-         path = "YYKVStorage.m";
+         path = "YYDiskCache.m";
          sourceTree = "<group>";
       };
       "OBJ_41" = {
          isa = "PBXFileReference";
-         path = "YYMemoryCache.m";
+         path = "YYKVStorage.m";
          sourceTree = "<group>";
       };
       "OBJ_42" = {
+         isa = "PBXFileReference";
+         path = "YYMemoryCache.m";
+         sourceTree = "<group>";
+      };
+      "OBJ_43" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_43",
             "OBJ_44",
             "OBJ_45",
-            "OBJ_46"
+            "OBJ_46",
+            "OBJ_47"
          );
          name = "include";
          path = "include";
          sourceTree = "<group>";
       };
-      "OBJ_43" = {
+      "OBJ_44" = {
          isa = "PBXFileReference";
          path = "YYKVStorage.h";
          sourceTree = "<group>";
       };
-      "OBJ_44" = {
+      "OBJ_45" = {
          isa = "PBXFileReference";
          path = "YYMemoryCache.h";
          sourceTree = "<group>";
       };
-      "OBJ_45" = {
+      "OBJ_46" = {
          isa = "PBXFileReference";
          path = "YYDiskCache.h";
          sourceTree = "<group>";
       };
-      "OBJ_46" = {
+      "OBJ_47" = {
          isa = "PBXFileReference";
          path = "YYCache.h";
          sourceTree = "<group>";
       };
-      "OBJ_47" = {
+      "OBJ_48" = {
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/apollonian/Documents/GitHub/EFStorage/.build/checkouts/YYCache/Package.swift";
+         path = "/Users/apollonyan/Documents/Git-Repo/EFStorage/.build/checkouts/YYCache/Package.swift";
          sourceTree = "<group>";
-      };
-      "OBJ_48" = {
-         isa = "PBXGroup";
-         children = (
-            "OBJ_49",
-            "OBJ_51"
-         );
-         name = "KeychainAccess 3.2.0";
-         path = "";
-         sourceTree = "SOURCE_ROOT";
       };
       "OBJ_49" = {
          isa = "PBXGroup";
          children = (
-            "OBJ_50"
+            "OBJ_50",
+            "OBJ_52"
          );
-         name = "KeychainAccess";
-         path = ".build/checkouts/KeychainAccess/Lib/KeychainAccess";
+         name = "KeychainAccess 3.2.0";
+         path = "";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_5" = {
@@ -1500,44 +1478,50 @@
          children = (
             "OBJ_6",
             "OBJ_7",
-            "OBJ_31",
-            "OBJ_35",
-            "OBJ_52",
-            "OBJ_60",
+            "OBJ_32",
+            "OBJ_36",
+            "OBJ_53",
             "OBJ_61",
             "OBJ_62",
             "OBJ_63",
             "OBJ_64",
             "OBJ_65",
-            "OBJ_66",
-            "OBJ_67",
-            "OBJ_68"
+            "OBJ_66"
          );
          path = "";
          sourceTree = "<group>";
       };
       "OBJ_50" = {
+         isa = "PBXGroup";
+         children = (
+            "OBJ_51"
+         );
+         name = "KeychainAccess";
+         path = ".build/checkouts/KeychainAccess/Lib/KeychainAccess";
+         sourceTree = "SOURCE_ROOT";
+      };
+      "OBJ_51" = {
          isa = "PBXFileReference";
          path = "Keychain.swift";
          sourceTree = "<group>";
       };
-      "OBJ_51" = {
+      "OBJ_52" = {
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/apollonian/Documents/GitHub/EFStorage/.build/checkouts/KeychainAccess/Package.swift";
+         path = "/Users/apollonyan/Documents/Git-Repo/EFStorage/.build/checkouts/KeychainAccess/Package.swift";
          sourceTree = "<group>";
       };
-      "OBJ_52" = {
+      "OBJ_53" = {
          isa = "PBXGroup";
          children = (
-            "EFStorage::EFStorageCore::Product",
-            "EFStorage::EFStorageYYCache::Product",
-            "EFStorage::EFStorageKeychainAccess::Product",
-            "KeychainAccess::KeychainAccess::Product",
-            "EFStorage::EFStorageTests::Product",
             "YYCache::YYCache::Product",
-            "EFStorage::EFStorageUserDefaults::Product"
+            "EFStorage::EFStorageTests::Product",
+            "EFStorage::EFStorageKeychainAccess::Product",
+            "EFStorage::EFStorageYYCache::Product",
+            "EFStorage::EFStorageCore::Product",
+            "EFStorage::EFStorageUserDefaults::Product",
+            "KeychainAccess::KeychainAccess::Product"
          );
          name = "Products";
          path = "";
@@ -1549,11 +1533,6 @@
          path = "Package.swift";
          sourceTree = "<group>";
       };
-      "OBJ_60" = {
-         isa = "PBXFileReference";
-         path = "Cocoapods.xcworkspace";
-         sourceTree = "SOURCE_ROOT";
-      };
       "OBJ_61" = {
          isa = "PBXFileReference";
          path = "Example";
@@ -1561,7 +1540,7 @@
       };
       "OBJ_62" = {
          isa = "PBXFileReference";
-         path = "Pods";
+         path = "wiki";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_63" = {
@@ -1584,64 +1563,63 @@
          path = "README.md";
          sourceTree = "<group>";
       };
-      "OBJ_67" = {
-         isa = "PBXFileReference";
-         path = "Podfile";
-         sourceTree = "<group>";
-      };
       "OBJ_68" = {
-         isa = "PBXFileReference";
-         path = "Podfile.lock";
-         sourceTree = "<group>";
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_69",
+            "OBJ_70"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
+      };
+      "OBJ_69" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+         };
+         name = "Debug";
       };
       "OBJ_7" = {
          isa = "PBXGroup";
          children = (
             "OBJ_8",
-            "OBJ_15",
-            "OBJ_21",
-            "OBJ_27"
+            "OBJ_16",
+            "OBJ_22",
+            "OBJ_28"
          );
          name = "Sources";
          path = "";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_70" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_71",
-            "OBJ_72"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_71" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-         };
-         name = "Debug";
-      };
-      "OBJ_72" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
          };
          name = "Release";
       };
-      "OBJ_73" = {
+      "OBJ_71" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageCore";
       };
-      "OBJ_75" = {
+      "OBJ_73" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageKeychainAccess";
       };
-      "OBJ_77" = {
+      "OBJ_75" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageUserDefaults";
       };
-      "OBJ_79" = {
+      "OBJ_77" = {
          isa = "PBXTargetDependency";
          target = "EFStorage::EFStorageYYCache";
+      };
+      "OBJ_79" = {
+         isa = "XCConfigurationList";
+         buildConfigurations = (
+            "OBJ_80",
+            "OBJ_81"
+         );
+         defaultConfigurationIsVisible = "0";
+         defaultConfigurationName = "Release";
       };
       "OBJ_8" = {
          isa = "PBXGroup";
@@ -1651,22 +1629,14 @@
             "OBJ_11",
             "OBJ_12",
             "OBJ_13",
-            "OBJ_14"
+            "OBJ_14",
+            "OBJ_15"
          );
          name = "EFStorageCore";
          path = "Sources/EFStorageCore";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_81" = {
-         isa = "XCConfigurationList";
-         buildConfigurations = (
-            "OBJ_82",
-            "OBJ_83"
-         );
-         defaultConfigurationIsVisible = "0";
-         defaultConfigurationName = "Release";
-      };
-      "OBJ_82" = {
+      "OBJ_80" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -1707,7 +1677,7 @@
          };
          name = "Debug";
       };
-      "OBJ_83" = {
+      "OBJ_81" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -1748,36 +1718,45 @@
          };
          name = "Release";
       };
-      "OBJ_84" = {
+      "OBJ_82" = {
          isa = "PBXSourcesBuildPhase";
          files = (
+            "OBJ_83",
+            "OBJ_84",
             "OBJ_85",
             "OBJ_86",
             "OBJ_87",
             "OBJ_88",
-            "OBJ_89",
-            "OBJ_90"
+            "OBJ_89"
          );
       };
-      "OBJ_85" = {
+      "OBJ_83" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_9";
       };
-      "OBJ_86" = {
+      "OBJ_84" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_10";
       };
-      "OBJ_87" = {
+      "OBJ_85" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_11";
       };
-      "OBJ_88" = {
+      "OBJ_86" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_12";
       };
-      "OBJ_89" = {
+      "OBJ_87" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_13";
+      };
+      "OBJ_88" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_14";
+      };
+      "OBJ_89" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_15";
       };
       "OBJ_9" = {
          isa = "PBXFileReference";
@@ -1785,22 +1764,59 @@
          sourceTree = "<group>";
       };
       "OBJ_90" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_14";
-      };
-      "OBJ_91" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
          );
       };
-      "OBJ_92" = {
+      "OBJ_91" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            "OBJ_93",
-            "OBJ_94"
+            "OBJ_92",
+            "OBJ_93"
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Release";
+      };
+      "OBJ_92" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            ENABLE_TESTABILITY = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)"
+            );
+            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageKeychainAccess_Info.plist";
+            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
+            );
+            MACOSX_DEPLOYMENT_TARGET = "10.10";
+            OTHER_CFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)"
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)"
+            );
+            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageKeychainAccess";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
+               "$(inherited)"
+            );
+            SWIFT_VERSION = "5.0";
+            TARGET_NAME = "EFStorageKeychainAccess";
+            TVOS_DEPLOYMENT_TARGET = "9.0";
+            WATCHOS_DEPLOYMENT_TARGET = "2.0";
+         };
+         name = "Debug";
       };
       "OBJ_93" = {
          isa = "XCBuildConfiguration";
@@ -1841,80 +1857,43 @@
             TVOS_DEPLOYMENT_TARGET = "9.0";
             WATCHOS_DEPLOYMENT_TARGET = "2.0";
          };
-         name = "Debug";
-      };
-      "OBJ_94" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)"
-            );
-            INFOPLIST_FILE = "EFStorage.xcodeproj/EFStorageKeychainAccess_Info.plist";
-            IPHONEOS_DEPLOYMENT_TARGET = "8.0";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"
-            );
-            MACOSX_DEPLOYMENT_TARGET = "10.10";
-            OTHER_CFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)"
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)"
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "EFStorageKeychainAccess";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_ACTIVE_COMPILATION_CONDITIONS = (
-               "$(inherited)"
-            );
-            SWIFT_VERSION = "5.0";
-            TARGET_NAME = "EFStorageKeychainAccess";
-            TVOS_DEPLOYMENT_TARGET = "9.0";
-            WATCHOS_DEPLOYMENT_TARGET = "2.0";
-         };
          name = "Release";
       };
-      "OBJ_95" = {
+      "OBJ_94" = {
          isa = "PBXSourcesBuildPhase";
          files = (
+            "OBJ_95",
             "OBJ_96",
             "OBJ_97",
             "OBJ_98",
-            "OBJ_99",
-            "OBJ_100"
+            "OBJ_99"
          );
       };
-      "OBJ_96" = {
-         isa = "PBXBuildFile";
-         fileRef = "OBJ_16";
-      };
-      "OBJ_97" = {
+      "OBJ_95" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_17";
       };
-      "OBJ_98" = {
+      "OBJ_96" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_18";
       };
-      "OBJ_99" = {
+      "OBJ_97" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_19";
       };
+      "OBJ_98" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_20";
+      };
+      "OBJ_99" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_21";
+      };
       "YYCache::SwiftPMPackageDescription" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_190";
+         buildConfigurationList = "OBJ_189";
          buildPhases = (
-            "OBJ_193"
+            "OBJ_192"
          );
          dependencies = (
          );
@@ -1924,11 +1903,11 @@
       };
       "YYCache::YYCache" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_175";
+         buildConfigurationList = "OBJ_174";
          buildPhases = (
-            "OBJ_178",
-            "OBJ_183",
-            "OBJ_188"
+            "OBJ_177",
+            "OBJ_182",
+            "OBJ_187"
          );
          dependencies = (
          );

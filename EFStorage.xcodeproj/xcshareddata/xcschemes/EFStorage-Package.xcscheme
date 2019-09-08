@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFStorage::EFStorageKeychainAccess"
-               BuildableName = "EFStorageKeychainAccess.framework"
-               BlueprintName = "EFStorageKeychainAccess"
+               BlueprintIdentifier = "EFStorage::EFStorageCore"
+               BuildableName = "EFStorageCore.framework"
+               BlueprintName = "EFStorageCore"
                ReferencedContainer = "container:EFStorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFStorage::EFStorageCore"
-               BuildableName = "EFStorageCore.framework"
-               BlueprintName = "EFStorageCore"
+               BlueprintIdentifier = "EFStorage::EFStorageKeychainAccess"
+               BuildableName = "EFStorageKeychainAccess.framework"
+               BlueprintName = "EFStorageKeychainAccess"
                ReferencedContainer = "container:EFStorage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
