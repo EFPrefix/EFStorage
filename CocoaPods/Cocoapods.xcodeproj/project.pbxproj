@@ -25,7 +25,7 @@
 		0A4959AE69C35E25542D4D8C /* Pods_CocoaPods_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CocoaPods_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		491FC3F856F0991564F61038 /* Pods-Cocoapods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cocoapods.release.xcconfig"; path = "Target Support Files/Pods-Cocoapods/Pods-Cocoapods.release.xcconfig"; sourceTree = "<group>"; };
 		529ED188231784F50011606E /* Cocoapods.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cocoapods.entitlements; sourceTree = "<group>"; };
-		52BAC9CA230A478800982784 /* Cocoapods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cocoapods.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52BAC9CA230A478800982784 /* EFStorage Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EFStorage Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52BAC9CD230A478800982784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52BAC9CF230A478800982784 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52BAC9D1230A478800982784 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -33,7 +33,7 @@
 		52BAC9D6230A478900982784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52BAC9D9230A478900982784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52BAC9DB230A478900982784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		52CDE017230FC838000DFF4B /* CocoaPods-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CocoaPods-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52CDE017230FC838000DFF4B /* EFStorage Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EFStorage Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52CDE019230FC838000DFF4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52CDE01B230FC838000DFF4B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		52CDE01D230FC839000DFF4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,8 +80,8 @@
 		52BAC9CB230A478800982784 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				52BAC9CA230A478800982784 /* Cocoapods.app */,
-				52CDE017230FC838000DFF4B /* CocoaPods-macOS.app */,
+				52BAC9CA230A478800982784 /* EFStorage Demo.app */,
+				52CDE017230FC838000DFF4B /* EFStorage Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,7 +153,7 @@
 			);
 			name = Cocoapods;
 			productName = Cocoapods;
-			productReference = 52BAC9CA230A478800982784 /* Cocoapods.app */;
+			productReference = 52BAC9CA230A478800982784 /* EFStorage Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		52CDE016230FC838000DFF4B /* CocoaPods-macOS */ = {
@@ -172,7 +172,7 @@
 			);
 			name = "CocoaPods-macOS";
 			productName = "CocoaPods-macOS";
-			productReference = 52CDE017230FC838000DFF4B /* CocoaPods-macOS.app */;
+			productReference = 52CDE017230FC838000DFF4B /* EFStorage Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -493,7 +493,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.az.EFStorage.Cocoapods;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EFStorage Demo";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -513,7 +513,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.eyrefree.az.EFStorage.Cocoapods;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EFStorage Demo";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -534,7 +534,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.az.EFStorage.CocoaPods-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EFStorage Demo";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 			};
@@ -555,7 +555,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.eyrefree.az.EFStorage.CocoaPods-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EFStorage Demo";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 			};

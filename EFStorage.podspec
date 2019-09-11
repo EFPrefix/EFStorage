@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EFStorage'
-  s.version          = '0.1.1'
-  s.summary          = 'Store anything anywhere with ease.'
+  s.version          = '0.2.0'
+  s.summary          = 'A Swifty storage solution.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -56,7 +56,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'YYCache' do |sp|
     sp.platform = :ios
-    sp.source_files = 'Sources/YYCache'
+    sp.source_files = 'Sources/EFStorageYYCache'
     sp.dependency 'YYCache', '~> 1.0.4'
     sp.dependency 'EFStorage/Core'
   end
