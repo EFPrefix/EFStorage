@@ -11,6 +11,8 @@ import EFStorage
 import KeychainAccess
 import YYCache
 
+// MARK: - Replace default container
+
 extension UserDefaults {
     private static let forAppGroup = UserDefaults(
         suiteName: kSecAttrAccessGroup as String
@@ -23,7 +25,9 @@ extension UserDefaults {
     }
 }
 
-extension UIImage: YYCacheStorable { }
+// MARK: - Make custom types storable in some EFStorage
+
+extension UIImage: YYCacheStorable { } // Auto synthesized implmentation for NSCoding
 
 extension Bool: KeychainAccessStorable {
     public func asKeychainStorable() -> KeychainAccessStorable! {
@@ -36,6 +40,8 @@ extension Bool: KeychainAccessStorable {
     }
 }
 
+// MARK: Allow optional default value
+
 extension Optional: UserDefaultsStorable where Wrapped: UserDefaultsStorable {
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Optional<Wrapped>? {
         return Wrapped.fromUserDefaults(userDefaults, forKey: key)
@@ -45,6 +51,8 @@ extension Optional: UserDefaultsStorable where Wrapped: UserDefaultsStorable {
         return self.flatMap { $0.asUserDefaultsStorable() }
     }
 }
+
+// MARK: - Property wrapper usage
 
 class ViewController: UIViewController {
     @EFStorageYYCache(forKey: "image", defaultsTo: UIImage(systemName: "hare") ?? UIImage())

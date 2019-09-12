@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Protocol for some `EFSingleInstanceStorageReference` and `EFStorage`.
 @dynamicMemberLookup
 public protocol EFOptionalContentWrapper {
     associatedtype Content
@@ -30,6 +31,7 @@ public extension EFOptionalContentWrapper {
 }
 
 public extension EFOptionalContentWrapper where Content: NSString {
+    /// Convert to and from NSString
     var string: String? {
         get {
             return content as String?

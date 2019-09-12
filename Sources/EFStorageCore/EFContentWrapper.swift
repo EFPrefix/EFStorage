@@ -34,6 +34,7 @@ public extension EFContentWrapper {
 }
 
 public extension EFContentWrapper where Content: NSString {
+    /// Convert to and from NSString
     var string: String {
         get {
             return wrappedValue as String

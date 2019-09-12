@@ -14,12 +14,14 @@ public protocol EFFailableUnderlyingStorage: EFUnderlyingStorage {
 }
 
 extension EFFailableUnderlyingStorage {
+    /// Returns the default storage or **TRAP**.
     public dynamic static func makeDefault() -> Self {
         return makeDefault()!
     }
 }
 
 extension Optional: EFUnderlyingStorage where Wrapped: EFFailableUnderlyingStorage {
+    /// Return the default storage or `nil`.
     public dynamic static func makeDefault() -> Self {
         return Wrapped.makeDefault() ?? nil
     }

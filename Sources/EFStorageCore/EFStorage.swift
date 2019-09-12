@@ -8,6 +8,19 @@
 @dynamicMemberLookup
 public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 
+/// A wrapper around some kind of `EFStorage`.
+///
+/// This is especially useful when you don't want to expose the exact type,
+/// or as a property wrapper when underlying implementation
+/// is composed using `+` from many `EFStorage`s like this:
+///
+///     @SomeEFStorage(
+///         EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
+///         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
+///         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey",
+///                                 defaultsTo: true,
+///                                 persistDefaultContent: true))
+///     var hasPaidBefore: Bool
 @propertyWrapper
 public class SomeEFStorage<Storage: EFStorage, Content>: EFStorage where Storage.Content == Content {
     public var content: Content? {
@@ -28,12 +41,31 @@ public class SomeEFStorage<Storage: EFStorage, Content>: EFStorage where Storage
 }
 
 public extension EFStorage {
+    /// Compose two `EFStorage`s together.
+    /// - Parameter lhs: prioritized storage.
+    /// - Parameter rhs: secondary storage.
+    ///
+    /// You can use this to combine multiple `EFStorage`s together, then pass it to `SomeEFStorage`:
+    ///
+    ///     @SomeEFStorage(
+    ///         EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
+    ///         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
+    ///         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey",
+    ///                                 defaultsTo: true,
+    ///                                 persistDefaultContent: true))
+    ///     var hasPaidBefore: Bool
     static func +<AnotherStorage: EFStorage>(lhs: Self, rhs: AnotherStorage)
         -> EFStorageComposition<Self, AnotherStorage, Content> {
             return EFStorageComposition(lhs, rhs)
     }
 }
 
+/// Combine two `EFStorage`s into one.
+///
+///     @EFStorageComposition(
+///         EFStorageUserDefaults(forKey: "isNewUser", defaultsTo: false),
+///         EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
+///     var isNewUser: Bool
 @propertyWrapper
 public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
 : EFStorage where Content == A.Content, Content == B.Content {
@@ -65,7 +97,24 @@ public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
     }
 }
 
-/// Only for migration purposes. Setting the content/wrappedValue does nothing.
+/// Read-only storage that migrates content from one data type to another.
+///
+/// This is very useful when the old storage has a different data type than the new one.
+///
+///     @EFStorageComposition(
+///         EFStorageUserDefaults<String>(forKey: "sameKey",
+///                                       defaultsTo: "Nah"),
+///         EFStorageMigrate(
+///             from: EFStorageUserDefaults<Int>(
+///                 forKey: "sameKey",
+///                 defaultsTo: 1551,
+///                 persistDefaultContent: true),
+///             by: { number in String(number) }
+///         )
+///     )
+///     var mixedType: String
+///
+/// - Important: Only for migration purposes. Setting the content/wrappedValue does nothing.
 public struct EFStorageMigrate<A: EFStorage, OldContent, Content>
 : EFStorage where A.Content == OldContent {
     public typealias Migrator = (OldContent) -> Content

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Supposedly singleton protocol if you only make instances using the `forKey(_:in:)` statis method.
 @dynamicMemberLookup
 public protocol EFSingleInstanceStorageReference: AnyObject, EFOptionalContentWrapper, CustomDebugStringConvertible {
     associatedtype Storage: EFUnderlyingStorage
@@ -27,6 +28,9 @@ extension EFSingleInstanceStorageReference {
         return "\(storageName)[\(key)] : \(content.debugDescription)"
     }
     
+    /// Make reference into `storage`, identified by `key`.
+    /// - Parameter key: identifier for the stored content.
+    /// - Parameter storage: where content should be stored to.
     public static func forKey(_ key: String, in storage: Storage = Storage.makeDefault()) -> Self {
         return _EFStorageInternal.modify { record in
             return make(forKey: key, in: storage, record: &record)
