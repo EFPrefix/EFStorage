@@ -21,7 +21,7 @@ extension YYCache: EFFailableUnderlyingStorage {
 }
 
 public protocol YYCacheStorable {
-    func asYYCacheStorable() -> YYCacheStorable!
+    func asYYCacheStorable() -> Result<NSCoding, Error>
     static func fromYYCache(_ yyCache: YYCache, forKey key: String) -> Self?
 }
 
@@ -44,16 +44,20 @@ public class EFStorageYYCacheRef<Content: YYCacheStorable>
                 storage?.removeObject(forKey: key)
                 return
             }
-            guard let storable = newValue.asYYCacheStorable() as? NSCoding else {
-                assertionFailure("""
-                \(newValue) of type \(type(of: newValue)) \
-                is not storable in YYCache.
-                """)
-                storage?.removeObject(forKey: key)
-                return
+            switch newValue.asYYCacheStorable() {
+            case .success(let storable):
+                storage?.setObject(storable, forKey: key)
+            case .failure(let error):
+                onConversionFailure(for: newValue, dueTo: error)
             }
-            storage?.setObject(storable, forKey: key)
         }
+    }
+    
+    public dynamic func onConversionFailure(for content: Content, dueTo error: Error) {
+        assertionFailure("""
+        \(content) of type \(type(of: content)) \
+        is not storable in YYCache because \(error.localizedDescription)
+        """)
     }
     
     deinit {

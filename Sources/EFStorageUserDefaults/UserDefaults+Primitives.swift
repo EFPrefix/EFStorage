@@ -8,7 +8,7 @@
 import Foundation
 
 extension URL: UserDefaultsStorable {
-    public func asUserDefaultsStorable() -> UserDefaultsStorable! {
+    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
         return absoluteString
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> URL? {
@@ -17,12 +17,10 @@ extension URL: UserDefaultsStorable {
 }
 
 // MARK: - As Is UserDefaults Storable
-
-@usableFromInline
-protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
+public protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
 
 extension AsIsUserDefaultsStorable {
-    public func asUserDefaultsStorable() -> UserDefaultsStorable! {
+    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
         return self
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
@@ -43,9 +41,10 @@ extension Date: AsIsUserDefaultsStorable { }
 extension Float: AsIsUserDefaultsStorable { }
 extension Double: AsIsUserDefaultsStorable { }
 #if canImport(CoreGraphics)
+// CGFloat is in CoreGraphics on Apple platforms, but in Foundation on others.
 import CoreGraphics
-extension CGFloat: AsIsUserDefaultsStorable { }
 #endif
+extension CGFloat: AsIsUserDefaultsStorable { }
 
 extension Int: AsIsUserDefaultsStorable { }
 extension Int8: AsIsUserDefaultsStorable { }

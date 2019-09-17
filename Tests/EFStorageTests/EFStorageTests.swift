@@ -9,8 +9,8 @@ import XCTest
 import KeychainAccess
 
 extension Bool: KeychainAccessStorable {
-    public func asKeychainStorable() -> KeychainAccessStorable! {
-        return "\(self)"
+    public func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+        return "\(self)".asKeychainStorable()
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Bool? {
         guard let string = try? keychain.getString(key) else { return nil }

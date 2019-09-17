@@ -12,10 +12,15 @@ public extension UserDefaultsStorable where Self: Codable {
         do {
             return try JSONEncoder().encode(self)
         } catch {
-            assertionFailure(error.localizedDescription)
-            return nil
+            return onConversionFailure(dueTo: error)
         }
     }
+    
+    dynamic func onConversionFailure(dueTo error: Error) -> UserDefaultsStorable! {
+        assertionFailure(error.localizedDescription)
+        return nil
+    }
+    
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
         return Data.fromUserDefaults(userDefaults, forKey: key).flatMap {
             try? JSONDecoder().decode(Self.self, from: $0)

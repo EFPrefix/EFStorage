@@ -9,13 +9,10 @@ import KeychainAccess
 import Foundation
 
 public extension KeychainAccessStorable where Self: Codable {
-    func asKeychainStorable() -> KeychainAccessStorable! {
-        do {
-            return try JSONEncoder().encode(self).asKeychainStorable()
-        } catch {
-            assertionFailure(error.localizedDescription)
-            return nil
-        }
+    func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+        return Result { try JSONEncoder().encode(self) }
+            .mapError { print($0);return $0 }
+            .flatMap { $0.asKeychainStorable() }
     }
     static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {
         return Data.fromKeychain(keychain, forKey: key).flatMap {

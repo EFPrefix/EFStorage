@@ -8,7 +8,7 @@
 import Foundation
 
 public extension UserDefaultsStorable where Self: NSCoding {
-    func asUserDefaultsStorable() -> UserDefaultsStorable! {
+    func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {

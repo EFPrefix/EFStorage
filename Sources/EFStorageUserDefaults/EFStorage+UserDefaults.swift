@@ -18,7 +18,7 @@ extension UserDefaults: EFUnderlyingStorage {
 
 /// NSData, NSString, NSNumber, NSDate, NSArray, or NSDictionary
 public protocol UserDefaultsStorable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable!
+    func asUserDefaultsStorable() -> AsIsUserDefaultsStorable!
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self?
 }
 
@@ -43,15 +43,19 @@ public class EFStorageUserDefaultsRef<Content: UserDefaultsStorable>: EFSingleIn
             guard let newValue = content else {
                 return storage.removeObject(forKey: key)
             }
-            guard let storable = newValue.asUserDefaultsStorable() else {
-                assertionFailure("""
-                \(newValue) of type \(type(of: newValue)) \
-                is not storable in user defaults.
-                """)
-                return storage.removeObject(forKey: key)
+            if let storable = newValue.asUserDefaultsStorable()  {
+                storage.set(storable, forKey: key)
+            } else {
+                onConversionFailure(for: newValue)
             }
-            storage.set(storable, forKey: key)
         }
+    }
+    
+    public dynamic func onConversionFailure(for content: Content) {
+        assertionFailure("""
+        \(content) of type \(type(of: content)) \
+        is not storable in user defaults.
+        """)
     }
     
     deinit {

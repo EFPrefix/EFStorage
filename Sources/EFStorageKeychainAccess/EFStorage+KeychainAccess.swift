@@ -28,8 +28,13 @@ extension Keychain: EFUnderlyingStorage {
     }
 }
 
+public enum AsIsKeychainAccessStorable {
+    case string(String)
+    case data(Data)
+}
+
 public protocol KeychainAccessStorable {
-    func asKeychainStorable() -> KeychainAccessStorable!
+    func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error>
     static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self?
 }
 
@@ -56,17 +61,33 @@ public class EFStorageKeychainAccessRef<Content: KeychainAccessStorable>: EFSing
                 return
             }
             switch newValue.asKeychainStorable() {
-            case let string as String:
-                try? storage.set(string, key: key)
-            case let data as Data:
-                try? storage.set(data, key: key)
-            default:
-                assertionFailure("""
-                \(newValue) of type \(type(of: newValue)) \
-                is not storable in keychain.
-                """)
+            case .success(.string(let string)):
+                do {
+                    try storage.set(string, key: key)
+                } catch {
+                    onStorageFailure(error)
+                }
+            case .success(.data(let data)):
+                do {
+                    try storage.set(data, key: key)
+                } catch {
+                    onStorageFailure(error)
+                }
+            case .failure(let error):
+                onConversionFailure(for: newValue, dueTo: error)
             }
         }
+    }
+    
+    public dynamic func onStorageFailure(_ error: Error) {
+        assertionFailure("keychain failed to save because \(error.localizedDescription)")
+    }
+    
+    public dynamic func onConversionFailure(for content: Content, dueTo error: Error) {
+        assertionFailure("""
+        \(content) of type \(type(of: content)) \
+        is not storable in keychain because \(error.localizedDescription)
+        """)
     }
     
     deinit {

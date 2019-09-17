@@ -10,13 +10,8 @@ import Foundation
 import YYCache
 
 extension YYCacheStorable where Self: Codable {
-    func asYYCacheStorable() -> YYCacheStorable! {
-        do {
-            return try JSONEncoder().encode(self) as NSData
-        } catch {
-            assertionFailure(error.localizedDescription)
-            return nil
-        }
+    func asYYCacheStorable() -> Result<NSCoding, Error> {
+        return Result { try JSONEncoder().encode(self) as NSData }
     }
     static func fromYYCache(_ yyCache: YYCache, forKey key: String) -> Self? {
         return NSData.fromYYCache(yyCache, forKey: key).flatMap {

@@ -10,8 +10,8 @@ import Foundation
 import YYCache
 
 public extension YYCacheStorable where Self: NSCoding {
-    func asYYCacheStorable() -> YYCacheStorable! {
-        return self
+    func asYYCacheStorable() -> Result<NSCoding, Error> {
+        return .success(self)
     }
     static func fromYYCache(_ yyCache: YYCache, forKey key: String) -> Self? {
         return yyCache.object(forKey: key) as? Self
