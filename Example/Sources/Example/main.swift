@@ -1,6 +1,8 @@
 import EFStorageUserDefaults
 import Foundation
 
+print(UserDefaults.standard)
+
 UserDefaults.standard.removeObject(forKey: "catSound")
 
 struct UD {

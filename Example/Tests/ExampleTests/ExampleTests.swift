@@ -24,19 +24,23 @@ final class ExampleTests: XCTestCase {
         process.waitUntilExit()
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)
-
+        let output = try XCTUnwrap(String(data: data, encoding: .utf8))
+        
+        let endOfFirstLine = try XCTUnwrap(output.firstIndex(of: "\n"))
+        let userDefaults = output[..<endOfFirstLine]
+        
         XCTAssertEqual(output, """
-        ALLOC EFStorageUserDefaultsRef<String>
-        CREAT EFStorageUserDefaultsRef<String> catSound
+        \(userDefaults)
+        EFStorage ALLOC EFStorageUserDefaultsRef<String>
+        EFStorage CREAT EFStorageUserDefaultsRef<String> catSound IN \(userDefaults)
         nyan
-        FETCH EFStorageUserDefaultsRef<String> catSound
+        EFStorage FETCH EFStorageUserDefaultsRef<String> catSound FROM \(userDefaults)
         nyan
-        FETCH EFStorageUserDefaultsRef<String> catSound
+        EFStorage FETCH EFStorageUserDefaultsRef<String> catSound FROM \(userDefaults)
         meow
         meow
-        FETCH EFStorageUserDefaultsRef<String> catSound
-        FETCH EFStorageUserDefaultsRef<String> catSound
+        EFStorage FETCH EFStorageUserDefaultsRef<String> catSound FROM \(userDefaults)
+        EFStorage FETCH EFStorageUserDefaultsRef<String> catSound FROM \(userDefaults)
         喵
         
         """)

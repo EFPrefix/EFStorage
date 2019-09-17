@@ -29,26 +29,31 @@ extension UserDefaults {
 
 extension UIImage: YYCacheStorable { } // Auto synthesized implmentation for NSCoding
 
-extension Bool: KeychainAccessStorable {
-    public func asKeychainStorable() -> KeychainAccessStorable! {
+extension Double: KeychainAccessStorable {
+    public func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
         return "\(self)".asKeychainStorable()
     }
-    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Bool? {
-        return String.fromKeychain(keychain, forKey: key).map {
-            $0 == "true"
-        }
+    public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Double? {
+        return String.fromKeychain(keychain, forKey: key).flatMap(Double.init)
+    }
+}
+
+extension EFStorageKeychainAccessRef {
+    @_dynamicReplacement(for: onConversionFailure(for:dueTo:))
+    func doNothingOnConversionFailure(for content: Content, dueTo error: Error) {
+        print("\(content) -> \(error.localizedDescription)")
     }
 }
 
 // MARK: Allow optional default value
 
 extension Optional: UserDefaultsStorable where Wrapped: UserDefaultsStorable {
-    public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Optional<Wrapped>? {
-        return Wrapped.fromUserDefaults(userDefaults, forKey: key)
+    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
+        return self.flatMap { $0.asUserDefaultsStorable() }
     }
     
-    public func asUserDefaultsStorable() -> UserDefaultsStorable! {
-        return self.flatMap { $0.asUserDefaultsStorable() }
+    public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Optional<Wrapped>? {
+        return Wrapped.fromUserDefaults(userDefaults, forKey: key)
     }
 }
 
@@ -65,8 +70,8 @@ class ViewController: UIViewController {
     @EFStorageUserDefaults(forKey: "username", defaultsTo: nil)
     var username: String?
     
-    @EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: true)
-    var isNewUser: Bool
+    @EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: 0)
+    var isNewUser: Double
     
     @EFStorageUserDefaults(forKey: "legacyNames", defaultsTo: [])
     var usedNames: [String]
@@ -87,11 +92,11 @@ class ViewController: UIViewController {
         print(usedNames)
         
         avatarView.image = avatar
-        if !isNewUser {
+        if isNewUser == .infinity {
             label.text = "Welcome back,"
         }
         textField.text = username
-        Keychain.efStorage.isNewUser = false
+        Keychain.efStorage.isNewUser = Double.infinity
         
         textField.addTarget(self, action: #selector(updateUsername),
                             for: .allEditingEvents)
