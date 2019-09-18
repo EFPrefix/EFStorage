@@ -30,8 +30,8 @@ extension UserDefaults {
 extension UIImage: YYCacheStorable { } // Auto synthesized implmentation for NSCoding
 
 extension Double: KeychainAccessStorable {
-    public func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
-        return "\(self)".asKeychainStorable()
+    public func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+        return "\(self)".asKeychainAccessStorable()
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Double? {
         return String.fromKeychain(keychain, forKey: key).flatMap(Double.init)
@@ -47,9 +47,14 @@ extension EFStorageKeychainAccessRef {
 
 // MARK: Allow optional default value
 
+extension Optional: AsIsUserDefaultsStorable where Wrapped: AsIsUserDefaultsStorable { }
+
 extension Optional: UserDefaultsStorable where Wrapped: UserDefaultsStorable {
-    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
-        return self.flatMap { $0.asUserDefaultsStorable() }
+    public func asUserDefaultsStorable() -> Result<AsIsUserDefaultsStorable, Error> {
+        return map { $0.asUserDefaultsStorable() }
+            ?? .success(nil as Optional<Int>)
+        //                              ^
+        // It can be any type `Optional<T> where T: AsIsUserDefaultsStorable`
     }
     
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Optional<Wrapped>? {

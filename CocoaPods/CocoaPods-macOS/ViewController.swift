@@ -11,8 +11,8 @@ import EFStorage
 import KeychainAccess
 
 extension Bool: KeychainAccessStorable {
-    public func asKeychainStorable() -> KeychainAccessStorable! {
-        return "\(self)"
+    public func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+        return "\(self)".asKeychainAccessStorable()
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Bool? {
         return String.fromKeychain(keychain, forKey: key).map {
