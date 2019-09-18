@@ -21,6 +21,8 @@ UserDefaults.efStorage.username = "OwO"
   * [@dynamicMemberLookup](https://github.com/EFPrefix/EFStorage/wiki/Usage#through-dynamicmemberlookup) | [动态成员查找](https://github.com/EFPrefix/EFStorage/wiki/用法#dynamicmemberlookup-动态成员查找)
   * [non-standard/default/shared storage](https://github.com/EFPrefix/EFStorage/wiki/Usage#non-default-container) | [非默认容器](https://github.com/EFPrefix/EFStorage/wiki/用法#放在其他什么地方吧)
   * [container/content type mix & match](https://github.com/EFPrefix/EFStorage/wiki/Usage#supported-containers) | [类型结合与转换](https://github.com/EFPrefix/EFStorage/wiki/用法#但是)
+  * [storing custom types](https://github.com/EFPrefix/EFStorage/wiki/Usage#more-storables) | [存储更多类型](https://github.com/EFPrefix/EFStorage/wiki/用法#能放点其他的吗太能了)
+  * [error handling](https://github.com/EFPrefix/EFStorage/wiki/Usage#assertion-failures) | [异常处理](https://github.com/EFPrefix/EFStorage/wiki/用法#我的程序炸了)
 * [Expand `EFStorage` to Support Your Data Store](https://github.com/EFPrefix/EFStorage/wiki/Extend) | [让 `EFStorage` 支持新的存储方案](https://github.com/EFPrefix/EFStorage/wiki/扩展)
 
 ## License
