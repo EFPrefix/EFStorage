@@ -8,8 +8,8 @@
 import Foundation
 
 extension URL: UserDefaultsStorable {
-    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
-        return absoluteString
+    public func asUserDefaultsStorable() -> Result<AsIsUserDefaultsStorable, Error> {
+        return absoluteString.asUserDefaultsStorable()
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> URL? {
         return userDefaults.url(forKey: key)
@@ -20,8 +20,8 @@ extension URL: UserDefaultsStorable {
 public protocol AsIsUserDefaultsStorable: UserDefaultsStorable { }
 
 extension AsIsUserDefaultsStorable {
-    public func asUserDefaultsStorable() -> AsIsUserDefaultsStorable! {
-        return self
+    public func asUserDefaultsStorable() -> Result<AsIsUserDefaultsStorable, Error> {
+        return .success(self)
     }
     public static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {
         guard let object = userDefaults.object(forKey: key) else { return nil }

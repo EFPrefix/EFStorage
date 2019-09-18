@@ -9,7 +9,7 @@ import KeychainAccess
 import Foundation
 
 public extension KeychainAccessStorable where Self: NSCoding {
-    func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+    func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
         return .success(.data(NSKeyedArchiver.archivedData(withRootObject: self)))
     }
     static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {

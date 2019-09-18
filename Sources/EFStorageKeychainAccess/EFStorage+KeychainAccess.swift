@@ -34,7 +34,7 @@ public enum AsIsKeychainAccessStorable {
 }
 
 public protocol KeychainAccessStorable {
-    func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error>
+    func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error>
     static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self?
 }
 
@@ -60,7 +60,7 @@ public class EFStorageKeychainAccessRef<Content: KeychainAccessStorable>: EFSing
                 try? storage.remove(key)
                 return
             }
-            switch newValue.asKeychainStorable() {
+            switch newValue.asKeychainAccessStorable() {
             case .success(.string(let string)):
                 do {
                     try storage.set(string, key: key)

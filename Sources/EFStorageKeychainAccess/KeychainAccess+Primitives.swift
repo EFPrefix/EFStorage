@@ -9,7 +9,7 @@ import KeychainAccess
 import Foundation
 
 extension String: KeychainAccessStorable {
-    public func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+    public func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
         return .success(.string(self))
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {
@@ -18,7 +18,7 @@ extension String: KeychainAccessStorable {
 }
 
 extension Data: KeychainAccessStorable {
-    public func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+    public func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
         return .success(.data(self))
     }
     public static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {

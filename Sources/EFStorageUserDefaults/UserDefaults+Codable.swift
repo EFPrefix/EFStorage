@@ -8,17 +8,8 @@
 import Foundation
 
 public extension UserDefaultsStorable where Self: Codable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable! {
-        do {
-            return try JSONEncoder().encode(self)
-        } catch {
-            return onConversionFailure(dueTo: error)
-        }
-    }
-    
-    dynamic func onConversionFailure(dueTo error: Error) -> UserDefaultsStorable! {
-        assertionFailure(error.localizedDescription)
-        return nil
+    func asUserDefaultsStorable() -> Result<AsIsUserDefaultsStorable, Error> {
+        return Result { try JSONEncoder().encode(self) }
     }
     
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {

@@ -8,7 +8,7 @@
 import Foundation
 
 public extension UserDefaultsStorable where Self: RawRepresentable, Self.RawValue: UserDefaultsStorable {
-    func asUserDefaultsStorable() -> UserDefaultsStorable! {
+    func asUserDefaultsStorable() -> Result<AsIsUserDefaultsStorable, Error> {
         return rawValue.asUserDefaultsStorable()
     }
     static func fromUserDefaults(_ userDefaults: UserDefaults, forKey key: String) -> Self? {

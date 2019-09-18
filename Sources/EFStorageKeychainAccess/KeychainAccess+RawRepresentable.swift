@@ -8,8 +8,8 @@
 import KeychainAccess
 
 public extension KeychainAccessStorable where Self: RawRepresentable, Self.RawValue: KeychainAccessStorable {
-    func asKeychainStorable() -> Result<AsIsKeychainAccessStorable, Error> {
-        return rawValue.asKeychainStorable()
+    func asKeychainAccessStorable() -> Result<AsIsKeychainAccessStorable, Error> {
+        return rawValue.asKeychainAccessStorable()
     }
     static func fromKeychain(_ keychain: Keychain, forKey key: String) -> Self? {
         return RawValue.fromKeychain(keychain, forKey: key)
