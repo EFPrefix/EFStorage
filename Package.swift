@@ -29,7 +29,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", .upToNextMajor(from: "3.2.0")),
-        .package(url: "https://github.com/EFPrefix/YYCache.git", .branch("master")),
+        .package(url: "https://github.com/EFPrefix/YYCache.git", .upToNextMajor(from: "1.0.5")),
     ],
     targets: [
         .target(
