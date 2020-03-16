@@ -9,7 +9,7 @@
 import Foundation
 import YYCache
 
-extension YYCacheStorable where Self: Codable {
+public extension YYCacheStorable where Self: Codable {
     func asYYCacheStorable() -> Result<NSCoding, Error> {
         return Result { try JSONEncoder().encode(self) as NSData }
     }
