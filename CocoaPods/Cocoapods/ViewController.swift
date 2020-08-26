@@ -105,6 +105,10 @@ class ViewController: UIViewController {
         
         textField.addTarget(self, action: #selector(updateUsername),
                             for: .allEditingEvents)
+        
+        if let ud = UserDefaults(suiteName: "2333") {
+            UserDefaults.shared = ud
+        }
     }
     
     @objc private func updateUsername() {

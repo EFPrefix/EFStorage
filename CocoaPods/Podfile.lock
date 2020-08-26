@@ -1,19 +1,19 @@
 PODS:
-  - EFStorage (0.3.2):
-    - EFStorage/Core (= 0.3.2)
-    - EFStorage/KeychainAccess (= 0.3.2)
-    - EFStorage/UserDefaults (= 0.3.2)
-    - EFStorage/YYCache (= 0.3.2)
-  - EFStorage/Core (0.3.2)
-  - EFStorage/KeychainAccess (0.3.2):
+  - EFStorage (0.4.0):
+    - EFStorage/Core (= 0.4.0)
+    - EFStorage/KeychainAccess (= 0.4.0)
+    - EFStorage/UserDefaults (= 0.4.0)
+    - EFStorage/YYCache (= 0.4.0)
+  - EFStorage/Core (0.4.0)
+  - EFStorage/KeychainAccess (0.4.0):
     - EFStorage/Core
-    - KeychainAccess (~> 3.2.0)
-  - EFStorage/UserDefaults (0.3.2):
+    - KeychainAccess (~> 4.2.0)
+  - EFStorage/UserDefaults (0.4.0):
     - EFStorage/Core
-  - EFStorage/YYCache (0.3.2):
+  - EFStorage/YYCache (0.4.0):
     - EFStorage/Core
     - YYCache (~> 1.0.4)
-  - KeychainAccess (3.2.1)
+  - KeychainAccess (4.2.0)
   - YYCache (1.0.4)
 
 DEPENDENCIES:
@@ -29,10 +29,10 @@ EXTERNAL SOURCES:
     :path: ".."
 
 SPEC CHECKSUMS:
-  EFStorage: 42f5931045fccf5d812f80dd0af55c4b79e2cf0c
-  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  EFStorage: 3e4b77aca10f9183966603bc6466571a5eb8efd4
+  KeychainAccess: 3f760109aa99b05d0f231e28b22642da7153e38a
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
 
 PODFILE CHECKSUM: af052cae0d127750d9540ee01faabf9500956a82
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3
