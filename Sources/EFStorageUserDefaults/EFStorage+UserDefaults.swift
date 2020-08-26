@@ -11,8 +11,9 @@ import EFStorageCore
 #endif
 
 extension UserDefaults: EFUnderlyingStorage {
+    public static var shared: UserDefaults = UserDefaults.standard
     public dynamic class func makeDefault() -> Self {
-        return (UserDefaults.standard as? Self) ?? Self()
+        return (shared as? Self) ?? Self()
     }
 }
 
