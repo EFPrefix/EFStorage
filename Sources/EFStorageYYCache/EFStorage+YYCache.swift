@@ -7,7 +7,7 @@
 
 #if canImport(YYCache)
 import Foundation
-import YYCache
+@_exported import YYCache
 #if canImport(EFStorageCore)
 import EFStorageCore
 #endif

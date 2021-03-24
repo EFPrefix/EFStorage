@@ -5,8 +5,8 @@
 //  Created by ApolloZhu on 2019/8/12.
 //
 
-import KeychainAccess
 import Foundation
+@_exported import KeychainAccess
 #if canImport(EFStorageCore)
 import EFStorageCore
 #endif
