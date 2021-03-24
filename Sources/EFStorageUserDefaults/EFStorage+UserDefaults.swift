@@ -7,7 +7,7 @@
 
 import Foundation
 #if canImport(EFStorageCore)
-import EFStorageCore
+@_exported import EFStorageCore
 #endif
 
 extension UserDefaults: EFUnderlyingStorage {

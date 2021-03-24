@@ -9,7 +9,7 @@
 import Foundation
 @_exported import YYCache
 #if canImport(EFStorageCore)
-import EFStorageCore
+@_exported import EFStorageCore
 #endif
 
 extension YYCache: EFFailableUnderlyingStorage {

@@ -8,7 +8,7 @@
 import Foundation
 @_exported import KeychainAccess
 #if canImport(EFStorageCore)
-import EFStorageCore
+@_exported import EFStorageCore
 #endif
 
 extension Keychain: EFUnderlyingStorage {
