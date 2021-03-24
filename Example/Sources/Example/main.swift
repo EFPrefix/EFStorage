@@ -6,9 +6,9 @@ print(UserDefaults.standard)
 UserDefaults.standard.removeObject(forKey: "catSound")
 
 struct UD {
-    @EFStorageUserDefaults(forKey: "catSound", defaultsTo: "nyan",
+    @EFStorageUserDefaults(forKey: "catSound",
                            persistDefaultContent: true)
-    static var meow: String
+    static var meow: String = "nya~"
 }
 
 print(UD.meow)

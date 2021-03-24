@@ -65,21 +65,21 @@ extension Optional: UserDefaultsStorable where Wrapped: UserDefaultsStorable {
 // MARK: - Property wrapper usage
 
 class ViewController: UIViewController {
-    @EFStorageYYCache(forKey: "image", defaultsTo: UIImage(systemName: "hare") ?? UIImage())
-    var avatar: UIImage {
+    @EFStorageYYCache(forKey: "image")
+    var avatar: UIImage = UIImage(systemName: "hare") ?? UIImage() {
         didSet {
             avatarView.image = avatar
         }
     }
     
-    @EFStorageUserDefaults(forKey: "username", defaultsTo: nil)
-    var username: String?
+    @EFStorageUserDefaults(forKey: "username")
+    var username: String? = nil
     
-    @EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: 0)
-    var isNewUser: Double
+    @EFStorageKeychainAccess(forKey: "isNewUser")
+    var isNewUser: Double = 0
     
-    @EFStorageUserDefaults(forKey: "legacyNames", defaultsTo: [])
-    var usedNames: [String]
+    @EFStorageUserDefaults(forKey: "legacyNames")
+    var usedNames: [String] = []
     
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var label: UILabel!

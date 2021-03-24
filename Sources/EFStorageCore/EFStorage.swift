@@ -15,10 +15,10 @@ public protocol EFStorage: EFContentWrapper, EFOptionalContentWrapper { }
 /// is composed using `+` from many `EFStorage`s like this:
 ///
 ///     @SomeEFStorage(
-///         EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
-///         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
-///         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey",
-///                                 defaultsTo: true,
+///         EFStorageKeychainAccess(wrappedValue: false, forKey: "paidBefore")
+///         + EFStorageUserDefaults(wrappedValue: false, forKey: "paidBefore")
+///         + EFStorageUserDefaults(wrappedValue: true,
+///                                 forKey: "oldHasPaidBeforeKey",
 ///                                 persistDefaultContent: true))
 ///     var hasPaidBefore: Bool
 @propertyWrapper
@@ -48,10 +48,10 @@ public extension EFStorage {
     /// You can use this to combine multiple `EFStorage`s together, then pass it to `SomeEFStorage`:
     ///
     ///     @SomeEFStorage(
-    ///         EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
-    ///         + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
-    ///         + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey",
-    ///                                 defaultsTo: true,
+    ///         EFStorageKeychainAccess(wrappedValue: false, forKey: "paidBefore")
+    ///         + EFStorageUserDefaults(wrappedValue: false, forKey: "paidBefore")
+    ///         + EFStorageUserDefaults(wrappedValue: true,
+    ///                                 forKey: "oldHasPaidBeforeKey",
     ///                                 persistDefaultContent: true))
     ///     var hasPaidBefore: Bool
     static func +<AnotherStorage: EFStorage>(lhs: Self, rhs: AnotherStorage)
@@ -63,8 +63,8 @@ public extension EFStorage {
 /// Combine two `EFStorage`s into one.
 ///
 ///     @EFStorageComposition(
-///         EFStorageUserDefaults(forKey: "isNewUser", defaultsTo: false),
-///         EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
+///         EFStorageUserDefaults(wrappedValue: false, forKey: "isNewUser"),
+///         EFStorageKeychainAccess(wrappedValue: false, forKey: "isNewUser"))
 ///     var isNewUser: Bool
 @propertyWrapper
 public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
@@ -102,12 +102,12 @@ public struct EFStorageComposition<A: EFStorage, B: EFStorage, Content>
 /// This is very useful when the old storage has a different data type than the new one.
 ///
 ///     @EFStorageComposition(
-///         EFStorageUserDefaults<String>(forKey: "sameKey",
-///                                       defaultsTo: "Nah"),
+///         EFStorageUserDefaults<String>(wrappedValue: "Nah",
+///                                       forKey: "sameKey"),
 ///         EFStorageMigrate(
 ///             from: EFStorageUserDefaults<Int>(
+///                 wrappedValue: 1551,
 ///                 forKey: "sameKey",
-///                 defaultsTo: 1551,
 ///                 persistDefaultContent: true),
 ///             by: { number in String(number) }
 ///         )

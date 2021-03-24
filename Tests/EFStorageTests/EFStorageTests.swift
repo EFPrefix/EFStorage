@@ -27,31 +27,29 @@ final class EFStorageTests: XCTestCase {
     static let defaultText = "Hello, World!"
     
     @EFStorageUserDefaults(forKey: "text",
-                           defaultsTo: EFStorageTests.defaultText,
                            persistDefaultContent: true)
-    var text: String
+    var text: String = EFStorageTests.defaultText
     
-    @EFStorageUserDefaults(forKey: "wow", defaultsTo: "nah")
-    var nsString: NSString
+    @EFStorageUserDefaults(forKey: "wow")
+    var nsString: NSString = "nah"
     
-    @EFStorageKeychainAccess(forKey: "password", defaultsTo: "")
-    var password: String
+    @EFStorageKeychainAccess(forKey: "password")
+    var password: String = ""
     
-    @EFStorageComposition(EFStorageUserDefaults(forKey: "isNewUser", defaultsTo: false),
-                          EFStorageKeychainAccess(forKey: "isNewUser", defaultsTo: false))
+    @EFStorageComposition(EFStorageUserDefaults(wrappedValue: false, forKey: "isNewUser"),
+                          EFStorageKeychainAccess(wrappedValue: false, forKey: "isNewUser"))
     var isNewUser: Bool
     
-    @SomeEFStorage(EFStorageKeychainAccess(forKey: "paidBefore", defaultsTo: false)
-        + EFStorageUserDefaults(forKey: "paidBefore", defaultsTo: false)
-        + EFStorageUserDefaults(forKey: "oldHasPaidBeforeKey", defaultsTo: true,
+    @SomeEFStorage(EFStorageKeychainAccess(wrappedValue: false, forKey: "paidBefore")
+                    + EFStorageUserDefaults(wrappedValue: false, forKey: "paidBefore")
+                    + EFStorageUserDefaults(wrappedValue: true, forKey: "oldHasPaidBeforeKey",
                                 persistDefaultContent: true))
     var hasPaidBefore: Bool
     
     
     @EFStorageComposition(
-        EFStorageUserDefaults<String>(forKey: "sameKey", defaultsTo: "Nah"),
-        EFStorageMigrate(from: EFStorageUserDefaults<Int>(forKey: "sameKey",
-                                                          defaultsTo: 1551,
+        EFStorageUserDefaults<String>(wrappedValue: "Nah", forKey: "sameKey"),
+        EFStorageMigrate(from: EFStorageUserDefaults<Int>(wrappedValue: 1551, forKey: "sameKey",
                                                           persistDefaultContent: true),
                          by: { number in String(number) })
     )

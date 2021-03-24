@@ -3,8 +3,8 @@
 An easy way to store anything anywhere -- UserDefaults, KeychainAccess, YYCache, you name it!
 
 ```swift
-@EFStorageUserDefaults(forKey: "username", defaultsTo: User.Name.random())
-var username: String
+@EFStorageUserDefaults(forKey: "username")
+var username: String = User.Name.random()
 
 // Or, if you don't like constraints,
 UserDefaults.efStorage.username = "OwO"

@@ -35,13 +35,13 @@ public extension EFSingleInstanceStorageReferenceWrapper {
     }
     
     /// The constructor to use for `@propertyWrapper`s.
+    /// - Parameter makeDefaultContent: default value to use when no content is found in `storage`.
     /// - Parameter key: identifier for the stored content.
     /// - Parameter storage: where content should be stored to.
-    /// - Parameter makeDefaultContent: default value to use when no content is found in `storage`.
     /// - Parameter persistDefaultContent: wether default value should actually be stored into `storage` or not.
     init(
+        wrappedValue makeDefaultContent: @escaping @autoclosure () -> Content,
         forKey key: String, in storage: Ref.Storage = Ref.Storage.makeDefault(),
-        defaultsTo makeDefaultContent: @escaping @autoclosure () -> Content,
         persistDefaultContent: Bool = false
     ) {
         self.init(
@@ -52,5 +52,21 @@ public extension EFSingleInstanceStorageReferenceWrapper {
         if _ref.content == nil, persistDefaultContent {
             _ref.content = makeDefaultContent()
         }
+    }
+    
+    /// The constructor to use for `@propertyWrapper`s.
+    /// - Parameter key: identifier for the stored content.
+    /// - Parameter storage: where content should be stored to.
+    /// - Parameter makeDefaultContent: default value to use when no content is found in `storage`.
+    /// - Parameter persistDefaultContent: wether default value should actually be stored into `storage` or not.
+    @available(*, deprecated, renamed: "init(forKey:in:wrappedValue:persistDefaultContent:)")
+    init(
+        forKey key: String, in storage: Ref.Storage = Ref.Storage.makeDefault(),
+        defaultsTo makeDefaultContent: @escaping @autoclosure () -> Content,
+        persistDefaultContent: Bool = false
+    ) {
+        self.init(wrappedValue: makeDefaultContent(),
+                  forKey: key, in: storage,
+                  persistDefaultContent: persistDefaultContent)
     }
 }

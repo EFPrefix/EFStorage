@@ -23,14 +23,14 @@ extension Bool: KeychainAccessStorable {
 
 class ViewController: NSViewController {
     
-    @EFStorageKeychainAccess(forKey: "newUser", defaultsTo: true)
-    var isNewUser: Bool
+    @EFStorageKeychainAccess(forKey: "newUser")
+    var isNewUser: Bool = true
     
-    @EFStorageUserDefaults(forKey: "username", defaultsTo: "EFS")
-    var username: String
+    @EFStorageUserDefaults(forKey: "username")
+    var username: String = "EFS"
     
-    @EFStorageUserDefaults(forKey: "a", defaultsTo: [])
-    var array: [String]
+    @EFStorageUserDefaults(forKey: "a")
+    var array: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
